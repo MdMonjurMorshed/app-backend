@@ -1,0 +1,84 @@
+{%extends 'adminlte/base.html' %}
+{% load static %}<!DOCTYPE html>
+<html>
+<head>
+    {% block title_outer %}
+        <title>{% block title %}{{ site.name }}{% endblock %}</title>
+    {% endblock %}
+
+    {% block meta %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    {% endblock %}
+
+    {% block stylesheets %}
+        {% include 'adminlte/lib/_styles.html' %}
+    {% endblock %}
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="hold-transition sidebar-mini {% block body_class %}{% block bodyclass %}{% endblock %}{% endblock %}">
+
+{% block body %}
+    <div class="wrapper">
+        {% block nav_header %}
+            {% include 'adminlte/lib/_main_header.html' %}
+        {% endblock %}
+
+        {% block nav_sidebar %}
+            {% include 'adminlte/lib/_main_sidebar.html' %}
+        {% endblock %}
+
+        {% block content_wrapper %}
+        <div class="content-wrapper">
+            {% block content_header %}
+                <section class="content-header">
+                    {% block no_heading %}
+                        <h1>
+                            {% block page_name %}<p>thiskjansfkjnasnfansdfnaknsdfknaskdfn<k/p> {% endblock page_name%}
+                            <div class="header-actions">
+                                {% block page_actions %}i know nothing{% endblock page_actions %}
+                            </div>
+                            {% block no_description %}
+                            <small>{% block page_description %}{% endblock page_description%}</small>
+                            {% endblock no_description %}
+                        </h1>
+                        {% block breadcrumbs %}
+                            {# Breadcrumb implementation left to developers #}
+                        {% endblock breadcrumbs%}
+                    {% endblock no_heading %}
+                </section>
+            {% endblock content_header%}
+
+            {% block content_outer %}
+            <section class="content">
+                {% block messages %}
+                    {% include 'adminlte/lib/_messages.html' %}
+                {% endblock messages%}
+
+                {% block content_block_wrap %}
+                    {% block content %}{% endblock content%}
+                {% endblock content_block_wrap%}
+            </section>
+            {% endblock content_outer%}
+
+        </div>
+        {% endblock content_wrapper %}
+        
+        {% block nav_footer %}
+            {% include 'adminlte/lib/_main_footer.html' %}
+        {% endblock %}
+
+    </div>
+{% endblock body %}
+
+{% block javascript %}
+{% include 'adminlte/lib/_scripts.html' %}
+{% endblock %}
+
+{% block extra_js %}{% endblock %}
+
+{% block extra_foot %}{% endblock %}
+</body>
+</html>
