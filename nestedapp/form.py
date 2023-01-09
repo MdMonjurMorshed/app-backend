@@ -1,6 +1,6 @@
 from select import select
 from selectors import SelectSelector
-from tkinter import Widget
+
 from tkinter.tix import Select
 from turtle import width
 
