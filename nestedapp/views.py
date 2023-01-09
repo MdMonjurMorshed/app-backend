@@ -24,7 +24,7 @@ from rest_framework import serializers
 def FrontView(request): 
     return render(request,'adminlte/base.html',{})  
 def Dashboard(request):
-    return render(request,'adminlte/base.html',{})     
+    return render(request,'nestedapp/base.html',{})     
 
 def loginview(request):
     
