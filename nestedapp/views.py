@@ -22,7 +22,7 @@ from rest_framework import serializers
 
 
 def FrontView(request): 
-    return render(request,'adminlte/base.html',{})  
+    return render(request,'nestedapp/base.html',{})  
 def Dashboard(request):
     return render(request,'nestedapp/base.html',{})     
 
@@ -46,10 +46,10 @@ def loginview(request):
                 }
 
            
-                return render(request,'adminlte/login.html',context)
+                return render(request,'nestedapp/login.html',context)
             login(request,user)
             return redirect('dash')
-    return render(request,"adminlte/login.html")
+    return render(request,"nestedapp/login.html")
 
 def LogoutView(request):
     if request.method== 'POST':
@@ -58,7 +58,7 @@ def LogoutView(request):
         
         
 
-    return render(request,'adminlte/logout.html')
+    return render(request,'nestedapp/logout.html')
    
           
 def CreateCategory(request):
@@ -88,7 +88,7 @@ def CreateCategory(request):
           }     
       
         
-        return render(request,'adminlte/category_page.html',context)
+        return render(request,'nestedapp/category_page.html',context)
     return redirect('login')    
 
     
@@ -112,7 +112,7 @@ def CategoryList(request):
 
     }
        
-    return render(request,'adminlte/category_list.html',context)
+    return render(request,'nestedapp/category_list.html',context)
 
 def CategoryUpdate(request,id):
     if request.method == "POST":
@@ -124,7 +124,7 @@ def CategoryUpdate(request,id):
             
     oneItem=Category.objects.get(pk=id)
     frm=ParentForm(instance=oneItem)
-    return render(request,'adminlte/category_update.html',{'frm':frm })
+    return render(request,'nestedapp/category_update.html',{'frm':frm })
 
 
 def CategoryDelete(request,id):
@@ -133,7 +133,7 @@ def CategoryDelete(request,id):
         mi.delete()
         return redirect('catlist')
 
-    return render(request,'adminlte/delete.html',{"form":mi})   
+    return render(request,'nestedapp/delete.html',{"form":mi})   
         
  
  #   for department view
@@ -153,7 +153,7 @@ def CreateDep(request):
             "form":frm
 
         }    
-        return render(request,'adminlte/depPage.html',context)
+        return render(request,'nestedapp/depPage.html',context)
     return redirect('login')    
 
 def DepList(request):
@@ -171,7 +171,7 @@ def DepList(request):
 
     }
 
-    return render(request,"adminlte/depList.html",context)
+    return render(request,"nestedapp/depList.html",context)
 
 def DepUpdate(request,id):
     if request.method == "POST":
@@ -184,7 +184,7 @@ def DepUpdate(request,id):
     dep_obj=Depertment.objects.get(pk=id)
     form=DepForm(instance=dep_obj)
 
-    return render(request,'adminlte/depUpdate.html',{"form":form})    
+    return render(request,'nestedapp/depUpdate.html',{"form":form})    
 def depDelete(request,id):
     dep_obj=Depertment.objects.get(pk=id)
 
@@ -193,7 +193,7 @@ def depDelete(request,id):
         return redirect("dep-list")
         
 
-    return render(request,"adminlte/depDelete.html",{"form":dep_obj})
+    return render(request,"nestedapp/depDelete.html",{"form":dep_obj})
 
 
 # for Semester view
@@ -212,7 +212,7 @@ def SemView(request):
         context={
         "form":form
     }
-        return render(request,'adminlte/semesterPage.html',context)
+        return render(request,'nestedapp/semesterPage.html',context)
 
     return redirect('login')
 
@@ -228,7 +228,7 @@ def SemList(request):
         "page_obj":page_obj,
         "nums":num
     }
-    return render(request,"adminlte/semlist.html",context)
+    return render(request,"nestedapp/semlist.html",context)
 def semUpdate(request,id):
     smi=Semester.objects.get(pk=id)
     if request.method=="POST":
@@ -241,7 +241,7 @@ def semUpdate(request,id):
     context={
         "form":form
     }
-    return render(request,"adminlte/semesterPage.html",context)
+    return render(request,"nestedapp/semesterPage.html",context)
 def semDelete(request,id):
     smi=Semester.objects.get(pk=id)
     if request.method=="POST":
@@ -249,7 +249,7 @@ def semDelete(request,id):
     context={
         "delete":smi
     }
-    return render(request,"adminlte/allDelete.html", context)
+    return render(request,"nestedapp/allDelete.html", context)
 
 
 
@@ -267,7 +267,7 @@ def subPage(request):
          context={
         'form':form
               }
-         return render(request,"adminlte/subPage.html",context)
+         return render(request,"nestedapp/subPage.html",context)
     return redirect('login')     
 def SubList(request): 
     sub_mi=Subject.objects.all()
@@ -281,7 +281,7 @@ def SubList(request):
         'filter':filter,
         'nums':num
     }
-    return render  (request,"adminlte/subList.html",context)
+    return render  (request,"nestedapp/subList.html",context)
 
 def SubUpdate(request,id):
     sub_mi=Subject.objects.get(pk=id)
@@ -295,7 +295,7 @@ def SubUpdate(request,id):
         'form':form
     }
 
-    return render(request,"adminlte/subPage.html",context)
+    return render(request,"nestedapp/subPage.html",context)
 
 def SubDelete(request,id):
     sub_mi=Subject.objects.get(pk=id)
@@ -306,7 +306,7 @@ def SubDelete(request,id):
     }
 
 
-    return render(request,'adminlte/allDelete.html',context)
+    return render(request,'nestedapp/allDelete.html',context)
 
 # VIEWS FOR CHAPTER
 
@@ -329,7 +329,7 @@ def ChapList(request):
         "page_obj":page_obj,
         "nums":num
     }
-    return render( request,'adminlte/chapterList.html',context)    
+    return render( request,'nestedapp/chapterList.html',context)    
 
 def ChapUpdate(request,id):
     chap_mi=Chapter.objects.get(pk=id)
@@ -343,7 +343,7 @@ def ChapUpdate(request,id):
     context={
         'form':form
     }
-    return render(request,'adminlte/chapUpdate.html',context)
+    return render(request,'nestedapp/chapUpdate.html',context)
 
 def ChapDelete(request,id):
     
@@ -358,7 +358,7 @@ def ChapDelete(request,id):
         'title':'chapter',
     }
 
-    return render(request,'adminlte/allDelete.html',context)        
+    return render(request,'nestedapp/allDelete.html',context)        
 
 #   VIDEO VIEW
 def VidView(request):
@@ -375,7 +375,7 @@ def VidView(request):
     context={
         'form':form
     }
-    return render(request,'adminlte/uploadVideo.html',context)    
+    return render(request,'nestedapp/uploadVideo.html',context)    
 
 
 def VideoList(request):
@@ -390,7 +390,7 @@ def VideoList(request):
         "page_obj":page_obj,
         "nums":num
     }
-    return render(request,'adminlte/videoList.html',context)
+    return render(request,'nestedapp/videoList.html',context)
 
 def VidUpdate(request,id):
     vid_mi=Video.objects.get(pk=id)
@@ -404,7 +404,7 @@ def VidUpdate(request,id):
     context={
     "form":form
     }
-    return render(request,'adminlte/uploadVideo.html',context)
+    return render(request,'nestedapp/uploadVideo.html',context)
 
 def VidDelete(request,id):
     vid_mi=Video.objects.get(pk=id)
@@ -414,7 +414,7 @@ def VidDelete(request,id):
         'title':'vid-list',
         "delete":vid_mi
     }    
-    return render(request,'adminlte/allDelete.html',context)
+    return render(request,'nestedapp/allDelete.html',context)
 def VidDetails(request,id):
     vid_mi=Video.objects.get(pk=id)
 
@@ -422,7 +422,7 @@ def VidDetails(request,id):
         'title':'vid-list',
         'form':vid_mi
     }
-    return render(request,'adminlte/vidDetails.html',context)
+    return render(request,'nestedapp/vidDetails.html',context)
 
 
     # PACKAGE VIEW
@@ -489,7 +489,7 @@ def PackageView(request):
       messages.success(request,"data is added successfully")
    
          
-    return render(request,"adminlte/package.html",context)    
+    return render(request,"nestedapp/package.html",context)    
 
 
 
@@ -502,7 +502,7 @@ def loadSubject(request):
     }
     return JsonResponse(list(subject.values('id','name')),safe=False)
     
-    #return render(request,'adminlte/subjectLoad.html',context)    
+    #return render(request,'nestedapp/subjectLoad.html',context)    
 
 def loadChap(request):
     subject_id=request.GET.get('subject')
@@ -511,7 +511,7 @@ def loadChap(request):
     context={
         'chapter':chapter
     }    
-    #return render(request,"adminlte/chapterLoad.html",context)
+    #return render(request,"nestedapp/chapterLoad.html",context)
     return JsonResponse(list(chapter.values('id','name')),safe=False)
 def VidSearch(request):
   

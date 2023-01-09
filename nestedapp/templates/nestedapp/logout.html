@@ -1,0 +1,51 @@
+{% extends "adminlte/base.html" %}
+{% load i18n static %}
+
+{% block body_class %}login-page{% endblock %}
+
+{% block body %}
+    
+
+    <div class="login-box">
+        {% block logo %}
+        <div class="login-logo">
+            {# Mirrors block names used in _main_header.html #}
+            <a href="{% block logo_href %}/{% endblock %}">{% block logo_text %}<b>Admin</b>LTE{% endblock %}</a>
+        </div>
+        {% endblock %}
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            {% block login_errors %}
+               
+
+               
+            {% endblock login_errors %}
+
+            {% block login_form %}
+            {% if  request.user.is_authenticated%}
+
+                <form action="" method="post">
+                    {% csrf_token%}
+                  
+                   
+                   
+                    <div class="form-group has-feedback">
+                        
+                        <p>Are you want to logout</p>
+                       
+                       
+                        <button type="submit" class="logout-btn">logout</button>
+                        
+                  
+                </form>
+                {%else%}
+                  <p>You are now no longer logged in.</p>
+                  <p>wanna login again.</p>
+                   <a href="{%url 'login'%}">login</a>
+               {%endif%}
+            {% endblock login_form %}
+
+        </div>
+    </div>
+{% endblock %}
+

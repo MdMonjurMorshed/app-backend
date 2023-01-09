@@ -1,0 +1,199 @@
+{% extends 'adminlte/base.html' %}
+
+{% block extra_head %}
+
+{% endblock %}
+
+{% block content_wrapper %}
+        <div class="content-wrapper">
+            {% block content_header %}
+                <section class="content-header">
+                   
+                    {% block no_heading %}
+                        <h1>
+                            {% block page_name %}Video Page{% endblock %}
+                            <div class="header-actions">
+                                {% block page_actions %}
+
+                                 {% endblock %}
+                            </div>
+                            {% block no_description %}
+                            <small>{% block page_description %}{% endblock %}</small>
+                            {% endblock %}
+                        </h1>
+                        {% block breadcrumbs %}
+                        <ol class='breadcrumb'>
+                            <li >
+                                <a href="{%url 'dash'%}">
+                                    <i class='fa fa-dashboard'></i>
+                                    DashBoard
+                                </a>
+                            </li>
+                            <li>
+                             Video Page
+                            </li>
+
+
+                        </ol>
+                            {# Breadcrumb implementation left to developers #}
+                        {% endblock %}
+                    {% endblock no_heading %}
+                </section>
+            {% endblock %}
+
+            {% block content_outer %}
+            <section class="content">
+                {% block messages %}
+                    {% include 'adminlte/lib/_messages.html' %}
+                {% endblock %}
+
+                {% block content_block_wrap %}
+                    {% block content %}
+                      
+                      <div class='row'>
+
+                        <div class='col-md-12'>
+                            <div class='box box-primary'>
+
+                                <!-- its header for the page -->
+                              <div class='box-header with-border'>
+                                <h3 class='box-title'>Upload Video<h3>
+                               </div>
+
+                               <!-- its form for this page-->
+                               <div class='box-body'>
+                                <form method='POST' role='form'  enctype='multipart/form-data'>
+
+                                    {%csrf_token%}
+                                    <div class='tosterMessage' id='messageArea'>
+    
+                                    </div>
+                                    <div class='row'>
+                                        <div class='col-md-6 '>
+                                            <div class='form-group'>
+                                                <label for="id_name">Video Title</label>
+                                                {{form.name}}
+                                            </div>
+                                            
+                                                <div class='form-group'>
+                                                    <label for="id_tags"> Tags name
+                                                        <code>(tag should be coma separated)</code>
+                                                    </label>
+                                                   
+                                                        {{form.tags}}
+                                                    
+                                                        
+                                                  
+                                                
+                                                   
+                                                
+                                                  
+                                                   
+                                                       
+                                                  
+                                                    
+                                                </div>
+                                                
+                                                <div class='form-group'>
+                                                    <label for="id_url">Video Url</label>
+                                                    {{form.url}}
+                                                </div>
+                                                <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 10px">
+                                                    <div class='form-group'>
+                                                        <label for="id_order">Ordering Number(optional)</label>
+                                                        {{form.order}}
+                                                    </div>
+                                                    <div class='form-group'>
+                                                        <label for="id_duration">Video Duration(optional)</label>
+                                                        {{form.duration}}
+                                                    </div>
+                                                </div>
+                                           
+                                           
+                                           
+                                        </div>
+                                        <div class='col-md-6'>
+                                            <div class='form-group'>
+                                                <label for="id_description"> Video Description</label>
+                                                
+                                                    {{form.description}}
+                                                
+                                                
+                                             </div>
+                                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap:5px">
+                                                <div class='form-group'>
+
+                                                    <label for="id_publish"> publish?</label>
+                                                   
+                                                        {{form.publish}}
+                                                   
+                                                   
+                                                   
+                                                 </div>
+                                                 <div class='form-group'>
+                                                    
+                                                    <label for="id_view">  Is free preview?</label>
+                                                   
+                                                    {{form.view}}
+                                                 </div>
+                                                 <div class='form-group'>
+                                                    
+                                                    <label for="id_stream">youtube stream?</label>
+                                                   
+                                                    {{form.stream}}
+                                                 </div>
+                                                
+                                            </div>
+                                            <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 10px">
+                                                <div class='form-group'>
+                                                    <label for="id_thumbnail">Video Thumbnail (optional)</label>
+                                                    
+ 
+                                                        
+                                                        {{form.thumbnail}}
+                                                         
+                                                      
+                                                         
+                                                        </div>
+                                                   
+                                                
+                                                 <div class='form-group'>
+                                                    <label for="id_video">Upload Video (optional)</label>
+                                                    {{form.video}}
+                                                 </div>
+                                            </div>
+                                           
+                                          
+                                            
+    
+                                            
+                                        </div>
+                                    </div>
+    
+                                    <div class="box-footer">
+                                        <button type='submit' class='btn btn-success btn-sm' data-placement='right' data-toggle='tooltip' >Save</button>
+                                        <a href="{% url 'dash'%}" class='btn btn-sm btn-primary'>
+                                          Back
+                                        </a>
+                                    </div>
+    
+                                   </form>
+                                
+
+                               </div>
+                              
+                               
+                               
+
+
+
+                            </div>
+                        </div>
+                      </div>
+                    {% endblock %}
+                {% endblock %}
+            </section>
+            {% endblock   %}
+
+        </div>
+        {% endblock content_wrapper %}

@@ -1,0 +1,181 @@
+{% extends 'adminlte/base.html' %}
+
+{% block content_wrapper %}
+        <div class="content-wrapper">
+            {% block content_header %}
+                <section class="content-header">
+                   
+                    {% block no_heading %}
+                        <h1>
+                            {% block page_name %}Semester Page{% endblock %}
+                            <div class="header-actions">
+                                {% block page_actions %}
+
+                                 {% endblock %}
+                            </div>
+                            {% block no_description %}
+                            <small>{% block page_description %}{% endblock %}</small>
+                            {% endblock %}
+                        </h1>
+                        {% block breadcrumbs %}
+                        <ol class='breadcrumb'>
+                            <li >
+                                <a href="{%url 'dash'%}">
+                                    <i class='fa fa-dashboard'></i>
+                                    DashBoard
+                                </a>
+                            </li>
+                            <li>
+                                Semester Page
+                            </li>
+
+
+                        </ol>
+                            {# Breadcrumb implementation left to developers #}
+                        {% endblock %}
+                    {% endblock no_heading %}
+                </section>
+            {% endblock %}
+
+            {% block content_outer %}
+            <section class="content">
+                {% block messages %}
+                    {% include 'adminlte/lib/_messages.html' %}
+                {% endblock %}
+
+                {% block content_block_wrap %}
+                    {% block content %}
+                      
+                      <div class='row'>
+
+                        <div class='col-md-12'>
+                            <div class='box box-primary'>
+
+                                <!-- its header for the page -->
+                              <div class='box-header with-border'>
+                                <h3 class='box-title'> Create Semester<h3>
+                               </div>
+
+                               <!-- its form for this page-->
+                               <div class='box-body'>
+                                <form method='POST' role='form'  enctype='multipart/form-data'>
+
+                                    {%csrf_token%}
+                                    <div class='tosterMessage' id='messageArea'>
+    
+                                    </div>
+                                    <div class='row'>
+                                        <div class='col-md-6 '>
+                                            <div class='form-group'>
+                                                <label for='catname'> Select Category</label>
+                                                {{form.category}}
+                                            </div>
+                                            <div class='form-group'>
+                                                <label for="{{form.parent.id_for_label}}"> Select Department</label>
+                                               {{form.department}}
+                                               
+                                                   
+                                              
+                                                
+                                            </div>
+                                            <div class='form-group'>
+                                                <label for='name'>Semester Name</label>
+                                                {{form.name}}
+                                            </div>
+                                            <div class='form-group'>
+                                                <p >
+                                                    <strong>
+                                                        Do you want to publish?
+                                                    </strong>
+                                                </p>
+                                                
+                                                <label class="switch">
+                                                    {{form.publish}}
+                                                    <span class="slider round"></span>
+                                                  </label>
+                                            </div>
+                                           
+                                        </div>
+                                        <div class='col-md-6'>
+                                            <div class="form-group">
+                                                
+                                                <label for='example'> Start Date</label>
+                                                <div class='input-group date'>
+                                                <div class='input-group-addon'>
+                                                    <i class='fa fa-calendar'></i>
+                                                </div>
+                                                
+                                                    
+                                                   
+                                                   {{form.startDate}}
+                                                 
+                                                </div>
+                                                
+                                                    
+                                             
+                                                
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for='example'> End Date</label>
+                                                
+                                                <div class='input-group date'>
+                                                    <div class='input-group-addon'>
+                                                        <i class='fa fa-calendar'></i>
+                                                    </div>
+                                                    <div class="md-form md-outline input-with-post-icon datepicker">
+                                                       
+                                                       {{form.endDate}}
+                                                      </div>
+                                                    </div>
+                                            </div>
+                                            <p >
+                                                <strong>
+                                                    Upload Semester icon (optional)
+                                                </strong>
+                                            </p>
+                                            <div class='form-group'>
+                                                
+                                               {{form.icon}}
+                                            </div>
+                                            
+                                            
+    
+                                            
+                                        </div>
+                                    </div>
+    
+                                    <div class="box-footer">
+                                        <button type='submit' class='btn btn-success btn-sm' data-placement='right' data-toggle='tooltip' >Save</button>
+                                        <a href="{% url 'dash'%}" class='btn btn-sm btn-primary'>
+                                          Back
+                                        </a>
+                                    </div>
+    
+                                   </form>
+                                
+
+                               </div>
+                              
+                               
+                               
+
+
+
+                            </div>
+                        </div>
+                        <script>
+                            $(function(){
+                                $("#datepicker").datepicker({
+                                    format:'MM-DD-YY'
+                                })
+                            })
+                            
+                        </script>
+                      </div>
+                    {% endblock %}
+                {% endblock %}
+            </section>
+            {% endblock   %}
+
+        </div>
+        {% endblock content_wrapper %}

@@ -1,0 +1,155 @@
+{% extends 'adminlte/base.html' %}
+{% load to_embed %}
+
+{% block content_wrapper %}
+        <div class="content-wrapper">
+            {% block content_header %}
+                <section class="content-header">
+                   
+                    {% block no_heading %}
+                        <h1>
+                            {% block page_name %}Video Page{% endblock %}
+                            <div class="header-actions">
+                                {% block page_actions %}
+
+                                 {% endblock %}
+                            </div>
+                            {% block no_description %}
+                            <small>{% block page_description %}{% endblock %}</small>
+                            {% endblock %}
+                        </h1>
+                        {% block breadcrumbs %}
+                        <ol class='breadcrumb'>
+                            <li >
+                                <a href="{%url 'dash'%}">
+                                    <i class='fa fa-dashboard'></i>
+                                    DashBoard
+                                </a>
+                            </li>
+                            <li>
+                                Video Page
+                            </li>
+
+
+                        </ol>
+                            {# Breadcrumb implementation left to developers #}
+                        {% endblock %}
+                    {% endblock no_heading %}
+                </section>
+            {% endblock %}
+
+            {% block content_outer %}
+            <section class="content">
+                {% block messages %}
+                    {% include 'adminlte/lib/_messages.html' %}
+                {% endblock %}
+
+                {% block content_block_wrap %}
+                    {% block content %}
+                   
+                      
+                      <div class='row'>
+
+                        <div class='col-md-12'>
+                            <div class='box'>
+                                  <div class='box-header'>
+                                    <div class='row'>
+                                        <div class='col-md-6'>
+                                            <h3 class='box-title'>
+                                                List of Uploaded Videos
+                                            </h3>
+
+                                        
+                                        </div>
+                                        <div class='col-md-6 text-right'>
+                                            <a class='btn btn-primary btn-sm' href="{% url title%}">
+                                                <i class='fa fa-backward'></i>
+                                            </a>
+                                        
+                                        </div>
+
+                                    </div>
+
+                                 </div>
+                                 <div class='box-body'>
+                                    <div style="display: grid; grid-template-columns: 1fr 2fr 2fr; grid-gap: 15px">
+                                        <div class='video'>
+                                            <iframe width="320" height="240" src="{{form.url|to_embed}}">
+                                            </iframe>
+                                        </div>
+
+                                        <div class='details'>
+                                            <ul class='list-group'>
+                                                <li class="list-group-item">
+                                                    Title:{{form.name}}
+                                                </li>
+                                                <li class="list-group-item">
+                                                    Course Title:
+                                                </li>
+                                                <li class="list-group-item">
+                                                    Duration: {{form.duration}}
+                                                </li>
+                                                <li class="list-group-item">
+                                                    Status: {% if form.publish is True%}
+                                                    activated
+                                                    {% else%}
+                                                    deactivated
+                                                    {% endif%}
+                                                </li>
+                                                <li class="list-group-item">
+                                                    Free Preview: {{form.view}}
+                                                </li>
+                                                <li class="list-group-item">
+                                                    Youtube Stream: {{form.stream}}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class='description'>
+                                            <p class="list-group-item"> Youtube Link:
+                                                <a href="{{form.url}}">{{form.url}}</a>
+                                            </p>
+                                            <hr>
+
+                                            <p> Tags:</p>
+                                            {% for tag in form.tags.all%}
+                                            <strong>{{tag}},</strong>
+                                            {% endfor%}
+                                        </div>
+                                       
+
+
+                                    </div>
+                                    <hr>
+                                    <div class="box-header">
+                                        <h3 class='box-title'> Description</h3>
+                                    </div>
+                                    <div class='box-body'>
+                                        <p> {{form.description}}</p>
+                                    </div>
+
+                                    
+                                </div>
+                                
+
+                            </div>
+                            
+                            
+                        </div>
+
+                      
+                            
+                      
+
+                      </div>
+                    {% endblock %}
+
+                {% endblock %}
+            </section>
+            
+            
+            {% endblock   %}
+
+            
+
+        </div>
+        {% endblock content_wrapper %}

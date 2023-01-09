@@ -1,0 +1,372 @@
+{% load static %}
+
+{% block scripts %}
+<script src="{% static "jquery/dist/jquery.min.js" %}"></script>
+<script src="{% static "jquery/dist/jquery-ui.min.js" %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="{% static "bootstrap/dist/js/bootstrap.min.js" %} "></script>
+
+
+
+
+<script src="{% static "admin-lte/dist/js/app.min.js" %}"></script>
+<script src="{% static "icheck/icheck.min.js" %}"></script>
+<script src="{% static "bootstrap/dist/js/colorpicker.js" %}"></script>
+{% comment %} <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script> {% endcomment %}
+{% comment %} <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script> {% endcomment %}
+{% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> {% endcomment %}
+
+
+
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button);
+</script>
+
+{% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> {% endcomment %}
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" integrity="sha512-9UR1ynHntZdqHnwXKTaOm1s6V9fExqejKvg5XMawEMToW4sSw+3jtLrYfZPijvnwnnE8Uol1O9BcAskoxgec+g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    $(function () {
+      // Basic instantiation:
+      $('.my-colorpicker1').colorpicker();
+
+      //select 2
+    
+      $("#select_cat").select2({
+        placeholder:"---------",
+        allowClear:true
+      });
+    
+      $("#select_sub").select2({
+        placeholder:"---------",
+        allowClear:true
+      });
+     
+      $("#select_chap").select2({
+        placeholder:"---------",
+        allowClear:true
+      });
+
+      // Example using an event, to change the color of the .jumbotron background:
+
+      // green checkbox and radio color scheme
+      $('input[type="checkbox"].flat-red,input[type="radio"].flat-red').iCheck({
+        checkboxClass:"icheckbox_flat-green",
+        radioClass:"iradio_flate-green"
+      })
+
+         // Tips tools
+    $('[data-toggle="tooltip"]').tooltip();
+    
+    });
+  </script>
+
+ <style>
+  .select2-results__options[aria-multiselectable="true"]
+    .select2-results__option[aria-selected="true"]:before {
+    content: "☑";
+    font-size: 2.5rem;
+  }
+
+
+  .select2-results__options[aria-multiselectable="true"]
+    .select2-results__option:before {
+    content: "◻";
+    font-size: 2.5rem;
+  }
+</style>
+<script>
+   
+    $(document).ready(function() {
+
+      $("#select_cat").change(function(){
+        var url =$("#form").attr("data-url");
+        var category_id=$(this).val();
+        console.log(category_id);
+  
+        $.ajax({
+          url:url,
+          data:{
+            'category':category_id
+          },
+          success:function(data){
+            console.log(data)
+            let html_data = '<option value="">-----------</option>';
+            data.forEach(function(subject){
+            html_data +='<option value="'+subject.id+'">' +subject.name +"</option>"
+            console.log(html_data)
+  
+            })
+            $("#select_sub").html(html_data);
+            $("#select_sub").select2({
+              placeholder:"select subject",
+              allowClear:true
+            });
+           
+  
+          }
+        })
+      });
+      $("#select_sub").change(function(){
+        var url= {% url 'chapter-load'%}
+        var subject_id = $(this).val();
+        console.log(subject_id)
+  
+        $.ajax({
+          url:url,
+          data:{
+            'subject':subject_id
+          },
+          success:function(data){
+              console.log(data)
+            let html_chap='<option value= "">-----------</option>'
+            data.forEach(function(chapter){
+              html_chap +='<option value="'+ chapter.id+'">'+chapter.name+ "</option>"
+            })
+            $("#select_chap").html(html_chap);
+            $("#select_chap").select2({
+              placeholder:"select chapter",
+              allowClear:true
+            });
+  
+          },
+          error:function(e){
+            console.log(e)
+          }
+        })
+  
+      });
+  
+      $("#video_search").select2({
+        
+        ajax:{
+          url:{% url 'video_search'%},
+          
+          data:function(params){
+            return{
+              'q':params.term
+            } 
+          },
+       
+          processResults: function(data){
+            console.log(data);
+            
+            return{
+              results:data.map(function(item){
+                console.log(item)
+               
+              
+                return {
+                     ...item,
+                  
+                     id:JSON.stringify({
+                      id:item.id,
+                      thumbnail:item.thumbnail,
+                      text:item.name,
+                      tags:item.tags
+                     })
+                   
+                
+            
+                 
+                }
+              })
+            }
+          },
+          delay:250,
+          cache:true,
+        },
+        minimumInputLength: 1,
+
+        placeholder:"video search",
+        allowClear:true,
+        closeOnSelect:false,
+        multiple:true,
+        templateResult:formatRepo,
+        templateSelection: function (item) {
+          
+     
+         return `
+           <span class="selected_val${item.id}">${item.name}</span>
+          `;
+          
+  },
+     
+
+        // 
+        escapeMarkup: function (markup) {
+          return markup;
+        },
+
+       
+        
+       
+      });
+      
+     
+   
+     
+      function list_template(data, index) {
+        console.log(data)
+        console.log(index)
+        return `
+                    <tr id="video_list_${data.id}">
+                      <td width="50" valign="center" class="text-center align-middle">
+                            <i class="fa fa-sort " style="line-height: 3.5rem;  cursor: move;"></i>
+                      </td>
+  
+                       <td>
+                          <input hidden name="video_ids[]" value="${data.id}">
+                          <input class="video_order" hidden name="video_orders[]" value="${index}">
+  
+                          <img src="${"/media/"}${data.thumbnail}" height="35" width="45"/>
+                          <span>${data.text}</span>
+                       </td>
+  
+                       <td>
+                          <label class="switch" for="basic_videos${data.id}">
+                          <input type="checkbox" name="basic_videos[]" value="${data.id}"
+                             id="basic_videos${data.id}">
+                          <span class="slider round"></span>
+                          </label>
+                       </td>
+  
+                       <td>
+                          <label class="switch" for="premium_videos${data.id}">
+                          <input type="checkbox" name="premium_videos[]" value="${data.id}"
+                             id="premium_videos${data.id}">
+                          <span class="slider round"></span>
+                          </label>
+                       </td>
+  
+                       <td>
+                          <label class="switch" for="diamond_videos${data.id}">
+                          <input type="checkbox" name="diamond_videos[]" checked value="${data.id}"
+                             id="diamond_videos${data.id}">
+                          <span class="slider round"></span>
+                          </label>
+                       </td>
+  
+                       <td>
+                          <label class="switch" for="active_videos${data.id}">
+                          <input type="checkbox" name="active_videos[]" checked value="${data.id}"
+                             id="active_videos${data.id}">
+                          <span class="slider round"></span>
+                          </label>
+                       </td>
+                    </tr>`;
+      }
+  
+
+      function formatRepo(repo) {
+        console.log(repo)
+        if (repo.loading) return repo.name;
+        if (repo && !repo.selected) {
+          return `<span check_val="${repo.id}" >
+            <img src="${"/media/"}${
+              repo.thumbnail
+            }" class="img-flag" height="35" width="45" />
+            ${repo.name} (${repo.tags})
+          </span>
+          `;
+        }
+        
+        
+        
+        
+        
+      };
+      let current_video_list = [];
+
+      $("#video_search").change(function () {
+        const changed_video_list = $(this).val() || [];
+    
+  
+        const current_len = current_video_list.length;
+        const changed_len = changed_video_list.length;
+  
+        if (current_len < changed_len) {
+          let add = "";
+          for (let item in changed_video_list) {
+            if (!current_video_list.includes(changed_video_list[item])) {
+              add = changed_video_list[item];
+              break;
+            }
+          }
+  
+          if (add != "") {
+            $("#video_list").append(list_template(JSON.parse(add), current_len));
+            $("#video_list").sortable("refresh");
+          }
+        } else {
+          //remove
+          // find removed video
+          let remove = "";
+          for (let item in current_video_list) {
+            if (!changed_video_list.includes(current_video_list[item])) {
+              remove = current_video_list[item];
+              break;
+            }
+          }
+  
+          if (remove != "") {
+            remove = JSON.parse(remove);
+            $("#video_list_" + remove.id).remove();
+  
+            // sortable refresh
+            $("#video_list").sortable("refresh");
+          }
+        }
+        current_video_list = changed_video_list;
+  
+        if (current_video_list.length > 0) {
+          $("#no_video").hide();
+        } else {
+          $("#no_video").show();
+        }
+      });
+      
+  
+      $("#video_list").sortable({
+        stop: function () {
+          const nbElems = $(".video_order").length;
+          $(".video_order").each(function (idx) {
+            $(this)
+              .val(nbElems - idx)
+              .change();
+          });
+        },
+      });
+      
+
+    
+      
+    
+      
+      });
+    
+  
+      
+      
+  
+      
+   
+    
+  </script>
+  
+
+  
+
+  
+ 
+
+    
+ 
+  
+{% endblock %}
