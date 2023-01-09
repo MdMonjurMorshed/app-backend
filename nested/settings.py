@@ -134,7 +134,7 @@ STATIC_ROOT=os.path.join(BASE_DIR,'static')
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'nestedapp/media')
 STATICFILES_DIRS=[os.path.join(BASE_DIR,'nestedapp/static')]
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 
 
 
