@@ -127,11 +127,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT=os.path.join(BASE_DIR,'nestedapp/static')
+STATIC_ROOT=os.path.join(BASE_DIR,'static')
 
 
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'nestedapp/media')
+STATICFILES_DIRS=[os.path.join(BASE_DIR,'nestedapp/static')]
 
 
 
@@ -143,3 +144,4 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'nestedapp/media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 TAGGIT_CASE_INSENSITIVE=True
+
