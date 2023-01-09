@@ -1,14 +1,7 @@
 from select import select
 from selectors import SelectSelector
-
-from tkinter.tix import Select
-from turtle import width
-
 from django import forms
-from django.forms import CharField, Textarea, TextInput
-from pyexpat import model
 from taggit.forms import *
-
 from .models import Category, Chapter, Depertment, Semester, Subject, Video,Package
 
 
