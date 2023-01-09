@@ -1,4 +1,4 @@
-{% extends 'adminlte/base.html' %}
+{% extends 'nestedapp/base.html' %}
 
 {% block extra_head %}
 
@@ -44,7 +44,7 @@
             {% block content_outer %}
             <section class="content">
                 {% block messages %}
-                    {% include 'adminlte/lib/_messages.html' %}
+                    {% include 'nestedapp/lib/_messages.html' %}
                 {% endblock %}
 
                 {% block content_block_wrap %}
