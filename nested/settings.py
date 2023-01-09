@@ -64,7 +64,7 @@ ROOT_URLCONF = 'nested.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': os.path.join(BASE_DIR, 'templates','adminlte'),
+        'DIRS': os.path.join(BASE_DIR,'nestedapp', 'templates','adminlte'),
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
