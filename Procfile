@@ -1,1 +1,1 @@
-web: gunicorn nested.wsgi
+web: gunicorn nested.wsgi --log-file-
