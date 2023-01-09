@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect,JsonResponse
 from django.shortcuts import render,redirect,get_object_or_404
 from rest_framework import request
 from django.contrib.auth.models import User
-from .forms import ParentForm ,DepForm,SemForm,SubForm,ChapterForm,VidForm,PackForm
+from .form import ParentForm ,DepForm,SemForm,SubForm,ChapterForm,VidForm,PackForm
 from .filter import filterModel, DepFilter,SemFilter,SubFilter,ChapFilter,VidFilter
 from django.core.paginator import Paginator
 
