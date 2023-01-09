@@ -1,7 +1,29 @@
 from rest_framework import serializers
-from .models import Package,Video,videoTopic
+from .models import Package,Video,videoTopic,Category,Subject,Depertment,Chapter,Semester
 
 
+class CatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Category
+        fields="__all__"
+
+class DepertSerializer(serializers.ModelSerializer):
+    category=CatSerializer()
+    class Meta:
+        model=Depertment
+        fields="__all__"
+        
+class SemesterSerializer(serializers.ModelSerializer):
+    category=CatSerializer()
+    department=DepertSerializer()
+    class Meta:
+        model=Semester
+        fields="__all__"      
+class SubSerializer(serializers.ModelSerializer):
+    category=CatSerializer()
+    class Meta:
+        model=Subject
+        fields="__all__"          
 class PackageSerialize(serializers.ModelSerializer):
     class Meta:
         model=Package
@@ -18,3 +40,5 @@ class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model=videoTopic
         fields='__all__'        
+        
+        
