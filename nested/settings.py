@@ -64,7 +64,7 @@ ROOT_URLCONF = 'nested.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': os.path.join(BASE_DIR,'nestedapp', 'templates'),
+        'DIRS': os.path.join(BASE_DIR,'nestedapp/templates'),
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -143,3 +143,6 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'nestedapp/media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 TAGGIT_CASE_INSENSITIVE=True
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'nestedapp/static'),
+]
