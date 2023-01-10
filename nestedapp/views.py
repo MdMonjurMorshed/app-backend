@@ -24,7 +24,11 @@ from rest_framework import serializers
 def FrontView(request): 
     return render(request,'nestedapp/base.html',{})  
 def Dashboard(request):
-    return render(request,'nestedapp/base.html',{})     
+     if request.user.is_authenticated:
+        
+       return render(request,'nestedapp/base.html',{})     
+     else:
+        return redirect("login")     
 
 def loginview(request):
     
