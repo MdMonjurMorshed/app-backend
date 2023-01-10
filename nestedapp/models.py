@@ -22,7 +22,7 @@ class Physics (models.Model):
 
 class Category(models.Model):
     Category_name=models.CharField( max_length=100,blank=False)
-    parent= models.OneToOneField('self',blank=True,null=True,on_delete=models.CASCADE)
+    parent= models.OneToOneField('self',blank=True,null=True,on_delete=models.CASCADE,related_name="cat_sub")
     display_name=models.CharField(max_length=100,blank=True)
     category_image=models.ImageField(upload_to='newfile/',blank=True)
     order=models.IntegerField(blank=True,null=True)
@@ -39,7 +39,7 @@ class Category(models.Model):
        
        
 class Depertment(models.Model):
-    category=models.ForeignKey(Category,blank=False, on_delete=models.CASCADE,related_name="category")
+    category=models.ForeignKey(Category,blank=False, on_delete=models.CASCADE,)
     depName=models.CharField(blank=False,max_length=100)
     shortName=models.CharField(blank=True, max_length=100)
     dep_icon=models.ImageField(blank=True,upload_to='icon/')
@@ -54,7 +54,7 @@ class Depertment(models.Model):
 class Semester(models.Model):
 
     name=models.CharField(max_length=100,blank=False)
-    category=models.ForeignKey(Category,blank= False, on_delete=models.CASCADE,related_name="category")
+    category=models.ForeignKey(Category,blank= False, on_delete=models.CASCADE)
     department=models.ForeignKey(Depertment,blank=False,on_delete=models.CASCADE,related_name="department")
     startDate=models.DateField(default=datetime.now)
     endDate=models.DateField(blank=False)
@@ -65,7 +65,7 @@ class Semester(models.Model):
         return self.name 
 class Subject(models.Model):
     name=models.CharField(max_length=100,blank=False)
-    category=models.ForeignKey(Category,blank=False,on_delete=models.CASCADE,related_name="category")
+    category=models.ForeignKey(Category,blank=False,on_delete=models.CASCADE)
     subCode=models.IntegerField(blank=False,null=True)
     order=models.IntegerField(blank=False,null=True)
     subImage=models.ImageField(blank=True,upload_to="subImage/")

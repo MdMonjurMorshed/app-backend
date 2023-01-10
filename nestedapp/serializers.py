@@ -3,6 +3,7 @@ from .models import Package,Video,videoTopic,Category,Subject,Depertment,Chapter
 
 
 class CatSerializer(serializers.ModelSerializer):
+  
     class Meta:
         model=Category
         fields="__all__"
