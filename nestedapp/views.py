@@ -13,7 +13,7 @@ from django.core.paginator import Paginator
 
 from rest_framework.generics import ListAPIView
 from .models import Category, Physics,Depertment,Semester,Subject,Chapter,Video,Package,videoTopic
-from .serializers import TopicSerializer,PackageSerialize,VideoSerialize
+from .serializers import TopicSerializer,PackageSerialize,VideoSerialize,CatSerializer,DepertSerializer,SemesterSerializer,SubSerializer
 from django.contrib.auth import authenticate,login,logout
 from taggit.models import Tag
 import json
@@ -560,6 +560,20 @@ def topicView(request):
 
 
 ################### SERIALIZE VIEW ################
+
+class categoryView(ListAPIView):
+    queryset=Category.objects.all()
+    serializer_class=CatSerializer
+    
+class DepartmentView(ListAPIView):
+    queryset=Depertment.objects.all()
+    serializer_class=DepertSerializer
+class SemesterView(ListAPIView):
+    queryset=Semester.objects.all()
+    serializer_class=SemesterSerializer
+class SubjectView(ListAPIView):
+    queryset=Subject.objects.all()
+    serializer_class=SubSerializer            
 class TopicView(ListAPIView):
     queryset=videoTopic.objects.all()
     serializer_class=TopicSerializer      

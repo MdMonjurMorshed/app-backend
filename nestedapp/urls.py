@@ -63,6 +63,10 @@ urlpatterns = [
   
   
   #############  SERIALIZED URL   #############
+  path('cat-api/',views.categoryView.as_view(),name='cat-api'),
+  path('dep-api/',views.DepartmentView.as_view(),name='dep-api'),
+  path('sem-api/',views.SemesterView.as_view(),name='sem-api'),
+  path('sub-api/',views.SubjectView.as_view(),name='sub-api'),
   
   path('topic-video/',views.TopicView.as_view(),name='topic-video'),
   path('pack-api/',views.PackView.as_view(),name='pack-api'),
