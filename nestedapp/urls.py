@@ -70,7 +70,8 @@ urlpatterns = [
   
   path('topic-video/',views.TopicView.as_view(),name='topic-video'),
   path('pack-api/',views.PackView.as_view(),name='pack-api'),
-  path('video-api/',views.Videosview.as_view(),name='video-api')
+  path('video-api/',views.Videosview.as_view(),name='video-api'),
+  path('chap-api/',views.ChapterSview.as_view(),name="chap-api")
   
   
    

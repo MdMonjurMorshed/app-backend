@@ -24,8 +24,16 @@ class SubSerializer(serializers.ModelSerializer):
     category=CatSerializer()
     class Meta:
         model=Subject
-        fields="__all__"          
+        fields="__all__"    
+class ChapSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Chapter
+        fields="__all__"              
 class PackageSerialize(serializers.ModelSerializer):
+    category=CatSerializer()
+    subject=SubSerializer()
+    chapter=ChapSerializer()
+    
     class Meta:
         model=Package
         fields='__all__'
