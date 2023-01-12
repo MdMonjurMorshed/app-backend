@@ -38,7 +38,7 @@ class VideoSerialize(serializers.ModelSerializer):
 
 
 class TopicSerializer(serializers.ModelSerializer):
-    name=PackageSerialize()
+   
     videos=VideoSerialize()
     class Meta:
         model=videoTopic
