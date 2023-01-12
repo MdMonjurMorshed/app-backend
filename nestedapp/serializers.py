@@ -52,4 +52,4 @@ class PackageSerialize(serializers.ModelSerializer):
     
     class Meta:
         model=Package
-        fields=['category','subject','chapter','video']
+        fields="__all__"
