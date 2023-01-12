@@ -48,7 +48,7 @@ class PackageSerialize(serializers.ModelSerializer):
     category=CatSerializer()
     subject=SubSerializer()
     chapter=ChapSerializer()
-    video=TopicSerializer()
+    video=TopicSerializer(many=True, read_only=True)
     
     class Meta:
         model=Package
