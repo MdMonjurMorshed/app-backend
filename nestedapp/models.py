@@ -117,7 +117,7 @@ class Video(models.Model):
 # VIDEO TOTIC
 
 class videoTopic(models.Model):
-    name=models.ForeignKey(Package,on_delete=models.CASCADE,blank=False,related_name="name")
+    name=models.ForeignKey(Package,on_delete=models.CASCADE,blank=False,related_name="video")
     videos=models.ForeignKey(Video,on_delete=models.CASCADE,blank=False,related_name='videos')
     basic=models.BooleanField(default=False)
     premium=models.BooleanField(default=False)
