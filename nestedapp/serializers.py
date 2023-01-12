@@ -29,19 +29,13 @@ class ChapSerializer(serializers.ModelSerializer):
     class Meta:
         model=Chapter
         fields="__all__"              
-class PackageSerialize(serializers.ModelSerializer):
-    category=CatSerializer()
-    subject=SubSerializer()
-    chapter=ChapSerializer()
-    
-    class Meta:
-        model=Package
-        fields='__all__'
+
 
 class VideoSerialize(serializers.ModelSerializer):
     class Meta:
         model=Video
         fields='__all__'  
+
 
 class TopicSerializer(serializers.ModelSerializer):
     name=PackageSerialize()
@@ -49,5 +43,13 @@ class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model=videoTopic
         fields='__all__'        
-        
-        
+
+class PackageSerialize(serializers.ModelSerializer):
+    category=CatSerializer()
+    subject=SubSerializer()
+    chapter=ChapSerializer()
+    video=TopicSerializer()
+    
+    class Meta:
+        model=Package
+        fields='__all__'
