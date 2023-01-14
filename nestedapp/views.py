@@ -370,9 +370,8 @@ def VidView(request):
         form=VidForm(request.POST,request.FILES)
         if form.is_valid():
 
-            form.save(commit=False)
-            form.save_m2m()
-
+            form.save()
+          
             
             messages.success(request,'video is uploaded successfully')
     form=VidForm()
