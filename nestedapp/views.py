@@ -370,7 +370,7 @@ def VidView(request):
         form=VidForm(request.POST,request.FILES)
         if form.is_valid():
 
-            form.save()
+            form.save(commit=False)
             form.save_m2m()
 
             
