@@ -403,8 +403,8 @@ def VidUpdate(request,id):
         
         frm=VidForm(request.POST,request.FILES,instance=vi)
         if frm.is_valid():
-            frm.save(commit=False)
-            frm.save_m2m()
+            frm.save()
+           
             messages.success(request,'Update successfull')
     context={
     "form":form
