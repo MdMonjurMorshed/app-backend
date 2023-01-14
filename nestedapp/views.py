@@ -402,7 +402,7 @@ def VidUpdate(request,id):
     if request.method=="POST":
         form=VidForm(request.POST,request.FILES,instance=vid_mi)
         if form.is_valid():
-            form.save()
+            form.save(commit=False)
             form.save_m2m()
             messages.success(request,'Update successfull')
     context={
