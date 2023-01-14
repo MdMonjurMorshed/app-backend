@@ -400,10 +400,12 @@ def VidUpdate(request,id):
     vid_mi=Video.objects.get(pk=id)
     form=VidForm(instance=vid_mi)
     if request.method=="POST":
-        form=VidForm(request.POST,request.FILES,instance=vid_mi)
-        if form.is_valid():
-            form.save(commit=False)
-            form.save_m2m()
+        vi=Video.objects.get(pk=id)
+        
+        frm=VidForm(request.POST,request.FILES,instance=vi)
+        if frm.is_valid():
+            frm.save(commit=False)
+            frm.save_m2m()
             messages.success(request,'Update successfull')
     context={
     "form":form
