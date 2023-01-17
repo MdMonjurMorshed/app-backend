@@ -5,15 +5,15 @@ from django.http import HttpResponseRedirect,JsonResponse
 from django.shortcuts import render,redirect,get_object_or_404
 from rest_framework import request
 from django.contrib.auth.models import User
-from .form import ParentForm ,DepForm,SemForm,SubForm,ChapterForm,VidForm,PackForm
-from .filter import filterModel, DepFilter,SemFilter,SubFilter,ChapFilter,VidFilter
+from .form import ParentForm ,DepForm,SemForm,SubForm,ChapterForm,VidForm,PackForm,CourseForm,instForm
+from .filter import filterModel, DepFilter,SemFilter,SubFilter,ChapFilter,VidFilter,instFilter
 from django.core.paginator import Paginator
 
 
 
 from rest_framework.generics import ListAPIView
-from .models import Category, Physics,Depertment,Semester,Subject,Chapter,Video,Package,videoTopic
-from .serializers import TopicSerializer,PackageSerialize,VideoSerialize,CatSerializer,DepertSerializer,SemesterSerializer,SubSerializer,ChapSerializer
+from .models import Category, Physics,Depertment,Semester,Subject,Chapter,Video,Package,videoTopic,Instructor,CourseModel
+from .serializers import TopicSerializer,PackageSerialize,VideoSerialize,CatSerializer,DepertSerializer,SemesterSerializer,SubSerializer,ChapSerializer,CourseSerialize,InstSerialize
 from django.contrib.auth import authenticate,login,logout
 from taggit.models import Tag
 import json
@@ -24,12 +24,11 @@ from rest_framework import serializers
 def FrontView(request): 
     return render(request,'nestedapp/base.html',{})  
 def Dashboard(request):
-     if request.user.is_authenticated:
+    if request.user.is_authenticated:
         
        return render(request,'nestedapp/base.html',{})     
-     else:
-        return redirect("login")     
-
+    else:
+        return redirect("login")
 def loginview(request):
     
     
@@ -198,7 +197,13 @@ def depDelete(request,id):
         
 
     return render(request,"nestedapp/depDelete.html",{"form":dep_obj})
+def depload(request):
+    parent_value=request.GET.get('parent_value',None)
+    dep_data=Depertment.objects.filter(category_id=parent_value).order_by('depName')
 
+
+    
+    return JsonResponse(list(dep_data.values('id','depName')),safe=False)    
 
 # for Semester view
 
@@ -322,7 +327,7 @@ def ChapList(request):
             messages.success(request,"data is added successfully")
     form=ChapterForm()
     chap_mi=Chapter.objects.all()
-    filter=ChapFilter(queryset=chap_mi)
+    filter=ChapFilter(request.GET,queryset=chap_mi)
     paginator=Paginator(filter.qs,10)
     page_num=request.GET.get('page')
     page_obj=paginator.get_page(page_num)
@@ -371,7 +376,8 @@ def VidView(request):
         if form.is_valid():
 
             form.save()
-          
+         
+
             
             messages.success(request,'video is uploaded successfully')
     form=VidForm()
@@ -399,12 +405,10 @@ def VidUpdate(request,id):
     vid_mi=Video.objects.get(pk=id)
     form=VidForm(instance=vid_mi)
     if request.method=="POST":
-        vi=Video.objects.get(pk=id)
-        
-        frm=VidForm(request.POST,request.FILES,instance=vi)
-        if frm.is_valid():
-            frm.save()
-           
+        form=VidForm(request.POST,request.FILES,instance=vid_mi)
+        if form.is_valid():
+            form.save(commit=False)
+            form.save_m2m()
             messages.success(request,'Update successfull')
     context={
     "form":form
@@ -558,9 +562,47 @@ def topicView(request):
    
       video_topic.save()
 
+# VIEW FORM THE COURSE MODEL
+def CourseView(request):
+    if request.method=="POST":
+        form=CourseForm(request.POST)
+       
+        if form.is_valid():
+            
+            form.save()
+            messages.success(request,"course is added successfully")
+        else:
+            print(str(form.errors)) 
+         
+        
+    frm=CourseForm()
+     
+    return render(request,'nestedapp/course.html',{'form':frm})
 
+#  VIEW FOR INSTRUCTOR
 
-
+def InstView(request):
+    if request.method=="POST":
+        form=instForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"data is added successfully")
+            return redirect('instructor')
+            
+    form=instForm()
+    inst_mi=Instructor.objects.all()
+    filter=instFilter(request.GET,queryset=inst_mi)
+    paginator=Paginator(filter.qs,10)
+    page_num=request.GET.get('page')
+    page_obj=paginator.get_page(page_num)
+    num="a" * page_obj.paginator.num_pages
+    context={
+        "form":form,
+        "filter":filter,
+        "page_obj":page_obj,
+        "nums":num
+    }
+    return render( request,'nestedapp/instructor.html',context)
 
 
 
@@ -590,8 +632,15 @@ class PackView(ListAPIView):
     
 class Videosview(ListAPIView):
     queryset=Video.objects.all()
-    serializer_class=VideoSerialize   
-
-class ChapterSview(ListAPIView):
+    serializer_class=VideoSerialize        
+    
+class ChapSview(ListAPIView):
     queryset=Chapter.objects.all()
-    serializer_class=ChapSerializer         
+    serializer_class=ChapSerializer    
+    
+class CourseSview(ListAPIView):
+    queryset=  CourseModel.objects.all()
+    serializer_class=CourseSerialize  
+class InstructorSview(ListAPIView):
+    queryset=Instructor.objects.all()
+    serializer_class=InstSerialize    

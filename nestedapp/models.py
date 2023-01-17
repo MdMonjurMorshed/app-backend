@@ -127,3 +127,35 @@ class videoTopic(models.Model):
     
     def __str__(self):
         return self.name.chapter.name
+    
+
+class Instructor (models.Model):
+    name=models.CharField(max_length=50,blank=False)
+    department=models.ForeignKey(Depertment,blank=False,on_delete=models.CASCADE,related_name="inst_department")
+    organization=models.CharField(max_length=100,blank=False)
+    picture=models.ImageField(blank=True,upload_to="instructor_pic/")  
+    available=models.BooleanField(default=True)  
+    creating_date=models.DateField(auto_now_add=True)
+    
+    def __str__(self) -> str:
+        return self.name
+    
+class CourseModel (models.Model):
+    name=models.CharField(max_length=100,blank=False)
+    category=models.ForeignKey(Category,blank=False,on_delete=models.CASCADE,related_name='category')
+    department=models.ForeignKey(Depertment,blank=False,on_delete=models.CASCADE,related_name='department')
+    subject=models.ManyToManyField(Subject,blank=False,related_name='subject')
+    instructor=models.ForeignKey(Instructor,blank=True,null=True,on_delete=models.CASCADE,related_name="instructor")
+    mentor=models.ForeignKey(Instructor,blank=True,null=True,on_delete=models.CASCADE,related_name="mentor")
+    email=models.EmailField(blank=True,max_length=50)
+    prerequisites=models.OneToOneField('self',blank=True,null=True,on_delete=models.CASCADE)
+    order=models.IntegerField(blank=True,null=True)
+    description=models.TextField(max_length=100,blank=False)
+    facebook=models.CharField(max_length=100,blank=True)
+    masenger=models.CharField(max_length=100,blank=True)
+    courseIcon=models.ImageField(blank=True,upload_to='courseIcon/')
+    courseBanner=models.ImageField(blank=True,upload_to='courseBanner/')
+    publish= models.BooleanField(default=True)
+    
+    def __str__(self) -> str:
+        return self.name    

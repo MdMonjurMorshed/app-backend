@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import  Physics, Category,Depertment,Semester,Subject,Chapter,Video,Package,videoTopic
+from .models import  CourseModel, Instructor, Physics, Category,Depertment,Semester,Subject,Chapter,Video,Package,videoTopic
 
 
 @admin.register(Physics)
@@ -38,7 +38,13 @@ class packageAdmin(admin.ModelAdmin):
 class topicAdmin(admin.ModelAdmin):
     list_display=['id','name']
 
-
+@admin.register(Instructor)
+class InsAdmin(admin.ModelAdmin):
+    list_display=["id","name"]
+    
+@admin.register(CourseModel)
+class CourseAdmin(admin.ModelAdmin):
+    list_display=["id","name","category","department"]   
 
 
  

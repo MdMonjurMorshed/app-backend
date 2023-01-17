@@ -18,6 +18,7 @@ urlpatterns = [
    path("category/<int:id>",views.CategoryUpdate,name='cat-update'),
    path("Delete/<int:id>",views.CategoryDelete,name='cat-delete'), 
 
+  path('load-dep/',views.depload,name='load-dep'),
   path("department/",views.CreateDep,name='department'),
   path("dep-list/",views.DepList,name='dep-list'),
   path("dep-update/<int:id>",views.DepUpdate,name='dep-update'),
@@ -58,6 +59,13 @@ urlpatterns = [
   # URL FOR VIDEO TOPIC
   path('topic/',views.topicView,name='topic'),
   
+  # URL FOR COURSEVIEW
+  path('course/',views.CourseView,name='course'),
+  
+  # URL FOR USER
+  path('instructor/',views.InstView,name='instructor'),
+  path('inst-api/',views.InstructorSview.as_view(),name='inst-api'),
+  
   
   
   
@@ -71,7 +79,10 @@ urlpatterns = [
   path('topic-video/',views.TopicView.as_view(),name='topic-video'),
   path('pack-api/',views.PackView.as_view(),name='pack-api'),
   path('video-api/',views.Videosview.as_view(),name='video-api'),
-  path('chap-api/',views.ChapterSview.as_view(),name="chap-api")
+  path('chap-api/',views.ChapSview.as_view(),name='chap-api'),
+  path('course-api/',views.CourseSview.as_view(),name='course-api')
+  
+  
   
   
    

@@ -78,3 +78,10 @@ class VidFilter(django_filters.FilterSet):
     class Meta:
         model=Video    
         fields=['name','tags','publish']
+
+
+class instFilter(django_filters.FilterSet):
+    department=django_filters.ModelChoiceFilter(queryset=Depertment.objects.all(),widget=forms.Select(attrs={'class':'form-control'}))
+    organization=django_filters.CharFilter(widget=forms.TextInput(attrs={'class':'form-control'}))
+    class Meta:
+        fields=['department','organization']          

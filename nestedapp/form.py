@@ -2,7 +2,7 @@ from select import select
 from selectors import SelectSelector
 from django import forms
 from taggit.forms import *
-from .models import Category, Chapter, Depertment, Semester, Subject, Video,Package
+from .models import Category, Chapter, Depertment, Semester, Subject, Video,Package,Instructor,CourseModel
 
 
 class ParentForm(forms.ModelForm):
@@ -144,4 +144,65 @@ class PackForm(forms.ModelForm):
             except(ValueError,TypeError):
                 pass
         elif self.instance.pk:
-            self.fields['chapter'].queryset= self.instance.subject.chapter_set.order_by('name')            
+            self.fields['chapter'].queryset= self.instance.subject.chapter_set.order_by('name')     
+            
+
+
+class CourseForm(forms.ModelForm):
+    
+    class Meta:
+       
+        model=CourseModel
+        fields=['name','category','department','subject','instructor','mentor','order','email','prerequisites','description','facebook','masenger','courseIcon','courseBanner','publish']      
+        
+        
+        widgets={
+            'name': forms.TextInput(attrs={'class':'form-control','name':"course_name",'id':'couse_id'}),
+            'category':forms.Select(attrs={'class':'form-control','name':'course_cat','id':'cat_id'}),
+            'department':forms.Select(attrs={'class':'form-control ','name':'course_dep','id':'dep_id'}),
+             'subject':forms.SelectMultiple(attrs={'class':'form-control','name':'subject','id':'sub_id'}),
+            'instructor':forms.Select(attrs={'class':'form-control','name':'inst_name','id':'inst_id'}),
+            'mentor':forms.Select(attrs={'class':'form-control','name':'mentor_name','id':'mentor_id'}),
+            'order':forms.NumberInput(attrs={'class':'form-control','name':'order','id':'order_id'}),
+            'email':forms.EmailInput(attrs={'class':'form-control','name':'email','id':'email_id'}),
+            'prerequisites':forms.Select(attrs={'class':'form-control','name':'prerequisites','id':'pre_id'}),
+            'description':forms.Textarea(attrs={'class':'form-control','name':'description','id':'des_id'}),
+            'facebook':forms.TextInput(attrs={'class':'form-control','name':'facebook','id':'face_id'}),
+            'masenger':forms.TextInput(attrs={'class':'form-control','name':'masenger','id':'masenger_id'}),
+            'courseIcon':forms.ClearableFileInput(attrs={'class':'form-control ','name':'courseIcon','id':'icon_id'}),
+            'courseBanner':forms.ClearableFileInput(attrs={'class':'form-control','name':'banner','id':'banner_id'}),
+            'publish':forms.CheckboxInput(attrs={'class':'form-control'})
+            
+            
+            
+            
+            
+            
+        }      
+    def __init__(self,*args, **kwargs) :
+        super(CourseForm,self).__init__(*args, **kwargs) 
+    
+        self.fields['department'].queryset=Depertment.objects.none()
+        
+        if 'category' in self.data:
+            try:
+                category_id=int(self.data.get('category'))
+                self.fields['department'].queryset=Depertment.objects.filter(category_id=category_id).order_by('depName')
+            except (ValueError,TypeError):
+                pass     
+            
+        elif self.instance.pk:   
+            self.fields['department'].queryset=self.instance.category.department_set.order_by('depName')
+
+
+class instForm(forms.ModelForm):
+    class Meta:
+        model=Instructor
+        fields=['name','department','organization','picture','available']
+        widgets={
+            'name':forms.TextInput(attrs={'class':'form-control','name':'inst_name','id':'inst_id'}),
+            'department':forms.Select(attrs={'class':'form-control','name':'inst_dep','id':'instDep'}),
+            'organization':forms.TextInput(attrs={'class':'form-control','name':'org','id':'org_id'}),
+            'picture':forms.ClearableFileInput(attrs={'class':'form-control','name':'inst_pic','id':'instPic'}),
+            'available':forms.CheckboxInput(attrs={'class':'form-control','name':'inst_able','id':'instAble'})
+        }            
