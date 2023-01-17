@@ -1,0 +1,241 @@
+{% extends 'nestedapp/base.html' %}
+
+{% block extra_head %}
+
+{% endblock %}
+
+{% block content_wrapper %}
+        <div class="content-wrapper">
+            {% block content_header %}
+                <section class="content-header">
+                   
+                    {% block no_heading %}
+                        <h1>
+                            {% block page_name %}Course Page{% endblock %}
+                            <div class="header-actions">
+                                {% block page_actions %}
+
+                                 {% endblock %}
+                            </div>
+                            {% block no_description %}
+                            <small>{% block page_description %}{% endblock %}</small>
+                            {% endblock %}
+                        </h1>
+                        {% block breadcrumbs %}
+                        <ol class='breadcrumb'>
+                            <li >
+                                <a href="{%url 'dash'%}">
+                                    <i class='fa fa-dashboard'></i>
+                                    DashBoard
+                                </a>
+                            </li>
+                            <li>
+                             Course Page
+                            </li>
+
+
+                        </ol>
+                            {# Breadcrumb implementation left to developers #}
+                        {% endblock %}
+                    {% endblock no_heading %}
+                </section>
+            {% endblock %}
+
+            {% block content_outer %}
+            <section class="content">
+                {% block messages %}
+                    {% include 'nestedapp/lib/_messages.html' %}
+                {% endblock %}
+
+                {% block content_block_wrap %}
+                    {% block content %}
+                      
+                      <div class='row'>
+
+                        <div class='col-md-12'>
+                            <div class='box box-primary'>
+
+                                <!-- its header for the page -->
+                              <div class='box-header with-border'>
+                                <h3 class='box-title'> Create Course<h3>
+                               </div>
+
+                               <!-- its form for this page-->
+                               <div class='box-body'>
+                                <form method='POST' role='form'  enctype='multipart/form-data'>
+
+                                    {%csrf_token%}
+                                    <div class='tosterMessage' id='messageArea'>
+    
+                                    </div>
+                                    <div class='row'>
+                                        <div class='col-md-6 '>
+                                            <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 10px">
+                                                <div class='form-group'>
+                                                    <label for="id_order">Select Category</label>
+                                                    {{form.category}}
+                                                </div>
+                                                <div class='form-group'>
+                                                    
+                                                    <label for="id_duration">Select Department</label>
+                                                    {{form.department}}
+                                                </div>
+                                            </div>
+                                            <div class='form-group'>
+                                                <label for="">Select Subjects</label>
+                                                <style>
+                                                    #sub_id .select2-dropdown .select2-search__field:focus, .select2-search--inline .select2-search__field:focus {
+                                                        outline: none;
+                                                        border: none !important;
+                                                        /* border: 1px solid #3c8dbc; */
+                                                    }
+                                                     .sub-select2 .select2-results__options[aria-multiselectable="true"]
+                                                    .select2-results__option[aria-selected="true"] {
+                                                   
+                                               
+                                                  }
+                                                
+                                                
+                                                  .sub-select2 .select2-results__options[aria-multiselectable="true"]
+                                                    .select2-results__option{
+                                                    
+                                                   
+                                                  }
+                                                </style>
+                                                {{form.subject}}
+                                            </div>
+                                            
+                                                <div class='form-group'>
+                                                    <label for="id_tags">Course Name
+                                                        
+                                                    </label>
+                                                   
+                                                        {{form.name}}
+                                                    
+                                                </div>
+                                                <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 10px">
+                                                    <div class='form-group'>
+                                                        <label for="id_order">Select Instructor(optional)</label>
+                                                        {{form.instructor}}
+                                                    </div>
+                                                    <div class='form-group'>
+                                                        <label for="id_duration">Select Mentor(optional)</label>
+                                                        {{form.mentor}}
+                                                    </div>
+                                                </div>
+                                                
+                                               
+                                                <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 10px">
+                                                    <div class='form-group'>
+                                                        <label for="id_order">Ordering Number(optional)</label>
+                                                        {{form.order}}
+                                                    </div>
+                                                    <div class='form-group'>
+                                                        <label for="id_duration">Supporting Email(optional)</label>
+                                                        {{form.email}}
+                                                    </div>
+                                                </div>
+                                                <div class='form-group'>
+                                                    <p >
+                                                        <strong>
+                                                            Do you want to publish?
+                                                        </strong>
+                                                    </p>
+                                                    
+                                                    <label class="switch">
+                                                        {{form.publish}}
+                                                        <span class="slider round"></span>
+                                                      </label>
+                                                </div>
+                                           
+                                           
+                                           
+                                        </div>
+                                        <div class='col-md-6'>
+                                            <div class='form-group'>
+                                                <label for="id_description">Select Prerequisites(optional)</label>
+                                                
+                                                    {{form.prerequisites}}
+                                                
+                                                
+                                             </div>
+                                             <div class='form-group'>
+                                                <label for="id_description">Course Description</label>
+                                                
+                                                    {{form.description}}
+                                                
+                                                
+                                             </div>
+                                            <div style="display: grid; grid-template-columns: 1fr 1fr ; grid-gap:5px">
+                                                <div class='form-group'>
+
+                                                    <label for="id_publish">Facebook Group (optional)</label>
+                                                   
+                                                        {{form.facebook}}
+                                                   
+                                                   
+                                                   
+                                                 </div>
+                                                 <div class='form-group'>
+                                                    
+                                                    <label for="id_view">Masenger Group(optional)</label>
+                                                   
+                                                    {{form.masenger}}
+                                                 </div>
+                                               
+                                                
+                                            </div>
+                                            <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 10px">
+                                                <div class='form-group'>
+                                                    <label for="id_thumbnail">Course Icon (optional)</label>
+                                                    
+ 
+                                                        
+                                                        {{form.courseIcon}}
+                                                         
+                                                      
+                                                         
+                                                        </div>
+                                                   
+                                                
+                                                 <div class='form-group'>
+                                                    <label for="id_video">Course Banner (optional)</label>
+                                                    {{form.courseBanner}}
+                                                 </div>
+                                            </div>
+                                           
+                                          
+                                            
+    
+                                            
+                                        </div>
+                                    </div>
+    
+                                    <div class="box-footer">
+                                        <button type='submit' class='btn btn-success btn-sm' data-placement='right' data-toggle='tooltip' >Save</button>
+                                        <a href="{% url 'dash'%}" class='btn btn-sm btn-primary'>
+                                          Back
+                                        </a>
+                                    </div>
+    
+                                   </form>
+                                
+
+                               </div>
+                              
+                               
+                               
+
+
+
+                            </div>
+                        </div>
+                      </div>
+                    {% endblock %}
+                {% endblock %}
+            </section>
+            {% endblock   %}
+
+        </div>
+        {% endblock content_wrapper %}
+        
