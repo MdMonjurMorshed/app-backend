@@ -55,7 +55,7 @@ class Semester(models.Model):
 
     name=models.CharField(max_length=100,blank=False)
     category=models.ForeignKey(Category,blank= False, on_delete=models.CASCADE)
-    department=models.ForeignKey(Depertment,blank=False,on_delete=models.CASCADE,related_name="department")
+    department=models.ForeignKey(Depertment,blank=False,on_delete=models.CASCADE,related_name="sem_department")
     startDate=models.DateField(default=datetime.now)
     endDate=models.DateField(blank=False)
     icon=models.ImageField(blank=True,upload_to='iconSemester/')
