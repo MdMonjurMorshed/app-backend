@@ -8,7 +8,7 @@
                    
                     {% block no_heading %}
                         <h1>
-                            {% block page_name %}Chapter Page{% endblock %}
+                            {% block page_name %}Session Page{% endblock %}
                             <div class="header-actions">
                                 {% block page_actions %}
 
@@ -27,7 +27,7 @@
                                 </a>
                             </li>
                             <li>
-                                Chapter Page
+                               Session Page
                             </li>
 
 
@@ -46,48 +46,7 @@
 
                 {% block content_block_wrap %}
                     {% block content %}
-                    <div class='row'>
-
-                        <div class='col-md-12'>
-                            <div class='box '>
-                            <div class='box-body'>
-
-                                <form  role='form'>
-                                    <div class='row filter'>
-                                        <div class='col-md-4'>
-                                            <div class='form-group has-success'>
-                                                <label class='control-label'>
-                                                    <i class='fa fa-bell-o'></i>
-                                                    Chapter Name
-                                                </label>
-                                               {{filter.form.name}}
-                                            </div>
-                                        </div>
-                                        <div class='col-md-4'>
-                                            <div class='form-group has-success'>
-                                                <label class='control-label'>
-                                                    
-                                                  Subject Name
-                                                </label>
-                                                {{filter.form.subject}}
-                                            </div>
-                                        </div>
-                                      
-                                        <div class='col-md-4'>
-                                            <div class='form-group has-success'>
-                                               
-                                              <button class='btn btn-info btn-sm' title='Subject filter' type='submit' style='margin-top:25px; width:100%'>
-                                                <i class =' fa fa-filter'></i>
-                                                Chapter Filter
-                                              </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                               </div>
-                            </div>
-                        </div>
-                      </div>
+                   
                       
                       <div class='row'>
 
@@ -97,13 +56,13 @@
                                     <div class='row'>
                                         <div class='col-md-6'>
                                             <h3 class='box-title'>
-                                                List of Chapters
+                                                List of Session
                                             </h3>
 
                                         
                                         </div>
                                         <div class='col-md-6 text-right'>
-                                            <button class='btn btn-primary btn-sm m_button' id="chap_btn">
+                                            <button class='btn btn-primary btn-sm m_button' id="session_btn">
                                                 <i class='fa fa-plus'></i>
                                             </button>
                                         
@@ -188,7 +147,7 @@
                                           font-size: 28px;
                                           color:black;
                                         }
-                                        #chap_close{
+                                        #session_close{
                                           color:black;
                                           background:#cfcfcf;
                                         }
@@ -203,111 +162,104 @@
                                             </button>
                                             <h5 class="title" id="exampleModalLongTitle">Create New Chatpter</h5>
                                           </div>
+                                          <style>
+                                            .ts-wrapper.single .ts-control:after {
+                                                border-color: #343a40 transparent transparent;
+                                                border-style: solid;
+                                                border-width: 5px 5px 0;
+                                                content: none !important;
+                                                display: block;
+                                                height: 0;
+                                                margin-top: -3px;
+                                                position: absolute;
+                                                right: calc(.75rem + 5px);
+                                                top: 50%;
+                                                width: 0;
+                                            }
+                                            .focus .ts-control {
+                                                border-color: #80bdff;
+                                                box-shadow: none !important;
+                                                outline: 0;
+                                            }
+                                            label.required:after {
+                                                content:" *";
+                                                color: red;
+                                              }
+                                              .dt-data{
+                                                text-align: center;
+                                              }
+                                          </style>
                                           
                                               <form method="POST"> 
                                                       {% csrf_token%}
                                                       <div class="modal-body">
                                                         <div class='form-group'>
-                                                            <label for='id_name'>Chapter Name</label>
+
+                                                            <label for='id_name' class="required">Session Name</label>
                                                             {{form.name}}
                                                         </div>
-                                                        <div class='form-group'>
-                                                            <label for='id_category'>Select Category</label>
-                                                            {{form.category}}
-                                                        </div>
-                                                        <div class='form-group'>
-                                                            <label for='id_subject'>Select Subject </label>
-                                                            {{form.subject}}
-                                                        </div>
-                                                          <div class='form-group'>
-                                                                  <strong>
-                                                                      Do you want to publish?
-                                                                  </strong>
-                                                                  
-                                                              </p>
-                                                              <label class='switch'>
-                                                                  {{form.publish}}
-                                                                  <span class="slider round"></span>
-                                                              </label>
+                                                        <div class="form-group">
+                                                            <label for="id_year" class="required">Session Year</label>
+                                                            <div class="input-group date">
+                                                              <div class="input-group-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                              </div>
+                                                                {{form.year}}
+                                                            </div>
                                                           </div>
+                                                          <div class='form-group'>
+                                                            <strong>
+                                                                Is active ?
+                                                            </strong>
+                                                            
+                                                        </p>
+                                                        <label class='switch'>
+                                                            {{form.publish}}
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary btn-sm " id="session_close" >Close</button>
+                                                            <button type="submit" class="btn btn-primary btn-sm session_submit">Save</button>
+                                                        </div>
+                                                        </div>
+                                                        
+                                                       
                                                       </div>
                                         
-                                                      <div class="modal-footer">
-                                                          <button type="button" class="btn btn-secondary btn-sm " id="chap_close" >Close</button>
-                                                          <button type="submit" class="btn btn-primary btn-sm">Save</button>
-                                                      </div>
+                                                      
                                         
                                                </form>  
                                              
                                          
                                          
                                       </div>
+                                      <table class='table table-bordered table-striped table-responsive' id="session_table">
+
+                                        <thead>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th> Year</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+            
+                                              
+                                            </tr>
+                                        </thead>
+
+                                       
+                                    </table>
                                     
                                   </div>
-
+   
+                                   
 
 
                                  </div>
                                  <div class='box-body'>
 
-                                    <table class='table table-bordered table-striped table-responsive'>
-
-                                        <thead>
-                                            <tr>
-                                                <th>Category</th>
-                                                <th> Subject Name</th>
-                                                <th>Chapter Name</th>
-                                                
-                                                
-                                                <th>Status</th>
-                                                <th>Create Date</th>
-
-                                                <th>Action</th>
-                                              
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            
-                                             
-                                            
-                                            {% for cdata in page_obj.object_list %}
-                                            <tr>
-                                                <td>{% if  cdata.category%}
-                                                    {{cdata.category}}
-                                                    {%else%}
-                                                    -----
-                                                    {% endif%}</td>
-                                                    <td>{{cdata.subject}}</td>
-                                                <td>{{cdata.name}}</td>
-                                               
-                                                
-                                                <td>{% if  cdata.publish is True%}
-                                                    Activated
-                                                    {%else%}
-                                                    Deactivated
-                                                    {% endif%}</td>
-                                                
-                                                <td>{{cdata.createDate}}</td>
-                                               
-                                                <td>
-                                                  <a href="{% url "chap-update" cdata.id%}"  class="btn btn-success btn-sm edit">
-                                                    <i class='glyphicon glyphicon-pencil'></i>
-                                                  </a>
-                                                  <a href="{%url 'chap-delete' cdata.id%}"  class="btn btn-danger btn-sm" >
-                                                    <i class='glyphicon glyphicon-trash'></i>
-                                                  </a>
-                                                 
-                                                </td>
-                                            </tr>
-                                            
-                                            {% endfor %}
-
-                                           
-                                           
-                                            
-                                        </tbody>
-                                    </table>
+                                   
                                 </div>
                                 
 
@@ -367,8 +319,8 @@
               
               // Get the button that opens the modal
               
-              var btn = document.getElementById("chap_btn");
-              var btn2 = document.getElementById("chap_close");
+              var btn = document.getElementById("session_btn");
+              var btn2 = document.getElementById("session_close");
               // Get the <span> element that closes the modal
               var span = document.getElementsByClassName("close")[0];
               var edit=document.getElementsByClassName('edit')
@@ -395,6 +347,37 @@
                   modal.style.display = "none";
                 }
               }
+            </script>
+            <script>
+              var selectedYear="";
+              $(document).ready(function(){
+                handleSelectYear()
+             
+            
+              })
+              function handleSelectYear() {
+                selectedYear = new TomSelect("#id_year", {
+                  create: false,
+                  sortField: {
+                    field: "text",
+                    direction: "asc",
+                  },
+                  minItems: 1,
+                  maxItems: 1,
+                });
+                
+            
+                let data = [];
+                for (let index = 2015; index < 2051; index++) {
+                  data.push({ value: index, text: index });
+                }
+            
+                selectedYear.addOption(data);
+              
+              
+              }
+            
+            
             </script>
             
             

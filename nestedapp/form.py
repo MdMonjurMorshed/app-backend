@@ -2,7 +2,7 @@ from select import select
 from selectors import SelectSelector
 from django import forms
 from taggit.forms import *
-from .models import Category, Chapter, Depertment, Semester, Subject, Video,Package,Instructor,CourseModel
+from .models import Category, Chapter, Depertment, Semester, Subject, Video,Package,Instructor,CourseModel,SessionModel
 
 
 class ParentForm(forms.ModelForm):
@@ -45,21 +45,21 @@ class DepForm(forms.ModelForm):
             "publish":forms.CheckboxInput(attrs={'class':'form-control'}),
         }
 
-class SemForm(forms.ModelForm):
-    class Meta:
-        model= Semester
-        fields= ['name','category','department','startDate','endDate','icon','publish']  
+# class SemForm(forms.ModelForm):
+#     class Meta:
+#         model= Semester
+#         fields= ['name','category','department','startDate','endDate','icon','publish']  
 
-        widgets={
-            'name':forms.TextInput(attrs={'class':'form-control '}),
-            'category':forms.Select(attrs={"class":"form-control"}),
-            'department':forms.Select(attrs={"class":"form-control"}),
-            'startDate':forms.DateInput(attrs={"class":"form-control ","id":"startDate","type":"date",}),
-            'endDate':forms.DateInput(attrs={"class":"form-control ","id":"endDate","type":"date"}),
-            'icon':forms.ClearableFileInput(attrs={'class':'form-control'}),
-            "publish":forms.CheckboxInput(attrs={'class':'form-control'}),
+#         widgets={
+#             'name':forms.TextInput(attrs={'class':'form-control '}),
+#             'category':forms.Select(attrs={"class":"form-control"}),
+#             'department':forms.Select(attrs={"class":"form-control"}),
+#             'startDate':forms.DateInput(attrs={"class":"form-control ","id":"startDate","type":"date",}),
+#             'endDate':forms.DateInput(attrs={"class":"form-control ","id":"endDate","type":"date"}),
+#             'icon':forms.ClearableFileInput(attrs={'class':'form-control'}),
+#             "publish":forms.CheckboxInput(attrs={'class':'form-control'}),
 
-        }
+#         }
 class SubForm(forms.ModelForm):
     class Meta:
         model=Subject
@@ -206,3 +206,18 @@ class instForm(forms.ModelForm):
             'picture':forms.ClearableFileInput(attrs={'class':'form-control','name':'inst_pic','id':'instPic'}),
             'available':forms.CheckboxInput(attrs={'class':'form-control','name':'inst_able','id':'instAble'})
         }            
+        
+class SessionForm(forms.ModelForm):
+    class Meta:
+        model=SessionModel
+        fields=['name','year','publish'] 
+        widgets={
+            'name':forms.TextInput(attrs={'class':'form-control','required':"true"}),
+            'year':forms.Select(attrs={'id':'id_year','placeholder':"Select a year...",'autocomplete':"off",'class':'form-control','required':'true'}),
+            'publish':forms.CheckboxInput(attrs={'class':'form-control'})
+          
+        }      
+        
+ 
+            
+            

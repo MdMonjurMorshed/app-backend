@@ -46,48 +46,8 @@
 
                 {% block content_block_wrap %}
                     {% block content %}
-                    <div class='row'>
-
-                        <div class='col-md-12'>
-                            <div class='box '>
-                            <div class='box-body'>
-
-                                <form  role='form'>
-                                    <div class='row filter'>
-                                        <div class='col-md-4'>
-                                            <div class='form-group has-success'>
-                                                <label class='control-label'>
-                                                    <i class='fa fa-bell-o'></i>
-                                                    Chapter Name
-                                                </label>
-                                               {{filter.form.name}}
-                                            </div>
-                                        </div>
-                                        <div class='col-md-4'>
-                                            <div class='form-group has-success'>
-                                                <label class='control-label'>
-                                                    
-                                                  Subject Name
-                                                </label>
-                                                {{filter.form.subject}}
-                                            </div>
-                                        </div>
-                                      
-                                        <div class='col-md-4'>
-                                            <div class='form-group has-success'>
-                                               
-                                              <button class='btn btn-info btn-sm' title='Subject filter' type='submit' style='margin-top:25px; width:100%'>
-                                                <i class =' fa fa-filter'></i>
-                                                Chapter Filter
-                                              </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                               </div>
-                            </div>
-                        </div>
-                      </div>
+                  
+                    
                       
                       <div class='row'>
 
@@ -103,7 +63,7 @@
                                         
                                         </div>
                                         <div class='col-md-6 text-right'>
-                                            <button class='btn btn-primary btn-sm m_button' id="chap_btn">
+                                            <button class='btn btn-primary btn-sm m_button' id="AddCourse_btn">
                                                 <i class='fa fa-plus'></i>
                                             </button>
                                         
@@ -114,12 +74,10 @@
 
                                   <!-- Modal  -->
 
-                                  <div id="myModal" class="modal">
-                                
+                                  <div class="modal-dialog">
+                                    <div id="myModal" class="modal">
                                       <style>
-
-
-                                        /* The Modal (background) */
+                                                            /* The Modal (background) */
                                         .modal {
                                           display: none; /* Hidden by default */
                                           position: fixed; /* Stay in place */
@@ -130,8 +88,8 @@
                                           width: 100%; /* Full width */
                                           height: 100%; /* Full height */
                                           overflow: auto; /* Enable scroll if needed */
-                                          background-color: rgb(0,0,0); /* Fallback color */
-                                          background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+                                          background-color: rgb(0, 0, 0); /* Fallback color */
+                                          background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
                                         }
                                         
                                         /* Modal Content */
@@ -141,23 +99,35 @@
                                           margin: auto;
                                           padding: 0;
                                           border: 1px solid #888;
-                                          width: 40%;
-                                          box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+                                          width: 50%;
+                                          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
                                           -webkit-animation-name: animatetop;
                                           -webkit-animation-duration: 0.4s;
                                           animation-name: animatetop;
-                                          animation-duration: 0.4s
+                                          animation-duration: 0.4s;
                                         }
                                         
                                         /* Add Animation */
                                         @-webkit-keyframes animatetop {
-                                          from {top:-300px; opacity:0} 
-                                          to {top:0; opacity:1}
+                                          from {
+                                            top: -300px;
+                                            opacity: 0;
+                                          }
+                                          to {
+                                            top: 0;
+                                            opacity: 1;
+                                          }
                                         }
                                         
                                         @keyframes animatetop {
-                                          from {top:-300px; opacity:0}
-                                          to {top:0; opacity:1}
+                                          from {
+                                            top: -300px;
+                                            opacity: 0;
+                                          }
+                                          to {
+                                            top: 0;
+                                            opacity: 1;
+                                          }
                                         }
                                         
                                         /* The Close Button */
@@ -165,86 +135,94 @@
                                           color: black;
                                           float: right;
                                           font-size: 25px;
-                                          top:10%;
-                                         
+                                          top: 10%;
                                         }
-                                        
-                                       
                                         
                                         .modal-header {
                                           padding: 10px;
-                                         
+                                        
                                           color: white;
                                         }
                                         
-                                        .modal-body {padding: 2px 16px;}
+                                        .modal-body {
+                                          padding: 2px 16px;
+                                        }
                                         
                                         .modal-footer {
                                           padding: 2px 16px;
-                                      
+                                        
                                           color: white;
                                         }
-                                        .title{
+                                        .title {
                                           font-size: 28px;
-                                          color:black;
+                                          color: black;
                                         }
-                                        #chap_close{
-                                          color:black;
-                                          background:#cfcfcf;
+                                        #chap_close {
+                                          color: black;
+                                          background: #cfcfcf;
+                                        }
+                                        label.required:after {
+                                          content: ' *';
+                                          color: red;
+                                        }
+                                        /*tom select css */
+                                        #sessionWiseCategory .ts-wrapper.single .ts-control:after {
+                                          border-color: #343a40 transparent transparent;
+                                          border-style: solid;
+                                          border-width: 5px 5px 0;
+                                          content: none !important;
+                                          display: block;
+                                          height: 0;
+                                          margin-top: -3px;
+                                          position: absolute;
+                                          right: calc(0.75rem + 5px);
+                                          top: 50%;
+                                          width: 0;
                                         }
                                       </style>
-                                   
-
+                
                                       <!-- Modal content -->
                                       <div class="modal-content">
-                                          <div class="modal-header">
-                                            <button type="button" class="close"  >
-                                              <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            <h5 class="title" id="exampleModalLongTitle">Create New Chatpter</h5>
+                                        <style>
+                                          .ts-wrapper.single .ts-control:after {
+                                            border-color: #343a40 transparent transparent;
+                                            border-style: solid;
+                                            border-width: 5px 5px 0;
+                                            content: none !important;
+                                            display: block;
+                                            height: 0;
+                                            margin-top: -3px;
+                                            position: absolute;
+                                            right: calc(0.75rem + 5px);
+                                            top: 50%;
+                                            width: 0;
+                                          }
+                                          .focus .ts-control {
+                                            border-color: #80bdff;
+                                            box-shadow: none !important;
+                                            outline: 0;
+                                          }
+                                        </style>
+                                        <div class="modal-header">
+                                          <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                                          <h5 class="title" id="exampleModalLongTitle">Create New Chatpter</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                          {% csrf_token %}
+                                          <div class="form-group">
+                                            <label for="name" class="required">Category</label>
+                                            <span class="appendSessionWiseCategory"></span>
                                           </div>
-                                          
-                                              <form method="POST"> 
-                                                      {% csrf_token%}
-                                                      <div class="modal-body">
-                                                        <div class='form-group'>
-                                                            <label for='id_name'>Chapter Name</label>
-                                                            {{form.name}}
-                                                        </div>
-                                                        <div class='form-group'>
-                                                            <label for='id_category'>Select Category</label>
-                                                            {{form.category}}
-                                                        </div>
-                                                        <div class='form-group'>
-                                                            <label for='id_subject'>Select Subject </label>
-                                                            {{form.subject}}
-                                                        </div>
-                                                          <div class='form-group'>
-                                                                  <strong>
-                                                                      Do you want to publish?
-                                                                  </strong>
-                                                                  
-                                                              </p>
-                                                              <label class='switch'>
-                                                                  {{form.publish}}
-                                                                  <span class="slider round"></span>
-                                                              </label>
-                                                          </div>
-                                                      </div>
-                                        
-                                                      <div class="modal-footer">
-                                                          <button type="button" class="btn btn-secondary btn-sm " id="chap_close" >Close</button>
-                                                          <button type="submit" class="btn btn-primary btn-sm">Save</button>
-                                                      </div>
-                                        
-                                               </form>  
-                                             
-                                         
-                                         
+                                          <!-- append conditional select -->
+                                          <span class="appendConditionalSelect"></span>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-default pull-left" id="sessionClose" data-dismiss="modal">Close</button>
+                                          <button type="button" class="btn btn-primary sessionWiseSubmitBtn" data-dismiss="modal">Submit</button>
+                                        </div>
                                       </div>
-                                    
+                                    </div>
                                   </div>
-
 
 
                                  </div>
@@ -367,7 +345,7 @@
               
               // Get the button that opens the modal
               
-              var btn = document.getElementById("chap_btn");
+              var btn = document.getElementById("AddCourse_btn");
               var btn2 = document.getElementById("chap_close");
               // Get the <span> element that closes the modal
               var span = document.getElementsByClassName("close")[0];

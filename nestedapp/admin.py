@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import  CourseModel, Instructor, Physics, Category,Depertment,Semester,Subject,Chapter,Video,Package,videoTopic
+from .models import  Physics, Category,Depertment,Semester,Subject,Chapter,Video,Package,videoTopic,Instructor,CourseModel,SessionModel,SessionCategory
 
 
 @admin.register(Physics)
@@ -15,9 +15,8 @@ class DepertmentAdmin(admin.ModelAdmin):
     list_display=("id","category","depName","shortName","dep_icon","dep_thumbnail","publish")
     
 
-@admin.register(Semester)
-class SemAdmin(admin.ModelAdmin):
-    list_display=("id","category","name","department","icon","startDate","endDate","publish")
+admin.site.register(Semester)
+
 
 @admin.register(Subject)
 class SubAdmin(admin.ModelAdmin):
@@ -38,14 +37,22 @@ class packageAdmin(admin.ModelAdmin):
 class topicAdmin(admin.ModelAdmin):
     list_display=['id','name']
 
+
 @admin.register(Instructor)
 class InsAdmin(admin.ModelAdmin):
     list_display=["id","name"]
     
 @admin.register(CourseModel)
 class CourseAdmin(admin.ModelAdmin):
-    list_display=["id","name","category","department"]   
-
+    list_display=["id","name","category","department"]    
+    
+@admin.register(SessionModel)
+class SessionAdmin(admin.ModelAdmin):
+    list_display=['id','name','year','publish']     
+    
+@admin.register(SessionCategory)
+class SesscionCatAdmin(admin.ModelAdmin):
+    list_display=['id','category','session']       
 
  
            

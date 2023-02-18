@@ -24,11 +24,10 @@ urlpatterns = [
   path("dep-update/<int:id>",views.DepUpdate,name='dep-update'),
   path("dep-delete/<int:id>",views.depDelete,name='dep-delete'),
 
+# URL FOR SEMESTER
 
-  path("semester/",views.SemView,name='semester'),
-  path("sem-list/",views.SemList,name='sem-list'),
-  path("sem-update/<int:id>",views.semUpdate,name='sem-update'),
-  path("sem-delete/<int:id>",views.semDelete,name='sem-delete'),
+ path('semester-list/',views.semesterPage,name='semester-list'),
+
 
 
   #  URL FOR SUBJECT VIEW
@@ -65,6 +64,7 @@ urlpatterns = [
   # URL FOR USER
   path('instructor/',views.InstView,name='instructor'),
   path('inst-api/',views.InstructorSview.as_view(),name='inst-api'),
+ 
   
   
   
@@ -80,10 +80,24 @@ urlpatterns = [
   path('pack-api/',views.PackView.as_view(),name='pack-api'),
   path('video-api/',views.Videosview.as_view(),name='video-api'),
   path('chap-api/',views.ChapSview.as_view(),name='chap-api'),
-  path('course-api/',views.CourseSview.as_view(),name='course-api')
+  path('course-api/',views.CourseSview.as_view(),name='course-api'),
   
   
+  path('response-table/',views.TableView,name="response-table"),
+  path('table/',views.table,name='table'),
+   path('new-response/',views.newDataTable,name='new-response'),
+  path('newvid-list/',views.newVidList,name='newvid-list'),
+  
+  path('session/',views.Session,name='session'),
+  path('session_save/',views.SessionSave,name='session_save'),
+  path('session-table/',views.SessionTable,name='session-table'),
+  path('session-update/<int:id>',views.SessionUpdate,name='session-update'),
+  
+  path('session-cat/api/',views.SessionCatSerialView.as_view(),name='session-cat/api'),
+  path('session-api/',views.SessionSerialView.as_view(),name='session-api'),
   
   
+  path('course-control/',views.ControlingView,name='course-control'),
+  path('control-post/',views.ControlPost,name='control-post'),
    
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

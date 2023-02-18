@@ -1,6 +1,7 @@
 {% extends 'nestedapp/base.html' %}
 
 {% block content_wrapper %}
+>
         <div class="content-wrapper">
             {% block content_header %}
                 <section class="content-header">
@@ -51,46 +52,7 @@
                             <div class='box '>
                             <div class='box-body'>
 
-                                <form  role='form'>
-                                    <div class='row filter'>
-                                        <div class='col-md-4'>
-                                            <div class='form-group has-success'>
-                                                <label class='control-label'>
-                                                    <i class='fa fa-file-video-o'></i>
-                                                 Title
-                                                </label>
-                                               {{filter.form.name}}
-                                            </div>
-                                        </div>
-                                        <div class='col-md-3'>
-                                            <div class='form-group has-success'>
-                                                <label class='control-label'>
-                                                   <i class='fa fa-tag'></i> 
-                                                  Tag
-                                                </label>
-                                                {{filter.form.tags}}
-                                            </div>
-                                        </div>
-                                        <div class='col-md-3'>
-                                            <div class='form-group has-success'>
-                                                <label class='control-label'>
-                                                    
-                                                 Publish
-                                                </label>
-                                                {{filter.form.publish}}
-                                            </div>
-                                        </div>
-                                        <div class='col-md-2'>
-                                            <div class='form-group has-success'>
-                                               
-                                              <button class='btn btn-info btn-sm' title='Video filter' type='submit' style='margin-top:25px; width:100%'>
-                                                <i class =' fa fa-filter'></i>
-                                                Video Filter
-                                              </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                           
                                </div>
                             </div>
                         </div>
@@ -121,16 +83,14 @@
                                  </div>
                                  <div class='box-body'>
 
-                                    <table class='table table-bordered table-striped table-responsive' id="video_table">
+                                    <table class='table table-bordered table-striped' id="NewTable">
 
                                         <thead>
                                             <tr>
                                                 <th>Video Title</th>
                                                 <th>Tags</th>
-                                                <th> Order</th>
-                                                <th>Duration</th>
+                                              
                                                 <th>Status</th>
-                                                <th>Thumbnail</th>
                                                 <th>Create Date</th>
                                                 <th>Action</th>
 
@@ -142,41 +102,7 @@
                                         <tbody>
                                             
                                              
-                                            
-                                            {% for cdata in page_obj.object_list %}
-                                            <tr>
-                                                <td>{{cdata.name}}</td>
-                                                <td class='tag'>
-                                                    {% for tag in cdata.tags.all%}
-                                                    <span class="label label-{% cycle 'primary' 'info' 'success' 'danger' %}">{{tag}}</span>
-                                                    {% endfor%}
-                                                    </td>
-                                                <td>{{cdata.order}}</td>
-                                                <td>{{cdata.duration}}</td>
-                                                <td>{% if  cdata.view is True%}
-                                                    free
-                                                    {%else%}
-                                                    paid
-                                                    {% endif%}</td>
-                                                
-                                                <td>{{cdata.thumbnail}}</td>
-                                                <td>{{cdata.creatDate}}</td>
-                                               
-                                                <td>
-                                                  <a href="{% url 'vid-update' cdata.id%}"  class="btn btn-success btn-sm">
-                                                    <i class='glyphicon glyphicon-pencil'></i>
-                                                  </a>
-                                                  <a href="{% url 'vid-details' cdata.id%}"  class="btn btn-info btn-sm">
-                                                    <i class='glyphicon glyphicon-eye-open'></i>
-                                                  </a>
-                                                  <a href="{%url 'vid-delete' cdata.id%}"  class="btn btn-danger btn-sm" >
-                                                    <i class='glyphicon glyphicon-trash'></i>
-                                                  </a>
-                                                 
-                                                </td>
-                                            </tr>
-                                            
-                                            {% endfor %}
+                                           
 
                                            
                                            
@@ -223,7 +149,7 @@
                         </div>
 
                       
-                            
+                         
                       
 
                       </div>

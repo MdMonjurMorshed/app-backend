@@ -121,6 +121,20 @@
                                                 </style>
                                                 <td colspan="7">
                                                     <div class="form-group">
+                                                        <style>
+                                                            .select2-results__options[aria-multiselectable="true"]
+                                                              .select2-results__option[aria-selected="true"]:before {
+                                                              content: "☑" !important;
+                                                              font-size: 2.5rem !important;
+                                                            }
+                                                          
+                                                          
+                                                        .select2-results__options[aria-multiselectable="true"]
+                                                              .select2-results__option:before {
+                                                              content: "◻" !important;
+                                                              font-size: 2.5rem !important;
+                                                            }
+                                                          </style>
                                                       <label for="video_search">Video Name</label>
                                                       <select class="form-control select1" multiple placeholder="Choose skills" id="video_search" required>
                                                     </select>

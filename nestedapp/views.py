@@ -1,21 +1,23 @@
+from urllib import response
 from django.contrib import messages
 from multiprocessing import context
+from django.forms import model_to_dict
 
 from django.http import HttpResponseRedirect,JsonResponse
 from django.shortcuts import render,redirect,get_object_or_404
 from rest_framework import request
 from django.contrib.auth.models import User
-from .form import ParentForm ,DepForm,SemForm,SubForm,ChapterForm,VidForm,PackForm,CourseForm,instForm
-from .filter import filterModel, DepFilter,SemFilter,SubFilter,ChapFilter,VidFilter,instFilter
+from .form import ParentForm ,DepForm,SubForm,ChapterForm,VidForm,PackForm,CourseForm,instForm,SessionForm
+from .filter import filterModel, DepFilter,SubFilter,ChapFilter,VidFilter,instFilter
 from django.core.paginator import Paginator
+from django.contrib.contenttypes.models import ContentType
 
-
-
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import ListAPIView
-from .models import Category, Physics,Depertment,Semester,Subject,Chapter,Video,Package,videoTopic,Instructor,CourseModel
-from .serializers import TopicSerializer,PackageSerialize,VideoSerialize,CatSerializer,DepertSerializer,SemesterSerializer,SubSerializer,ChapSerializer,CourseSerialize,InstSerialize
+from .models import Category, Physics,Depertment,Semester,Subject,Chapter,Video,Package,videoTopic,Instructor,CourseModel,SessionModel,SessionCategory
+from .serializers import TopicSerializer,PackageSerialize,VideoSerialize,CatSerializer,DepertSerializer,SemesterSerializer,SubSerializer,ChapSerializer,CourseSerialize,InstSerialize,SessionCatSerial,SessionSerial
 from django.contrib.auth import authenticate,login,logout
-from taggit.models import Tag
+from taggit.models import TaggedItem
 import json
 from rest_framework import serializers
 
@@ -208,57 +210,57 @@ def depload(request):
 # for Semester view
 
 
-def SemView(request):
-    if request.user.is_authenticated:
-        if request.method=="POST":
-            form=SemForm(request.POST,request.FILES)
-            if form.is_valid():
-                form.save()
-                messages.success(request,"data added successfully")
+# def SemView(request):
+#     if request.user.is_authenticated:
+#         if request.method=="POST":
+#             form=SemForm(request.POST,request.FILES)
+#             if form.is_valid():
+#                 form.save()
+#                 messages.success(request,"data added successfully")
 
 
-        form=SemForm()
-        context={
-        "form":form
-    }
-        return render(request,'nestedapp/semesterPage.html',context)
+#         form=SemForm()
+#         context={
+#         "form":form
+#     }
+#         return render(request,'nestedapp/semesterPage.html',context)
 
-    return redirect('login')
+#     return redirect('login')
 
-def SemList(request):
-    sem=Semester.objects.all()
-    filter=SemFilter(request.GET,queryset=sem)
-    paginator=Paginator(filter.qs,10)
-    page_num=request.GET.get('page')
-    page_obj=paginator.get_page(page_num)
-    num="a" * page_obj.paginator.num_pages
-    context={
-        "filter":filter,
-        "page_obj":page_obj,
-        "nums":num
-    }
-    return render(request,"nestedapp/semlist.html",context)
-def semUpdate(request,id):
-    smi=Semester.objects.get(pk=id)
-    if request.method=="POST":
-        form=SemForm(request.POST,request.FILES,instance=smi)
-        if form.is_valid():
-            form.save()
-            messages.success(request,"data is updated successfully")
+# def SemList(request):
+#     sem=Semester.objects.all()
+#     filter=SemFilter(request.GET,queryset=sem)
+#     paginator=Paginator(filter.qs,10)
+#     page_num=request.GET.get('page')
+#     page_obj=paginator.get_page(page_num)
+#     num="a" * page_obj.paginator.num_pages
+#     context={
+#         "filter":filter,
+#         "page_obj":page_obj,
+#         "nums":num
+#     }
+#     return render(request,"nestedapp/semlist.html",context)
+# def semUpdate(request,id):
+#     smi=Semester.objects.get(pk=id)
+#     if request.method=="POST":
+#         form=SemForm(request.POST,request.FILES,instance=smi)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request,"data is updated successfully")
 
-    form=SemForm(instance=smi)
-    context={
-        "form":form
-    }
-    return render(request,"nestedapp/semesterPage.html",context)
-def semDelete(request,id):
-    smi=Semester.objects.get(pk=id)
-    if request.method=="POST":
-       smi.delete()
-    context={
-        "delete":smi
-    }
-    return render(request,"nestedapp/allDelete.html", context)
+#     form=SemForm(instance=smi)
+#     context={
+#         "form":form
+#     }
+#     return render(request,"nestedapp/semesterPage.html",context)
+# def semDelete(request,id):
+#     smi=Semester.objects.get(pk=id)
+#     if request.method=="POST":
+#        smi.delete()
+#     context={
+#         "delete":smi
+#     }
+#     return render(request,"nestedapp/allDelete.html", context)
 
 
 
@@ -606,6 +608,121 @@ def InstView(request):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+####################  TEST VIEW #################
+
+def TableView(request):
+    table_data=list(Video.objects.values('name','id','creatDate','publish'))
+    print(table_data)
+    ct=ContentType.objects.get(model="video")
+    new_list=[{"name":k['name'],"tags": [tag_item.tag.name for tag_item in TaggedItem.objects.filter(object_id=k["id"]).distinct()],"publish":"activated" if k["publish"]==True else"Deactivated","creatDate":k["creatDate"] ,"id":k["id"]}for k in table_data]
+    print("this is k",new_list)
+    return JsonResponse(new_list,safe=False)
+
+def table(request):
+    return render(request,"nestedapp/vido_dataTable.html")
+
+def newDataTable(request):
+    list_model=list(Video.objects.values("name","id","publish","creatDate"))
+    data_list=[{"name":k['name'],"id":k['id'],"tags":[ tag_item.tag.name for tag_item in TaggedItem.objects.filter(object_id=k['id']).distinct()],"publish":"activated" if k['publish']==True else "deactivated","creatDate":k['creatDate']} for k in list_model]
+    print('this is new list of object',data_list)
+    
+    
+    return JsonResponse(data_list,safe=False)
+def newVidList(request):
+    return render(request,"nestedapp/newVid_list.html")
+
+################## SESSION VIEW #####################
+def SessionTable(request):
+    query=SessionModel.objects.filter(publish=True)
+    new_list=list(query.values())
+    n_list=[{'id':k['id'],'name':k['name'],'year':k['year'],'publish':"Active" if k['publish']==True else 'Inactive'} for k in new_list]
+    print('n_list: ',n_list)
+
+    return JsonResponse(n_list,safe=False)  
+def Session(request):
+    if request.method == "POST":
+        frm=SessionForm(request.POST)
+        
+        if frm.is_valid():
+            frm.save()
+            messages.success(request,'Session created')
+            return redirect('session')
+      
+    frm=SessionForm()
+    context={
+    'form':frm        
+    }
+    return render(request,'nestedapp/session.html',context)
+def SessionSave(request):
+    JsonResponse({'success':True})
+    
+def SessionUpdate(request,id):
+    if request.method=="POST":
+        instance=SessionModel.objects.get(pk=id)
+        form=SessionForm(request.POST,instance=instance)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Session has been Updated successfully")
+            return redirect('session')
+    
+    instance = SessionModel.objects.get(pk=id)
+    
+
+    form = SessionForm(instance=instance)
+    print(instance.year)
+   
+    
+    context={
+        "form":form,
+        "instance":json.dumps(model_to_dict(instance))
+    }
+    return render(request,'nestedapp/sessionUpdate.html',context)
+
+################### SEMESTER VIEW ####################
+
+def semesterPage(request):
+    return render(request,'nestedapp/semList.html')
+    
+
+
+################### CONTROLLING VIEW ################
+def ControlingView(request):
+    return render(request,'nestedapp/courseControl.html')    
+
+def ControlPost(request):
+    if request.method=="POST":
+        data=json.loads(request.body)
+        print(data)
+        semesters=data['semester']
+        print(semesters)
+        session_cat=SessionCategory.objects.filter(session__id=data['session'],category__id=data['category'])
+        print(session_cat)
+        for d in semesters:
+            semester=Semester(level=d['level'],startDate=d['semester_start'],endDate=d['semester_end'])
+           
+            
+            
+            
+            semester.save()
+            for s_c in session_cat:
+                
+               s_c.semester.add(semester)
+        
+        
+            
+    return JsonResponse({'sussess':True})
+
 ################### SERIALIZE VIEW ################
 
 class categoryView(ListAPIView):
@@ -644,3 +761,11 @@ class CourseSview(ListAPIView):
 class InstructorSview(ListAPIView):
     queryset=Instructor.objects.all()
     serializer_class=InstSerialize    
+
+class SessionCatSerialView(ListAPIView):
+    queryset=SessionCategory.objects.all()
+    serializer_class=SessionCatSerial   
+
+class SessionSerialView(ListAPIView):
+    queryset=SessionModel.objects.all()
+    serializer_class= SessionSerial   

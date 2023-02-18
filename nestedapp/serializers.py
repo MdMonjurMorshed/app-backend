@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Package,Video,videoTopic,Category,Subject,Depertment,Chapter,Semester,CourseModel,Instructor
+from .models import Package,Video,videoTopic,Category,Subject,Depertment,Chapter,Semester,CourseModel,Instructor,SessionCategory,SessionModel
 
 
 class CatSerializer(serializers.ModelSerializer):
@@ -15,8 +15,7 @@ class DepertSerializer(serializers.ModelSerializer):
         fields="__all__"
         
 class SemesterSerializer(serializers.ModelSerializer):
-    category=CatSerializer()
-    department=DepertSerializer()
+
     class Meta:
         model=Semester
         fields="__all__"      
@@ -68,4 +67,22 @@ class CourseSerialize(serializers.ModelSerializer):
     
     class Meta:
         model= CourseModel
-        fields=['id','name','category','department','subject','instructor','mentor','email','prerequisites','order','description','facebook','masenger','courseIcon','courseBanner','publish']        
+        fields=['id','name','category','department','subject','instructor','mentor','email','prerequisites','order','description','facebook','masenger','courseIcon','courseBanner','publish']     
+        
+        
+class SessionSerial(serializers.ModelSerializer) :
+    class Meta:
+        model=SessionModel
+        fields="__all__"       
+class SessionCatSerial (serializers.ModelSerializer):
+    session=SessionSerial()
+    category=CatSerializer()
+    semester=SemesterSerializer(many=True)
+  
+    class Meta:
+        model=SessionCategory
+        fields=["session","category","semester"]     
+    
+
+       
+       

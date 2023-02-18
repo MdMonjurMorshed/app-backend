@@ -4,7 +4,7 @@ from distutils.command.upload import upload
 
 from django.db import models
 from django.utils import timezone
-from datetime import datetime
+from datetime import datetime,date
 from taggit.managers import TaggableManager
 
 
@@ -27,6 +27,8 @@ class Category(models.Model):
     category_image=models.ImageField(upload_to='newfile/',blank=True)
     order=models.IntegerField(blank=True,null=True)
     publish=models.BooleanField(default=True)
+    has_session=models.BooleanField(default=False)
+    is_sub=models.BooleanField(default=False)
     dateCreate=models.DateTimeField(default=timezone.now)  
     dateUpdate=models.DateTimeField(auto_now=True) 
 
@@ -53,16 +55,34 @@ class Depertment(models.Model):
 
 class Semester(models.Model):
 
-    name=models.CharField(max_length=100,blank=False)
-    category=models.ForeignKey(Category,blank= False, on_delete=models.CASCADE)
-    department=models.ForeignKey(Depertment,blank=False,on_delete=models.CASCADE,related_name="sem_department")
-    startDate=models.DateField(default=datetime.now)
+    level=models.IntegerField(blank=False,null=True)
+    
+    startDate=models.DateField()
     endDate=models.DateField(blank=False)
-    icon=models.ImageField(blank=True,upload_to='iconSemester/')
-    publish=models.BooleanField(default=True)
 
-    def _str__(self):
-        return self.name 
+    is_active=models.BooleanField(default=False)
+
+    def __str__(self):
+        return  "year "+ str(self.startDate).split('-')[0] +" semester "+str(self.level)
+  
+    def active_status(self):
+        now=datetime.today()
+        start=datetime.strptime(self.startDate, '%Y-%m-%d')
+        deffer=start-now
+        if(start <= now <= datetime.strptime(self.endDate, '%Y-%m-%d')):
+            self.is_active=True  
+        elif (self.level==1 and start.year==now.year and( start >= now) and (deffer.days<180 or deffer.days==0)) and now <= datetime.strptime(self.endDate, '%Y-%m-%d'):
+            self.is_active=True
+          
+        else:
+            self.is_active=False
+    def save(self,*args, **kwargs):
+        self.active_status()
+        super().save(*args, **kwargs)            
+        
+                
+        
+        
 class Subject(models.Model):
     name=models.CharField(max_length=100,blank=False)
     category=models.ForeignKey(Category,blank=False,on_delete=models.CASCADE)
@@ -87,6 +107,28 @@ class Chapter(models.Model):
 
     def __str__(self):
         return self.name
+    
+    
+############## SESSION MODEL ##############
+class SessionModel(models.Model):
+    name=models.CharField(max_length=50,blank=False)
+    year=models.IntegerField(max_length=50,blank=False)
+    publish=models.BooleanField(default=True) 
+    
+    def __str__(self):
+        return self.name
+    
+class SessionCategory(models.Model):
+    session=models.ForeignKey(SessionModel,on_delete=models.CASCADE,blank=True,related_name='session')
+    category=models.ForeignKey(Category,blank=False,on_delete=models.CASCADE,related_name="session_category") 
+    total_semester=models.IntegerField()
+    is_active=models.BooleanField(default=True)
+    semester=models.ManyToManyField(Semester)
+    
+    def __str__(self):
+        return self.category.Category_name
+       
+     
 # PACKAGE MODEL
 class Package(models.Model):
     category=models.ForeignKey(Category,blank=False,on_delete=models.CASCADE)
@@ -127,8 +169,6 @@ class videoTopic(models.Model):
     
     def __str__(self):
         return self.name.chapter.name
-    
-
 class Instructor (models.Model):
     name=models.CharField(max_length=50,blank=False)
     department=models.ForeignKey(Depertment,blank=False,on_delete=models.CASCADE,related_name="inst_department")
@@ -158,4 +198,6 @@ class CourseModel (models.Model):
     publish= models.BooleanField(default=True)
     
     def __str__(self) -> str:
-        return self.name    
+        return self.name
+    
+        

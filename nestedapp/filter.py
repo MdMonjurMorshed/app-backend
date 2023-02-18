@@ -32,13 +32,13 @@ class DepFilter(django_filters.FilterSet):
         } 
 
 
-class SemFilter(django_filters.FilterSet):
-    name=django_filters.CharFilter(widget=forms.TextInput(attrs={"class":"form-control"}))
-    category=django_filters.ModelChoiceFilter(queryset=Category.objects.all(),widget=forms.Select(attrs={"class":"form-control"}))
-    department=django_filters.ModelChoiceFilter(queryset=Depertment.objects.all(),widget=forms.Select(attrs={"class":"form-control"}))
-    class Meta:
-        model=Semester
-        fields=['name','category','department']
+# class SemFilter(django_filters.FilterSet):
+#     name=django_filters.CharFilter(widget=forms.TextInput(attrs={"class":"form-control"}))
+#     category=django_filters.ModelChoiceFilter(queryset=Category.objects.all(),widget=forms.Select(attrs={"class":"form-control"}))
+#     department=django_filters.ModelChoiceFilter(queryset=Depertment.objects.all(),widget=forms.Select(attrs={"class":"form-control"}))
+#     class Meta:
+#         model=Semester
+#         fields=['name','category','department']
 
 # SUBJECT FILTER
 
@@ -78,10 +78,8 @@ class VidFilter(django_filters.FilterSet):
     class Meta:
         model=Video    
         fields=['name','tags','publish']
-
-
 class instFilter(django_filters.FilterSet):
     department=django_filters.ModelChoiceFilter(queryset=Depertment.objects.all(),widget=forms.Select(attrs={'class':'form-control'}))
     organization=django_filters.CharFilter(widget=forms.TextInput(attrs={'class':'form-control'}))
     class Meta:
-        fields=['department','organization']          
+        fields=['department','organization']        
