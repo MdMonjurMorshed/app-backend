@@ -693,6 +693,13 @@ def SessionUpdate(request,id):
 
 def semesterPage(request):
     return render(request,'nestedapp/semList.html')
+
+def SemesterCourse(request,id):
+    sem_ins=Semester.objects.get(pk=id)
+    context={
+        "data":sem_ins.level
+    }
+    return render(request,'nestedapp/sem_course.html',context)
     
 
 

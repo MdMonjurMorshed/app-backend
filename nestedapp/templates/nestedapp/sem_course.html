@@ -8,7 +8,9 @@
                    
                     {% block no_heading %}
                         <h1>
-                            {% block page_name %}Chapter Page{% endblock %}
+                           
+                            <span class="semesterNameOne text-capitalize"> {{data}}</span>
+                            {% block page_name %}Semester of Polytechnic{% endblock %}
                             <div class="header-actions">
                                 {% block page_actions %}
 
@@ -27,7 +29,7 @@
                                 </a>
                             </li>
                             <li>
-                                Chapter Page
+                                Semester with course view
                             </li>
 
 
@@ -57,14 +59,22 @@
                                     <div class='row'>
                                         <div class='col-md-6'>
                                             <h3 class='box-title'>
-                                                List of Chapters
+                                                Course List of
+                                               <span class="semesterNameTwo text-capitalize"></span>
+                                                 Semesters
                                             </h3>
 
                                         
                                         </div>
                                         <div class='col-md-6 text-right'>
+                                            <a href="/controlling/semester/" 
+                                            title="Create a new Session"
+                                            class="btn btn-danger btn-sm">
+                                            <i class="fa fa-angle-double-left"></i> Back
+                                          </a>
                                             <button class='btn btn-primary btn-sm m_button' id="AddCourse_btn">
-                                                <i class='fa fa-plus'></i>
+                                                Add Course
+                                               
                                             </button>
                                         
                                         </div>
@@ -217,7 +227,7 @@
                                           <span class="appendConditionalSelect"></span>
                                         </div>
                                         <div class="modal-footer">
-                                          <button type="button" class="btn btn-default pull-left" id="sessionClose" data-dismiss="modal">Close</button>
+                                          <button type="button" class="btn btn-default pull-left" id="Close" data-dismiss="modal">Close</button>
                                           <button type="button" class="btn btn-primary sessionWiseSubmitBtn" data-dismiss="modal">Submit</button>
                                         </div>
                                       </div>
@@ -346,7 +356,7 @@
               // Get the button that opens the modal
               
               var btn = document.getElementById("AddCourse_btn");
-              var btn2 = document.getElementById("chap_close");
+              var btn2 = document.getElementById("Close");
               // Get the <span> element that closes the modal
               var span = document.getElementsByClassName("close")[0];
               var edit=document.getElementsByClassName('edit')
@@ -373,6 +383,34 @@
                   modal.style.display = "none";
                 }
               }
+            </script>
+            <script>
+                var courseData=""
+                $(document).ready(function(){
+                    semesterNameHandeler()
+
+                })
+                function semesterNameHandeler(){
+                    let semester_name=$('.semesterNameOne').text()
+                    semester_name=semester_name.replace(/\s/g,'')
+                    semester_name=parseInt(semester_name)
+                    semester_name=stringifyNumber(semester_name)
+                    
+                    $('.semesterNameOne').text(semester_name)
+               
+                    $('.semesterNameTwo').text(semester_name)
+
+                    
+
+                }
+                function stringifyNumber(n) {
+                    var special = ['zeroth','first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelvth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth'];
+                    var other = ['twent', 'thirt', 'fourt', 'fift', 'sixt', 'sevent', 'eight', 'ninet'];
+                    if (n < 20) return special[n];
+                    if (n%10 === 0) return other[Math.floor(n/10)-2] + 'ieth';
+                    return other[Math.floor(n/10)-2] + 'y-' + special[n%10];
+                  }
+
             </script>
             
             

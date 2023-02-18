@@ -27,6 +27,7 @@ urlpatterns = [
 # URL FOR SEMESTER
 
  path('semester-list/',views.semesterPage,name='semester-list'),
+ path("semester-course/<int:id>",views.SemesterCourse,name='semester-course'),
 
 
 
