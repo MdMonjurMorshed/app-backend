@@ -100,5 +100,8 @@ urlpatterns = [
   
   path('course-control/',views.ControlingView,name='course-control'),
   path('control-post/',views.ControlPost,name='control-post'),
+  
+  
+  path('session-and-category/',views.categoryAndSession,name='session-and-category'),
    
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

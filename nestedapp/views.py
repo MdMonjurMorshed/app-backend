@@ -623,10 +623,10 @@ def InstView(request):
 
 def TableView(request):
     table_data=list(Video.objects.values('name','id','creatDate','publish'))
-    print(table_data)
+    
     ct=ContentType.objects.get(model="video")
     new_list=[{"name":k['name'],"tags": [tag_item.tag.name for tag_item in TaggedItem.objects.filter(object_id=k["id"]).distinct()],"publish":"activated" if k["publish"]==True else"Deactivated","creatDate":k["creatDate"] ,"id":k["id"]}for k in table_data]
-    print("this is k",new_list)
+   
     return JsonResponse(new_list,safe=False)
 
 def table(request):
@@ -635,12 +635,31 @@ def table(request):
 def newDataTable(request):
     list_model=list(Video.objects.values("name","id","publish","creatDate"))
     data_list=[{"name":k['name'],"id":k['id'],"tags":[ tag_item.tag.name for tag_item in TaggedItem.objects.filter(object_id=k['id']).distinct()],"publish":"activated" if k['publish']==True else "deactivated","creatDate":k['creatDate']} for k in list_model]
-    print('this is new list of object',data_list)
+    
     
     
     return JsonResponse(data_list,safe=False)
 def newVidList(request):
     return render(request,"nestedapp/newVid_list.html")
+
+
+def categoryAndSession(request):
+    category=Category.objects.all()
+    session=SessionModel.objects.all()
+    list_cat=[]
+    list_session=[]
+    for cat in category:
+       
+           list_cat.append({"name":cat.Category_name,"id":cat.id,"has_session":cat.has_session,"is_sub":cat.is_sub}) 
+    for s in session:
+        list_session.append({'name':s.name,'year':s.year,'id':s.id})
+        
+    data={
+        "session":list_session,
+        "category":list_cat
+    }
+    return JsonResponse(data,safe=False)    
+        
 
 ################## SESSION VIEW #####################
 def SessionTable(request):
@@ -696,6 +715,7 @@ def semesterPage(request):
 
 def SemesterCourse(request,id):
     sem_ins=Semester.objects.get(pk=id)
+    print(sem_ins)
     context={
         "data":sem_ins.level
     }
@@ -711,10 +731,14 @@ def ControlPost(request):
     if request.method=="POST":
         data=json.loads(request.body)
         print(data)
-        semesters=data['semester']
+        semesters=data['semesters']
         print(semesters)
+        sessionCategory=SessionCategory(session_id=data['session'],category_id=data['category'],total_semester=data['total_semesters'])
+        sessionCategory.save()
         session_cat=SessionCategory.objects.filter(session__id=data['session'],category__id=data['category'])
         print(session_cat)
+        
+       
         for d in semesters:
             semester=Semester(level=d['level'],startDate=d['semester_start'],endDate=d['semester_end'])
            
@@ -722,9 +746,13 @@ def ControlPost(request):
             
             
             semester.save()
+            
+           
             for s_c in session_cat:
                 
-               s_c.semester.add(semester)
+                s_c.semester.add(semester)
+                
+                  
         
         
             

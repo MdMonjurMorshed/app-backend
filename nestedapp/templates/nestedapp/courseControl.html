@@ -274,7 +274,10 @@
     <script>
       var CategoryAndSessionData = ''
       var cat = []
+
       var sessions = []
+      var cat_2
+      var sessions_2
       $(document).ready(function () {
         fun_SessionWiseCategory()
         handelCategory()
@@ -311,10 +314,28 @@
             if (item.has_session) {
               let data = { value: item.id, text: item.Category_name }
       
-              selectedCategory.addOption(data)
+              {% comment %} selectedCategory.addOption(data) {% endcomment %}
             }
           })
         })
+        
+        axios.get(" {% url 'session-and-category' %}").then(function (response){
+          cat_2=response.data.category
+          sessions_2=response.data.session
+    
+          $('#sessionWiseCategory').html('')
+          $('#sessionWiseCategory').append(`<option value="">Select Category</option>`)
+          cat_2.forEach(function(item){
+
+            if (item.has_session){
+              let data_2={value:item.id,text:item.name}
+              console.log(data_2)
+              selectedCategory.addOption(data_2)
+            }
+          })
+          
+         })
+        
       }
       
       function handelCategory() {
@@ -336,9 +357,13 @@
           sessions.forEach(function (item) {
             let data = { value: item.year + '-' + item.id, text: item.name }
      
-            sessionSelect.addOption(data)
+            {% comment %} sessionSelect.addOption(data) {% endcomment %}
           })
-          let categorySelected = cat.find((item) => item.id == $(this).val())
+          sessions_2.forEach(function(item){
+            let data_2={value:item.year+'-'+item.id,text:item.name}
+            sessionSelect.addOption(data_2)
+          })
+          let categorySelected = cat_2.find((item) => item.id == $(this).val())
           if (categorySelected.is_sub) {
             let end_date = `<div class="form-group">
                                 <label for="name">End Date</label>
@@ -380,7 +405,7 @@
         </div>`
         $('.appendSemester').append(semester_one)
         handleAfterFirstSemester(semesters,session_year)
-      }
+      } 
       function handleAfterFirstSemester(semesters,session_year) {
         let semester = "";
         session_year = session_year + "-06-30";
@@ -451,7 +476,7 @@
           var data=""
           let category_id=$("#sessionWiseCategory").val()
           let currentDate=date.getFullYear()+ "-" + (date.getMonth())+ "-"+ date.getDate();
-          let selected_category=cat.find((item)=>item.id==category_id)
+          let selected_category=cat_2.find((item)=>item.id==category_id)
           if (selected_category.is_sub){
             data={
               "session":$('#session').val().split('-')[1],
@@ -500,7 +525,7 @@
               "session":$("#session").val().split('-')[1],
               "category":category_id,
               "total_semesters":$("#semester_number").val(),
-              "semester":semesters
+              "semesters":semesters
             }
             sendBackendForSessionWise(data)
           
@@ -522,6 +547,15 @@
         })
 
       }
+    </script>
+    <script>
+      var cate
+      var sess
+      $(document).ready(function(){
+       
+        
+      })
+  
     </script>
   </div>
 {% endblock %}

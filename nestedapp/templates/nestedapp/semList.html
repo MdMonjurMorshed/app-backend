@@ -152,16 +152,7 @@
                             <div class="col-md-6">
                               <h3 class="box-title">List of Semesters</h3>
                             </div>
-                            <div class="col-md-6 text-right d-none">
-                              <a
-                                data-toggle="modal"
-                                data-target="#addSession"
-                                title="Create a new Session"
-                                class="btn btn-primary btn-sm addSession"
-                              >
-                                <i class="fa fa-plus"></i> Add
-                              </a>
-                            </div>
+                            
                           </div>
                         </div>
                         <div class="box-body">
@@ -243,7 +234,7 @@
                        })
 
                        console.log(option)
-                       let firstSelectedSessionValue=option[0].value
+                       let firstSelectedSessionValue=option[option.length-1].value
                        selectedFilterSession.addOption(option)
                        selectedFilterSession.setValue(firstSelectedSessionValue)
                        selectCategoryOption(firstSelectedSessionValue)
