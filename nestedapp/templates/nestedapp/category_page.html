@@ -98,19 +98,46 @@
                                                 
                                                {{form.category_image}}
                                             </div>
-                                            <div class='form-group'>
-                                                <p >
-                                                    <strong>
-                                                        Do you want to publish?
-                                                    </strong>
-                                                </p>
+                                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap:5px">
+                                                <div class='form-group'>
+                                                    <p >
+                                                        <strong>
+                                                            Do you want to publish?
+                                                        </strong>
+                                                    </p>
+                                                    
+                                                    <label class="switch">
+                                                        {{form.publish}}
+                                                        <span class="slider round"></span>
+                                                      </label>
+                                                </div>
+                                                <div class='form-group'>
+                                                    <p >
+                                                        <strong>
+                                                            Has Session?
+                                                        </strong>
+                                                    </p>
+                                                    
+                                                    <label class="switch">
+                                                        {{form.has_session}}
+                                                        <span class="slider round"></span>
+                                                      </label>
+                                                </div>
+                                                <div class='form-group'>
+                                                    <p >
+                                                        <strong>
+                                                            Is Sub?
+                                                        </strong>
+                                                    </p>
+                                                    
+                                                    <label class="switch">
+                                                        {{form.is_sub}}
+                                                        <span class="slider round"></span>
+                                                      </label>
+                                                </div>
                                                 
-                                                <label class="switch">
-                                                    {{form.publish}}
-                                                    <span class="slider round"></span>
-                                                  </label>
                                             </div>
-                                            
+                                           
     
                                             
                                         </div>
