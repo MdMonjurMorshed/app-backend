@@ -123,7 +123,7 @@ class SessionCategory(models.Model):
     category=models.ForeignKey(Category,blank=False,on_delete=models.CASCADE,related_name="session_category") 
     total_semester=models.IntegerField()
     is_active=models.BooleanField(default=True)
-    semester=models.ManyToManyField(Semester)
+    semester=models.ManyToManyField(Semester,blank=True)
     
     def __str__(self):
         return self.category.Category_name
