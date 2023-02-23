@@ -14,11 +14,7 @@ class DepertSerializer(serializers.ModelSerializer):
         model=Depertment
         fields="__all__"
         
-class SemesterSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model=Semester
-        fields="__all__"      
+    
 class SubSerializer(serializers.ModelSerializer):
     category=CatSerializer()
     class Meta:
@@ -69,7 +65,12 @@ class CourseSerialize(serializers.ModelSerializer):
         model= CourseModel
         fields=['id','name','category','department','subject','instructor','mentor','email','prerequisites','order','description','facebook','masenger','courseIcon','courseBanner','publish']     
         
-        
+
+class SemesterSerializer(serializers.ModelSerializer):
+    course=CourseSerialize(many=True)
+    class Meta:
+        model=Semester
+        fields="__all__"          
 class SessionSerial(serializers.ModelSerializer) :
     class Meta:
         model=SessionModel

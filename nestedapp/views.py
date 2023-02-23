@@ -720,6 +720,39 @@ def SemesterCourse(request,id):
         "data":sem_ins.level
     }
     return render(request,'nestedapp/sem_course.html',context)
+
+
+def AddCourseToSemester(request):
+    category=Category.objects.all()
+    department=Depertment.objects.all()
+    course=CourseModel.objects.all()
+    
+    category_list=[]
+    department_list=[]
+    course_list=[]
+    for cat in category:
+        category_list.append({'name':cat.Category_name,'id':cat.id,'has_session':cat.has_session,'is_sub':cat.is_sub})
+    for dep in department:
+        department_list.append({'id':dep.id,'name':dep.depName,'category':dep.category.id,})
+    for c in course:
+        course_list.append({'id':c.id,'name':c.name,"category":c.category.id,'department':c.department.id})
+        
+    data={
+        'category':category_list,
+        'department':department_list,
+        'course':course_list
+    }    
+    return JsonResponse(data,safe=False)
+
+def PostCourse(request):
+    if request.method == "POST":
+        data=json.loads(request.body)
+        sem_ins=Semester.objects.filter(level=data["semester"])
+        for sem in sem_ins:
+            sem.course.add(data['course'])
+            
+    return JsonResponse({"success":True})
+
     
 
 

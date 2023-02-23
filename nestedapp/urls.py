@@ -103,5 +103,9 @@ urlpatterns = [
   
   
   path('session-and-category/',views.categoryAndSession,name='session-and-category'),
+  
+  
+  path('addcourse-to-semester/',views.AddCourseToSemester,name='addcourse-to-semester'),
+  path('post-course-semester',views.PostCourse,name='postCourse'),
    
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

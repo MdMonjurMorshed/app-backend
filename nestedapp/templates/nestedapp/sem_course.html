@@ -221,14 +221,22 @@
                                           {% csrf_token %}
                                           <div class="form-group">
                                             <label for="name" class="required">Category</label>
-                                            <span class="appendSessionWiseCategory"></span>
+                                            <span class="normalCategory"></span>
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="name" class="required">Department</label>
+                                            <span class="categoryWiseDepartment"></span>
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="name" class="required">Course</label>
+                                            <span class="cat-and-dep-wiseCourse"></span>
                                           </div>
                                           <!-- append conditional select -->
-                                          <span class="appendConditionalSelect"></span>
+                                         
                                         </div>
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-default pull-left" id="Close" data-dismiss="modal">Close</button>
-                                          <button type="button" class="btn btn-primary sessionWiseSubmitBtn" data-dismiss="modal">Submit</button>
+                                          <button type="button" class="btn btn-primary courseSubmitButton" data-dismiss="modal">Submit</button>
                                         </div>
                                       </div>
                                     </div>
@@ -386,10 +394,164 @@
             </script>
             <script>
                 var courseData=""
+
+                var cat
+                var dep
+                var course
+                var cat_id=""
                 $(document).ready(function(){
+                    submitData()
                     semesterNameHandeler()
+                    handelCategory()
+                    handelDepartment()
+                    handelCourse()
+                    
 
                 })
+                function handelCategory(){
+                  $('.normalCategory').html("")
+                  $('.normalCategory').html("<select id='idCategory' placeholder='select category' autocomplete='off' class='form-control' ><option value='' selected disabled>Select Category</select>")
+
+                    var categorySelect=new TomSelect('#idCategory',{
+                      create:false,
+                      sortedField:{
+                        field:'text',
+                        direction:'asc'
+                        
+                      },
+                      minItem:1,
+                      maxItem:1
+                    })
+
+                    axios.get("{% url 'addcourse-to-semester'%}").then(function(response){
+                      cat=response.data.category
+                      dep=response.data.department
+                      course=response.data.course
+                      console.log(dep)
+                     
+                      cat.forEach(function(item){
+                        if (item.has_session){
+                          let data={value:item.id,text:item.name}
+                          categorySelect.addOption(data)
+                        }
+                      })
+                     
+                     
+                    
+                  
+                     
+                    
+                   
+                      
+                    })
+                   
+                }
+                function handelDepartment(){
+
+              
+                  $(".categoryWiseDepartment").html('')
+                  $(".categoryWiseDepartment").html('<select id="idDepartment"placeholder="Select Department" autocomplete="off" class="form-control"><option value="" selected disabled>Select Department</select>')
+                  var departmentSelect=new TomSelect("#idDepartment",{
+                    create:false,
+                    sortedField:{
+                      field:'text',
+                      direction:'asc'
+                    },
+                    minItem:1,
+                    maxItem:1
+                  })  
+                  
+
+                  $("#idCategory").on('change',function(){
+                    let cat_id=$("#idCategory").val()
+                   
+                    let depart=dep.filter((item)=>item.category==cat_id)
+                    departmentSelect.clear();
+                    departmentSelect.clearOptions()
+                    if (depart.length > 0){
+                      depart.forEach(function(item){
+                   
+                        let data={value:item.id,text:item.name}
+                    
+                        departmentSelect.addOption(data)
+  
+                      })
+                      
+
+                    }
+                  
+                    
+                    
+                    
+                  })
+                  
+                }
+                function handelCourse(){
+                 
+                 
+              
+                  $(".cat-and-dep-wiseCourse").html('')
+                  $(".cat-and-dep-wiseCourse").html('<select id="idCourse" placeholder="Select Course" autocomplete="off" class="form-control"><option value="" selected disabled>Select Course</select>')
+                  var courseSelect=new TomSelect("#idCourse",{
+                    create:false,
+                    sortedField:{
+                      field:'text',
+                      direction:'asc'
+                    },
+                    minItem:1,
+                    maxItem:1
+                  })
+                  
+                  $("#idDepartment").on('change',function(){
+                    let dep_id=$("#idDepartment").val()
+                    
+                    let course_data=course.filter((item)=>item.department==dep_id)
+                  
+                    courseSelect.clear()
+                    courseSelect.clearOptions()
+                    if (course_data.length > 0){
+                      course_data.forEach(function(item){
+                        let data={value:item.id,text:item.name}
+                        courseSelect.addOption(data)  
+  
+                      })
+                   
+                    }
+                    
+                 
+                   
+                   
+                  })  
+                   
+                          
+                  }
+
+                function submitData(){
+                  $(".courseSubmitButton").on('click',function(){
+                    let category=$("#idCategory").val()
+                    let department=$("#idDepartment").val()
+                    let course=$("#idCourse").val()
+                    let semester=$(".semesterNameOne").text()
+                    semester=parseStringifiedNumber(semester)
+                    let data={
+                      "category":category,
+                      "department":department,
+                      "course":course,
+                      "semester":semester
+                    }
+                    console.log(data)
+                    let csrf=$("input[name=csrfmiddlewaretoken]").val()
+                    axios.post("{% url 'postCourse'%}",data,{
+                      headers:{
+                        "X-CSRFToken":csrf
+                      }
+                    }).then(function(response){
+                      location.reload()
+                    }) 
+                    
+                  })
+
+                }  
                 function semesterNameHandeler(){
                     let semester_name=$('.semesterNameOne').text()
                     semester_name=semester_name.replace(/\s/g,'')
@@ -405,12 +567,59 @@
                 }
                 function stringifyNumber(n) {
                     var special = ['zeroth','first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelvth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth'];
+                    
                     var other = ['twent', 'thirt', 'fourt', 'fift', 'sixt', 'sevent', 'eight', 'ninet'];
                     if (n < 20) return special[n];
                     if (n%10 === 0) return other[Math.floor(n/10)-2] + 'ieth';
                     return other[Math.floor(n/10)-2] + 'y-' + special[n%10];
                   }
 
+                  function parseStringifiedNumber(str) {
+                    var special = ['zeroth', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelvth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth'];
+                    var extra=['zero','one','two']
+                    var other = ['twent', 'thirt', 'fourt', 'fift', 'sixt', 'sevent', 'eight', 'ninet'];
+                    for (var i = 0; i < special.length; i++) {
+                      if (str === special[i]) {
+                        return i;
+                      }
+                    }
+                    for(var k=0;k<extra.length;k++){
+                      if(str===extra[k]){
+                        return k
+                      }
+                    }
+                    for (var j = 0; j < other.length; j++) {
+                      if (str.startsWith(other[j])) {
+                        var num = j + 2;
+                        if (str.endsWith('hiet')) {
+                          return num * 10;
+                          
+                        }
+                        
+                        
+                        else {
+                          if(extra.includes(str.split('-')[1])){
+                            var extraIndex=extra.indexOf(str.substring(other[j].length + 2));
+                            console.log(extraIndex)
+                            return num * 10 + extraIndex
+                          }else{
+                            var specialIndex = special.indexOf(str.substring(other[j].length + 2));
+                          console.log(specialIndex)
+                          return num * 10 + specialIndex;
+                        }
+
+                          }
+                          
+                      }
+                    }
+                    return NaN;
+                  }  
+
+            </script>
+            <script>
+              $(document).ready(function(){
+                
+              })
             </script>
             
             
