@@ -86,9 +86,13 @@ WSGI_APPLICATION = 'nested.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+     'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd3le8c4hmmdcak',
+        'USER': 'opwyflnuivnkwh',
+        'PASSWORD': '4331ccec8c529e1560136f5e14d52f9e449665cb57753fcb947ce09ad3f51a55',
+        'HOST': 'ec2-54-86-214-124.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
