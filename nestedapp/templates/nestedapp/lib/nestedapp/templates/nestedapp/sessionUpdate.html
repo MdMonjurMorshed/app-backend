@@ -1,0 +1,179 @@
+{% extends 'nestedapp/base.html' %}
+
+{% block content_wrapper %}
+        <div class="content-wrapper">
+            {% block content_header %}
+                <section class="content-header">
+                   
+                    {% block no_heading %}
+                        <h1>
+                            {% block page_name %}Session Page{% endblock %}
+                            <div class="header-actions">
+                                {% block page_actions %}
+
+                                 {% endblock %}
+                            </div>
+                            {% block no_description %}
+                            <small>{% block page_description %}{% endblock %}</small>
+                            {% endblock %}
+                        </h1>
+                        {% block breadcrumbs %}
+                        <ol class='breadcrumb'>
+                            <li >
+                                <a href="{%url 'dash'%}">
+                                    <i class='fa fa-dashboard'></i>
+                                    DashBoard
+                                </a>
+                            </li>
+                            <li>
+                          Session Page
+                            </li>
+
+
+                        </ol>
+                            {# Breadcrumb implementation left to developers #}
+                        {% endblock %}
+                    {% endblock no_heading %}
+                </section>
+            {% endblock %}
+
+            {% block content_outer %}
+            <section class="content">
+                {% block messages %}
+                    {% include 'nestedapp/lib/_messages.html' %}
+                {% endblock %}
+
+                {% block content_block_wrap %}
+                    {% block content %}
+                      
+                      <div class='row'>
+
+                        <div class='col-md-12'>
+                            <div class='box box-primary'>
+
+                                <!-- its header for the page -->
+                              <div class='box-header with-border'>
+                                <h3 class='box-title'> Update Session<h3>
+                               </div>
+
+                               <!-- its form for this page-->
+                               <div class='box-body'>
+                                <style>
+                                .ts-wrapper.single .ts-control:after {
+                                    border-color: #343a40 transparent transparent;
+                                    border-style: solid;
+                                    border-width: 5px 5px 0;
+                                    content: none !important;
+                                    display: block;
+                                    height: 0;
+                                    margin-top: -3px;
+                                    position: absolute;
+                                    right: calc(.75rem + 5px);
+                                    top: 50%;
+                                    width: 0;
+                                }
+                                .focus .ts-control {
+                                    border-color: #80bdff;
+                                    box-shadow: none !important;
+                                    outline: 0;
+                                }
+                                </style>
+                                <form method='POST' role='form'  enctype='multipart/form-data'>
+
+                                    {%csrf_token%}
+                                    <div class='tosterMessage' id='messageArea'>
+    
+                                    </div>
+                                    <div class='row'>
+                                     
+                                        <div class='col-md-6'>
+                                            <div class='form-group'>
+                                                <label for='name'>Session Name</label>
+                                                {{form.name}}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="id_year" class="required">Session Year</label>
+                                                <div class="input-group date">
+                                                  <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                  </div>
+                                                    {{form.year}}
+                                                </div>
+                                              </div>
+                                           
+                                           
+                                            <div class='form-group'>
+                                                <p >
+                                                    <strong>
+                                                        Is Active ?
+                                                    </strong>
+                                                </p>
+                                                
+                                                <label class="switch">
+                                                    {{form.publish}}
+                                                    <span class="slider round"></span>
+                                                  </label>
+                                            </div>
+                                            
+    
+                                            
+                                        </div>
+                                    </div>
+    
+                                    <div class="box-footer">
+                                        <button type='submit' class='btn btn-success btn-sm' data-placement='right' data-toggle='tooltip' >Save</button>
+                                        <a href="{% url 'chapter'%}" class='btn btn-sm btn-primary'>
+                                          Back
+                                        </a>
+                                    </div>
+    
+                                   </form>
+                                
+
+                               </div>
+                              
+                               
+                               
+
+
+
+                            </div>
+                        </div>
+                      </div>
+                    {% endblock %}
+                {% endblock %}
+            </section>
+            {% endblock   %}
+            <script>
+                var selectedYear="";
+                $(document).ready(function(){
+                  handleSelectYear({{instance|safe}})
+               
+              
+                })
+                function handleSelectYear(instance) {
+                  selectedYear = new TomSelect("#id_year", {
+                    create: false,
+                    sortField: {
+                      field: "text",
+                      direction: "asc",
+                    },
+                    minItems: 1,
+                    maxItems: 1,
+                  });
+                  
+              
+                  let data = [];
+                  for (let index = 2015; index < 2051; index++) {
+                    data.push({ value: index, text: index });
+                  }
+              
+                  selectedYear.addOption(data);
+                
+                  selectedYear.setValue(parseInt(instance.year));
+                }
+              
+              
+              </script>
+        </div>
+        {% endblock content_wrapper %}
