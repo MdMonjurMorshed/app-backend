@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-giqd*_+-5(ob#zx_t@sc$$kn_283k9_rmktgs$b!khfc!^kkzy'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['backend-app.herokuapp.com','127.0.0.1']
 
@@ -65,7 +65,7 @@ ROOT_URLCONF = 'nested.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': os.path.join(BASE_DIR,'nestedapp/templates/adminlte/templates'),
+        'DIRS': ['nestedapp/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,6 +89,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        'ENCODING': 'utf8',
+          'OPTIONS': {
+            'timeout': 60,
+        },
+      
     }
 }
 
@@ -128,7 +133,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT=os.path.join(BASE_DIR,'static')
+STATIC_ROOT='static/'
+
 
 
 MEDIA_URL='/media/'

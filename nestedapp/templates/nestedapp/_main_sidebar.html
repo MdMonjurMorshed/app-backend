@@ -1,0 +1,854 @@
+
+
+{%  load adminlte_helpers %}
+
+{%load static %}
+
+<script src="{% static "jquery/dist/jquery.js" %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static "admin-lte/dist/css/AdminLTE.css" %}">
+<!-- Left side column. contains the sidebar -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+     <!-- Brand Logo -->
+    {% block logo %}
+        <a href="/" class="brand-link">
+           
+            {% block logo_text %}<span class="brand-text font-weight-light"> </span>{% endblock %}
+        </a>
+    {% endblock %}
+    <!-- sidebar: style can be found in sidebar.less -->
+    <div class="sidebar">
+        <!-- Sidebar user panel -->
+        {% block user_panel %}
+        <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{% static 'admin-lte/dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
+
+          
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">{% firstof request.user.get_full_name request.user.username %}</a>
+        </div>
+      </div>
+        {% endblock user_panel%}
+
+       
+        {%block category%}
+
+        <ul class='sidebar-menu'>
+
+         <!-- list for DashBoard --> 
+          <li class='treeview'>
+            <a href="{% url 'table'%}">
+              <i class='fa fa-dashboard'>
+
+              </i>
+              <span>DashBoard</span>
+            </a>
+          </li>
+
+          <!-- list for header -->
+
+          <li class='header'>Academic</li>
+
+          
+          <!-- list for Academic -->
+
+
+          <li class='treeview'>
+            <a href='#'>
+              <i class='fa fa-table'></i>
+              <span> Category</span>
+              <i class='fa fa-angle-left pull-right'></i>
+            </a>
+            <ul class='treeview-menu'>
+
+              <li>
+                <a href="{%url 'category'%}">
+                  <i class='fa fa-circle-o'>
+
+                  </i>
+                Add Category
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'catlist'%}">
+                  <i class='fa fa-circle-o'>
+
+                  </i>
+                  Category List
+                </a>
+              </li>
+            </ul>
+
+          </li>
+
+    <!-- list for depertment -->
+    <li class='treeview'>
+      <a href='#'>
+        <i class='fa fa-university'></i>
+        <span> Department</span>
+        <i class='fa fa-angle-left pull-right'></i>
+      </a>
+      <ul class='treeview-menu'>
+
+        <li>
+          <a href="{% url 'department'%}">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Add Department
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'dep-list'%}">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Department List
+          </a>
+        </li>
+      </ul>
+
+    </li>
+   
+
+    
+    
+     <!-- list for subject -->
+
+     <li class='treeview'>
+      <a href='#'>
+        <i class='fa fa-book'></i>
+        <span> Subject</span>
+        <i class='fa fa-angle-left pull-right'></i>
+      </a>
+      <ul class='treeview-menu'>
+
+        <li>
+          <a href="{% url 'subject' %}">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Add Subject
+          </a>
+        </li>
+        <li>
+          <a href="{%url 'sub-list'%}">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Subject List
+          </a>
+        </li>
+      </ul>
+
+    </li>
+
+    <!-- list for chapter -->
+    <li class='treeview'>
+      <a href="{% url 'chapter'%}">
+        <i class='fa fa-music'>
+
+        </i>
+        <span>Chapter</span>
+      </a>
+    </li>
+    
+     <!-- list for Courses -->
+
+     <li class='treeview'>
+      <a href='#'>
+        <i class='fa fa-edit'></i>
+        <span> Course</span>
+        <i class='fa fa-angle-left pull-right'></i>
+      </a>
+      <ul class='treeview-menu'>
+
+        <li>
+          <a href="{% url 'course'%}">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Add Course
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Course List
+          </a>
+        </li>
+      </ul>
+
+    </li>
+
+     <!-- list for Enrollment -->
+
+     <li class='treeview'>
+      <a href='#'>
+        <i class="fa fa-usd"></i>
+        <span> Enrollment</span>
+        <i class='fa fa-angle-left pull-right'></i>
+      </a>
+      <ul class='treeview-menu'>
+
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Enrollment
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            New Enrollment
+          </a>
+        </li>
+      </ul>
+
+    </li>
+
+     <!-- list for header course control -->
+     <li class='treeview'>
+      <a href='#'>
+        <i class='fa fa-wrench'></i>
+        <span> Course Control</span>
+        <i class='fa fa-angle-left pull-right'></i>
+      </a>
+      <ul class='treeview-menu'>
+
+        <li>
+          <a href="{% url 'session'%}">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Session
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'course-control'%}">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Course Controling
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'semester-list'%}">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Semester
+          </a>
+        </li>
+      </ul>
+
+    </li>
+
+    <!-- list for header pricing&packages -->
+
+    <li class='header'>pricing&packages</li>
+
+    <!-- list for package -->
+
+    <li class='treeview'>
+      <a href='#'>
+        <i class='fa fa-database'></i>
+        <span> Package</span>
+        <i class='fa fa-angle-left pull-right'></i>
+      </a>
+      <ul class='treeview-menu'>
+
+        <li>
+          <a href="{%url 'package'%}">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Create Package
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Package List
+          </a>
+        </li>
+      </ul>
+
+    </li>
+
+    <!-- list for course price -->
+
+    <li class='treeview'>
+      <a href='#'>
+        <i class='fa fa-industry'></i>
+        <span> Course Pricing</span>
+        <i class='fa fa-angle-left pull-right'></i>
+      </a>
+      <ul class='treeview-menu'>
+
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Add Pricing Model
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Pricing Model
+          </a>
+        </li>
+      </ul>
+
+    </li>
+
+    <!-- list for course Bundle -->
+
+    <li class='treeview'>
+      <a href='#'>
+        <i class='fa fa-wrench'></i>
+        <span> Course Bundle</span>
+        <i class='fa fa-angle-left pull-right'></i>
+      </a>
+      <ul class='treeview-menu'>
+
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Create Bundle
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Bundle List
+          </a>
+        </li>
+      </ul>
+
+    </li>
+
+   
+    <!-- list for header Academic recources -->
+
+    <li class='header'>Academic Recources</li>
+
+    <!-- list for Video -->
+
+    <li class='treeview'>
+      <a href='#'>
+        <i class='fa fa-video-camera'></i>
+        <span> Videos</span>
+        <i class='fa fa-angle-left pull-right'></i>
+      </a>
+      <ul class='treeview-menu'>
+
+        <li>
+          <a href="{% url 'video'%}">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Video Upload
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'vid-list'%}">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Video List
+          </a>
+        </li>
+      </ul>
+
+    </li>
+    
+    <!-- list for Books-->
+
+    <li class='treeview'>
+      <a href='#'>
+        <i class='fa fa-book'></i>
+        <span> Books</span>
+        <i class='fa fa-angle-left pull-right'></i>
+      </a>
+      <ul class='treeview-menu'>
+
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Books
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+             BookList
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Create Notobook
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Notobook List
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Create Smartbook
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Smartbook Listview
+          </a>
+        </li>
+      </ul>
+
+    </li>
+
+     <!-- list for Syllabus -->
+
+     <li class='treeview'>
+      <a href='#'>
+        <i class='fa fa-newspaper-o'></i>
+        <span> Syllabus</span>
+        <i class='fa fa-angle-left pull-right'></i>
+      </a>
+      <ul class='treeview-menu'>
+
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Syllabus Type
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Syllabus List
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Suggestion List
+          </a>
+        </li>
+      </ul>
+
+    </li>
+
+    <!-- list for header of Quiz -->
+
+    <li class='header'>Quiz</li>
+
+    <!-- list for Quiz-->
+
+    <li class='treeview'>
+      <a href='#'>
+        <i class='fa fa-question-circle'></i>
+        <span> Quiz</span>
+        <i class='fa fa-angle-left pull-right'></i>
+      </a>
+      <ul class='treeview-menu'>
+
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Create Quiz-type
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+             List of Quiz-type
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Create Quiz
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Quiz List
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Quiz Exam result
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Leader Board
+          </a>
+        </li>
+      </ul>
+
+    </li>
+
+
+      <!-- list for Bank -->
+
+      <li class='treeview'>
+        <a href='#'>
+          <i class='fa fa-bank'></i>
+          <span> Bank</span>
+          <i class='fa fa-angle-left pull-right'></i>
+        </a>
+        <ul class='treeview-menu'>
+  
+          <li>
+            <a href="/">
+              <i class='fa fa-circle-o'>
+  
+              </i>
+            Question Bank
+            </a>
+          </li>
+          <li>
+            <a href="/">
+              <i class='fa fa-circle-o'>
+  
+              </i>
+              Add Question Bank
+            </a>
+          </li>
+          <li>
+            <a href="/">
+              <i class='fa fa-circle-o'>
+  
+              </i>
+              Information Bank
+            </a>
+          </li>
+          <li>
+            <a href="/">
+              <i class='fa fa-circle-o'>
+  
+              </i>
+              Add Information Bank
+            </a>
+          </li>
+          
+        </ul>
+  
+      </li>
+
+       <!-- list for Model Exam -->
+
+     <li class='treeview'>
+      <a href='#'>
+        <i class='fa fa-pencil'></i>
+        <span> Model Exam</span>
+        <i class='fa fa-angle-left pull-right'></i>
+      </a>
+      <ul class='treeview-menu'>
+
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Model Question
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Model Exam List
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Model Exam Review
+          </a>
+        </li>
+      </ul>
+
+    </li>
+
+     <!-- list for Mock Exam -->
+
+     <li class='treeview'>
+      <a href='#'>
+        <i class='fa fa-eye'></i>
+        <span> Mock Exam</span>
+        <i class='fa fa-angle-left pull-right'></i>
+      </a>
+      <ul class='treeview-menu'>
+
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Create Mock
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Mock List
+          </a>
+        </li>
+      </ul>
+
+    </li>
+
+     <!-- list for header of Order and Purchase -->
+
+     <li class='header'>Order & Purchase</li>
+
+      <!-- list for Orders -->
+
+      <li class='treeview'>
+        <a href='#'>
+          <i class='fa fa-shopping-cart'></i>
+          <span> Orders</span>
+          <i class='fa fa-angle-left pull-right'></i>
+        </a>
+        <ul class='treeview-menu'>
+  
+          <li>
+            <a href="/">
+              <i class='fa fa-circle-o'>
+  
+              </i>
+            New Orders
+            </a>
+          </li>
+          <li>
+            <a href="/">
+              <i class='fa fa-circle-o'>
+  
+              </i>
+             All Orders
+            </a>
+          </li>
+          <li>
+            <a href="/">
+              <i class='fa fa-circle-o'>
+  
+              </i>
+             Purchase Course
+            </a>
+          </li>
+          <li>
+            <a href="/">
+              <i class='fa fa-circle-o'>
+  
+              </i>
+              All Smart Book
+            </a>
+          </li>
+          
+        </ul>
+  
+      </li>
+
+      <!-- list for header of others -->
+
+    <li class='header'>Others</li>
+
+    <!-- list for User-->
+
+    <li class='treeview'>
+      <a href='#'>
+        <i class='fa fa-user'></i>
+        <span> User</span>
+        <i class='fa fa-angle-left pull-right'></i>
+      </a>
+      <ul class='treeview-menu'>
+
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Create User
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'instructor'%}">
+            <i class='fa fa-circle-o'>
+
+            </i>
+             Create Instructor
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          All Users
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            SOS Users
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Profile List
+          </a>
+        </li>
+      
+      </ul>
+
+    </li>
+
+    <!-- list for Utils-->
+
+    <li class='treeview'>
+      <a href='#'>
+        <i class='fa fa-step-backward'></i>
+        <span> Utils</span>
+        <i class='fa fa-angle-left pull-right'></i>
+      </a>
+      <ul class='treeview-menu'>
+
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Slider
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+             Institutes
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Contact
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Location
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+          Notification
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <i class='fa fa-circle-o'>
+
+            </i>
+            Splash Screen
+          </a>
+        </li>
+      </ul>
+
+    </li>
+
+
+
+    
+
+                 
+          
+
+
+        </ul>
+        
+        
+        {%endblock category%}
+
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        
+    <!-- /.sidebar -->
+</aside>

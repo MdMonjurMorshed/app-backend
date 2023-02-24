@@ -1,0 +1,629 @@
+{% extends 'nestedapp/base.html' %}
+
+{% block content_wrapper %}
+
+        <div class="content-wrapper">
+            {% block content_header %}
+                <section class="content-header">
+                   
+                    {% block no_heading %}
+                        <h1>
+                           
+                            <span class="semesterNameOne text-capitalize"> {{data}}</span>
+                            {% block page_name %}Semester of Polytechnic{% endblock %}
+                            <div class="header-actions">
+                                {% block page_actions %}
+
+                                 {% endblock %}
+                            </div>
+                            {% block no_description %}
+                            <small>{% block page_description %}{% endblock %}</small>
+                            {% endblock %}
+                        </h1>
+                        {% block breadcrumbs %}
+                        <ol class='breadcrumb'>
+                            <li >
+                                <a href="{%url 'dash'%}">
+                                    <i class='fa fa-dashboard'></i>
+                                    DashBoard
+                                </a>
+                            </li>
+                            <li>
+                                Semester with course view
+                            </li>
+
+
+                        </ol>
+                            {# Breadcrumb implementation left to developers #}
+                        {% endblock %}
+                    {% endblock no_heading %}
+                </section>
+            {% endblock %}
+
+            {% block content_outer %}
+            <section class="content">
+                {% block messages %}
+                    {% include 'nestedapp/lib/_messages.html' %}
+                {% endblock %}
+
+                {% block content_block_wrap %}
+                    {% block content %}
+                  
+                    
+                      
+                      <div class='row'>
+
+                        <div class='col-md-12'>
+                            <div class='box'>
+                                 <div class='box-header'>
+                                    <div class='row'>
+                                        <div class='col-md-6'>
+                                            <h3 class='box-title'>
+                                                Course List of
+                                               <span class="semesterNameTwo text-capitalize"></span>
+                                                 Semesters
+                                            </h3>
+
+                                        
+                                        </div>
+                                        <div class='col-md-6 text-right'>
+                                            <a href="/controlling/semester/" 
+                                            title="Create a new Session"
+                                            class="btn btn-danger btn-sm">
+                                            <i class="fa fa-angle-double-left"></i> Back
+                                          </a>
+                                            <button class='btn btn-primary btn-sm m_button' id="AddCourse_btn">
+                                                Add Course
+                                               
+                                            </button>
+                                        
+                                        </div>
+
+                                    </div>
+
+
+                                  <!-- Modal  -->
+
+                                  <div class="modal-dialog">
+                                    <div id="myModal" class="modal">
+                                      <style>
+                                                            /* The Modal (background) */
+                                        .modal {
+                                          display: none; /* Hidden by default */
+                                          position: fixed; /* Stay in place */
+                                          z-index: 1; /* Sit on top */
+                                          padding-top: 100px; /* Location of the box */
+                                          left: 0px;
+                                          top: 0;
+                                          width: 100%; /* Full width */
+                                          height: 100%; /* Full height */
+                                          overflow: auto; /* Enable scroll if needed */
+                                          background-color: rgb(0, 0, 0); /* Fallback color */
+                                          background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+                                        }
+                                        
+                                        /* Modal Content */
+                                        .modal-content {
+                                          position: relative;
+                                          background-color: #fefefe;
+                                          margin: auto;
+                                          padding: 0;
+                                          border: 1px solid #888;
+                                          width: 50%;
+                                          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                                          -webkit-animation-name: animatetop;
+                                          -webkit-animation-duration: 0.4s;
+                                          animation-name: animatetop;
+                                          animation-duration: 0.4s;
+                                        }
+                                        
+                                        /* Add Animation */
+                                        @-webkit-keyframes animatetop {
+                                          from {
+                                            top: -300px;
+                                            opacity: 0;
+                                          }
+                                          to {
+                                            top: 0;
+                                            opacity: 1;
+                                          }
+                                        }
+                                        
+                                        @keyframes animatetop {
+                                          from {
+                                            top: -300px;
+                                            opacity: 0;
+                                          }
+                                          to {
+                                            top: 0;
+                                            opacity: 1;
+                                          }
+                                        }
+                                        
+                                        /* The Close Button */
+                                        .close {
+                                          color: black;
+                                          float: right;
+                                          font-size: 25px;
+                                          top: 10%;
+                                        }
+                                        
+                                        .modal-header {
+                                          padding: 10px;
+                                        
+                                          color: white;
+                                        }
+                                        
+                                        .modal-body {
+                                          padding: 2px 16px;
+                                        }
+                                        
+                                        .modal-footer {
+                                          padding: 2px 16px;
+                                        
+                                          color: white;
+                                        }
+                                        .title {
+                                          font-size: 28px;
+                                          color: black;
+                                        }
+                                        #chap_close {
+                                          color: black;
+                                          background: #cfcfcf;
+                                        }
+                                        label.required:after {
+                                          content: ' *';
+                                          color: red;
+                                        }
+                                        /*tom select css */
+                                        #sessionWiseCategory .ts-wrapper.single .ts-control:after {
+                                          border-color: #343a40 transparent transparent;
+                                          border-style: solid;
+                                          border-width: 5px 5px 0;
+                                          content: none !important;
+                                          display: block;
+                                          height: 0;
+                                          margin-top: -3px;
+                                          position: absolute;
+                                          right: calc(0.75rem + 5px);
+                                          top: 50%;
+                                          width: 0;
+                                        }
+                                      </style>
+                
+                                      <!-- Modal content -->
+                                      <div class="modal-content">
+                                        <style>
+                                          .ts-wrapper.single .ts-control:after {
+                                            border-color: #343a40 transparent transparent;
+                                            border-style: solid;
+                                            border-width: 5px 5px 0;
+                                            content: none !important;
+                                            display: block;
+                                            height: 0;
+                                            margin-top: -3px;
+                                            position: absolute;
+                                            right: calc(0.75rem + 5px);
+                                            top: 50%;
+                                            width: 0;
+                                          }
+                                          .focus .ts-control {
+                                            border-color: #80bdff;
+                                            box-shadow: none !important;
+                                            outline: 0;
+                                          }
+                                        </style>
+                                        <div class="modal-header">
+                                          <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                                          <h5 class="title" id="exampleModalLongTitle">Create New Chatpter</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                          {% csrf_token %}
+                                          <div class="form-group">
+                                            <label for="name" class="required">Category</label>
+                                            <span class="normalCategory"></span>
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="name" class="required">Department</label>
+                                            <span class="categoryWiseDepartment"></span>
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="name" class="required">Course</label>
+                                            <span class="cat-and-dep-wiseCourse"></span>
+                                          </div>
+                                          <!-- append conditional select -->
+                                         
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-default pull-left" id="Close" data-dismiss="modal">Close</button>
+                                          <button type="button" class="btn btn-primary courseSubmitButton" data-dismiss="modal">Submit</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+
+                                 </div>
+                                 <div class='box-body'>
+
+                                    <table class='table table-bordered table-striped table-responsive'>
+
+                                        <thead>
+                                            <tr>
+                                                <th>Category</th>
+                                                <th> Subject Name</th>
+                                                <th>Chapter Name</th>
+                                                
+                                                
+                                                <th>Status</th>
+                                                <th>Create Date</th>
+
+                                                <th>Action</th>
+                                              
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            
+                                             
+                                            
+                                            {% for cdata in page_obj.object_list %}
+                                            <tr>
+                                                <td>{% if  cdata.category%}
+                                                    {{cdata.category}}
+                                                    {%else%}
+                                                    -----
+                                                    {% endif%}</td>
+                                                    <td>{{cdata.subject}}</td>
+                                                <td>{{cdata.name}}</td>
+                                               
+                                                
+                                                <td>{% if  cdata.publish is True%}
+                                                    Activated
+                                                    {%else%}
+                                                    Deactivated
+                                                    {% endif%}</td>
+                                                
+                                                <td>{{cdata.createDate}}</td>
+                                               
+                                                <td>
+                                                  <a href="{% url "chap-update" cdata.id%}"  class="btn btn-success btn-sm edit">
+                                                    <i class='glyphicon glyphicon-pencil'></i>
+                                                  </a>
+                                                  <a href="{%url 'chap-delete' cdata.id%}"  class="btn btn-danger btn-sm" >
+                                                    <i class='glyphicon glyphicon-trash'></i>
+                                                  </a>
+                                                 
+                                                </td>
+                                            </tr>
+                                            
+                                            {% endfor %}
+
+                                           
+                                           
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+
+                            </div>
+                            {%if page_obj.has_next or page_obj.has_previous%}
+                            <nav aria-label="..." style="float:right;">
+                                <ul class="pagination">
+                                    {%if page_obj.has_previous%}
+                                  <li class="page-item ">
+                                    <a class="page-link" href="?page={{page_obj.previous_page_number}}" >Previous</a>
+                                  </li>
+                                  {% else%}
+                                  <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                  </li>
+                                  {% endif%}
+                                  {% for i in nums%}
+                                  <li  class="{% if forloop.counter == page_obj.number%}page-item active{%endif%}"><a class="page-link" href="?page={{forloop.counter}}">
+                                    {{forloop.counter}}
+                                  
+                                     </a></li>
+                                  {% endfor%}
+                                  {%if dep_data.has_next%}
+                                  <li class="page-item">
+                                    <a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a>
+                                  </li>
+                                  {%else%}
+                                  
+                                  <li class="page-item disabled">
+                                    <a class="page-link" href="#">Next</a>
+                                  </li>
+                                  {% endif%}
+                                </ul>
+                              </nav>
+                              {% endif%}
+                            
+                            
+                        </div>
+
+                      
+                            
+                      
+
+                      </div>
+                    {% endblock %}
+
+                {% endblock %}
+            </section>
+            
+            
+            {% endblock   %}
+
+              
+            <script>
+              // Get the modal
+              var modal = document.getElementById("myModal");
+              
+              // Get the button that opens the modal
+              
+              var btn = document.getElementById("AddCourse_btn");
+              var btn2 = document.getElementById("Close");
+              // Get the <span> element that closes the modal
+              var span = document.getElementsByClassName("close")[0];
+              var edit=document.getElementsByClassName('edit')
+             
+               edit.onclick=function(){
+                modal.style.display="block"
+               }
+              // When the user clicks the button, open the modal 
+              btn.onclick = function() {
+                modal.style.display = "block";
+              }
+              
+              // When the user clicks on <span> (x), close the modal
+              span.onclick = function() {
+                modal.style.display = "none";
+              }
+              btn2.onclick=function(){
+                modal.style.display="none";
+              }
+              
+              // When the user clicks anywhere outside of the modal, close it
+              window.onclick = function(event) {
+                if (event.target == modal) {
+                  modal.style.display = "none";
+                }
+              }
+            </script>
+            <script>
+                var courseData=""
+
+                var cat
+                var dep
+                var course
+                var cat_id=""
+                $(document).ready(function(){
+                    submitData()
+                    semesterNameHandeler()
+                    handelCategory()
+                    handelDepartment()
+                    handelCourse()
+                    
+
+                })
+                function handelCategory(){
+                  $('.normalCategory').html("")
+                  $('.normalCategory').html("<select id='idCategory' placeholder='select category' autocomplete='off' class='form-control' ><option value='' selected disabled>Select Category</select>")
+
+                    var categorySelect=new TomSelect('#idCategory',{
+                      create:false,
+                      sortedField:{
+                        field:'text',
+                        direction:'asc'
+                        
+                      },
+                      minItem:1,
+                      maxItem:1
+                    })
+
+                    axios.get("{% url 'addcourse-to-semester'%}").then(function(response){
+                      cat=response.data.category
+                      dep=response.data.department
+                      course=response.data.course
+                      console.log(dep)
+                     
+                      cat.forEach(function(item){
+                        if (item.has_session){
+                          let data={value:item.id,text:item.name}
+                          categorySelect.addOption(data)
+                        }
+                      })
+                     
+                     
+                    
+                  
+                     
+                    
+                   
+                      
+                    })
+                   
+                }
+                function handelDepartment(){
+
+              
+                  $(".categoryWiseDepartment").html('')
+                  $(".categoryWiseDepartment").html('<select id="idDepartment"placeholder="Select Department" autocomplete="off" class="form-control"><option value="" selected disabled>Select Department</select>')
+                  var departmentSelect=new TomSelect("#idDepartment",{
+                    create:false,
+                    sortedField:{
+                      field:'text',
+                      direction:'asc'
+                    },
+                    minItem:1,
+                    maxItem:1
+                  })  
+                  
+
+                  $("#idCategory").on('change',function(){
+                    let cat_id=$("#idCategory").val()
+                   
+                    let depart=dep.filter((item)=>item.category==cat_id)
+                    departmentSelect.clear();
+                    departmentSelect.clearOptions()
+                    if (depart.length > 0){
+                      depart.forEach(function(item){
+                   
+                        let data={value:item.id,text:item.name}
+                    
+                        departmentSelect.addOption(data)
+  
+                      })
+                      
+
+                    }
+                  
+                    
+                    
+                    
+                  })
+                  
+                }
+                function handelCourse(){
+                 
+                 
+              
+                  $(".cat-and-dep-wiseCourse").html('')
+                  $(".cat-and-dep-wiseCourse").html('<select id="idCourse" placeholder="Select Course" autocomplete="off" class="form-control"><option value="" selected disabled>Select Course</select>')
+                  var courseSelect=new TomSelect("#idCourse",{
+                    create:false,
+                    sortedField:{
+                      field:'text',
+                      direction:'asc'
+                    },
+                    minItem:1,
+                    maxItem:1
+                  })
+                  
+                  $("#idDepartment").on('change',function(){
+                    let dep_id=$("#idDepartment").val()
+                    
+                    let course_data=course.filter((item)=>item.department==dep_id)
+                  
+                    courseSelect.clear()
+                    courseSelect.clearOptions()
+                    if (course_data.length > 0){
+                      course_data.forEach(function(item){
+                        let data={value:item.id,text:item.name}
+                        courseSelect.addOption(data)  
+  
+                      })
+                   
+                    }
+                    
+                 
+                   
+                   
+                  })  
+                   
+                          
+                  }
+
+                function submitData(){
+                  $(".courseSubmitButton").on('click',function(){
+                    let category=$("#idCategory").val()
+                    let department=$("#idDepartment").val()
+                    let course=$("#idCourse").val()
+                    let semester=$(".semesterNameOne").text()
+                    semester=parseStringifiedNumber(semester)
+                    let data={
+                      "category":category,
+                      "department":department,
+                      "course":course,
+                      "semester":semester
+                    }
+                    console.log(data)
+                    let csrf=$("input[name=csrfmiddlewaretoken]").val()
+                    axios.post("{% url 'postCourse'%}",data,{
+                      headers:{
+                        "X-CSRFToken":csrf
+                      }
+                    }).then(function(response){
+                      location.reload()
+                    }) 
+                    
+                  })
+
+                }  
+                function semesterNameHandeler(){
+                    let semester_name=$('.semesterNameOne').text()
+                    semester_name=semester_name.replace(/\s/g,'')
+                    semester_name=parseInt(semester_name)
+                    semester_name=stringifyNumber(semester_name)
+                    
+                    $('.semesterNameOne').text(semester_name)
+               
+                    $('.semesterNameTwo').text(semester_name)
+
+                    
+
+                }
+                function stringifyNumber(n) {
+                    var special = ['zeroth','first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelvth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth'];
+                    
+                    var other = ['twent', 'thirt', 'fourt', 'fift', 'sixt', 'sevent', 'eight', 'ninet'];
+                    if (n < 20) return special[n];
+                    if (n%10 === 0) return other[Math.floor(n/10)-2] + 'ieth';
+                    return other[Math.floor(n/10)-2] + 'y-' + special[n%10];
+                  }
+
+                  function parseStringifiedNumber(str) {
+                    var special = ['zeroth', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelvth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth'];
+                    var extra=['zero','one','two']
+                    var other = ['twent', 'thirt', 'fourt', 'fift', 'sixt', 'sevent', 'eight', 'ninet'];
+                    for (var i = 0; i < special.length; i++) {
+                      if (str === special[i]) {
+                        return i;
+                      }
+                    }
+                    for(var k=0;k<extra.length;k++){
+                      if(str===extra[k]){
+                        return k
+                      }
+                    }
+                    for (var j = 0; j < other.length; j++) {
+                      if (str.startsWith(other[j])) {
+                        var num = j + 2;
+                        if (str.endsWith('hiet')) {
+                          return num * 10;
+                          
+                        }
+                        
+                        
+                        else {
+                          if(extra.includes(str.split('-')[1])){
+                            var extraIndex=extra.indexOf(str.substring(other[j].length + 2));
+                            console.log(extraIndex)
+                            return num * 10 + extraIndex
+                          }else{
+                            var specialIndex = special.indexOf(str.substring(other[j].length + 2));
+                          console.log(specialIndex)
+                          return num * 10 + specialIndex;
+                        }
+
+                          }
+                          
+                      }
+                    }
+                    return NaN;
+                  }  
+
+            </script>
+            <script>
+              $(document).ready(function(){
+                
+              })
+            </script>
+            
+            
+
+
+        </div>
+        {% endblock content_wrapper %}

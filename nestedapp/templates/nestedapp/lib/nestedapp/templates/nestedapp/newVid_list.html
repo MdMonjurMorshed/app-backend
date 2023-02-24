@@ -1,0 +1,167 @@
+{% extends 'nestedapp/base.html' %}
+
+{% block content_wrapper %}
+>
+        <div class="content-wrapper">
+            {% block content_header %}
+                <section class="content-header">
+                   
+                    {% block no_heading %}
+                        <h1>
+                            {% block page_name %}Video Page{% endblock %}
+                            <div class="header-actions">
+                                {% block page_actions %}
+
+                                 {% endblock %}
+                            </div>
+                            {% block no_description %}
+                            <small>{% block page_description %}{% endblock %}</small>
+                            {% endblock %}
+                        </h1>
+                        {% block breadcrumbs %}
+                        <ol class='breadcrumb'>
+                            <li >
+                                <a href="{%url 'dash'%}">
+                                    <i class='fa fa-dashboard'></i>
+                                    DashBoard
+                                </a>
+                            </li>
+                            <li>
+                                Video Page
+                            </li>
+
+
+                        </ol>
+                            {# Breadcrumb implementation left to developers #}
+                        {% endblock %}
+                    {% endblock no_heading %}
+                </section>
+            {% endblock %}
+
+            {% block content_outer %}
+            <section class="content">
+                {% block messages %}
+                    {% include 'nestedapp/lib/_messages.html' %}
+                {% endblock %}
+
+                {% block content_block_wrap %}
+                    {% block content %}
+                    <div class='row'>
+
+                        <div class='col-md-12'>
+                            <div class='box '>
+                            <div class='box-body'>
+
+                           
+                               </div>
+                            </div>
+                        </div>
+                      </div>
+                      
+                      <div class='row'>
+
+                        <div class='col-md-12'>
+                            <div class='box'>
+                                 <div class='box-header'>
+                                    <div class='row'>
+                                        <div class='col-md-6'>
+                                            <h3 class='box-title'>
+                                                List of Uploaded Videos
+                                            </h3>
+
+                                        
+                                        </div>
+                                        <div class='col-md-6 text-right'>
+                                            <a class='btn btn-primary btn-sm' href="{% url 'subject'%}">
+                                                <i class='fa fa-plus'></i>
+                                            </a>
+                                        
+                                        </div>
+
+                                    </div>
+
+                                 </div>
+                                 <div class='box-body'>
+
+                                    <table class='table table-bordered table-striped' id="NewTable">
+
+                                        <thead>
+                                            <tr>
+                                                <th>Video Title</th>
+                                                <th>Tags</th>
+                                              
+                                                <th>Status</th>
+                                                <th>Create Date</th>
+                                                <th>Action</th>
+
+                                              
+                                              
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            
+                                             
+                                           
+
+                                           
+                                           
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+
+                            </div>
+                            {%if page_obj.has_next or page_obj.has_previous%}
+                            <nav aria-label="..." style="float:right;">
+                                <ul class="pagination">
+                                    {%if page_obj.has_previous%}
+                                  <li class="page-item ">
+                                    <a class="page-link" href="?page={{page_obj.previous_page_number}}" >Previous</a>
+                                  </li>
+                                  {% else%}
+                                  <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                  </li>
+                                  {% endif%}
+                                  {% for i in nums%}
+                                  <li  class="{% if forloop.counter == page_obj.number%}page-item active{%endif%}"><a class="page-link" href="?page={{forloop.counter}}">
+                                    {{forloop.counter}}
+                                  
+                                     </a></li>
+                                  {% endfor%}
+                                  {%if page_obj.has_next %}
+                                  <li class="page-item">
+                                    <a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a>
+                                  </li>
+                                  {%else%}
+                                  
+                                  <li class="page-item disabled">
+                                    <a class="page-link" href="#">Next</a>
+                                  </li>
+                                  {% endif%}
+                                </ul>
+                              </nav>
+                              {% endif%}
+                            
+                            
+                        </div>
+
+                      
+                         
+                      
+
+                      </div>
+                    {% endblock %}
+
+                {% endblock %}
+            </section>
+            
+            
+            {% endblock   %}
+
+            
+
+        </div>
+        {% endblock content_wrapper %}
