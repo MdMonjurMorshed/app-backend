@@ -10,7 +10,7 @@ class ParentForm(forms.ModelForm):
   
     class Meta:
         model= Category
-        fields=['parent','Category_name','display_name','category_image','order','publish']
+        fields=['parent','Category_name','display_name','category_image','order','publish','has_session','is_sub']
 
         widgets={
             'parent':forms.Select(attrs={"class":"form-control"}),
@@ -23,7 +23,9 @@ class ParentForm(forms.ModelForm):
                     'min':'0','class':'form-control','placeholder':'Enter number for ordering',
                 }
             ),
-            'publish':forms.CheckboxInput(attrs={'class':'form-control'})
+            'publish':forms.CheckboxInput(attrs={'class':'form-control'}),
+            'has_session':forms.CheckboxInput(attrs={'class':'form-control'}),
+            'is_sub':forms.CheckboxInput(attrs={'class':'form-control'})
 
 
 
