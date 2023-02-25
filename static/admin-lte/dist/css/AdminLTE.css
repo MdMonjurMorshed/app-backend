@@ -479,7 +479,7 @@ a:focus {
   /* overflow: hidden; */
   height: 60px;
   top: 0px;
-  bottom: 15px;
+ 
 }
 .user-panel:before,
 .user-panel:after {
@@ -499,6 +499,7 @@ a:focus {
   line-height: 1;
   position: absolute;
   left: 55px;
+  bottom: 15px;
 }
 .user-panel > .info > p {
   font-weight: 600;
