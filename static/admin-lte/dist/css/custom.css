@@ -64,9 +64,12 @@
     width: 100% !important;
   }
 
-  .test{
+  .test .log_test{
     float: right;
   }
+  a.log_test {
+    padding: 0px 10px 0px 10px;
+}
 
   .navbar button {
     border: none;
@@ -75,6 +78,7 @@
   .test a i{
     color: white;
   }
+
 
 
 

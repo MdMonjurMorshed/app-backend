@@ -227,7 +227,9 @@ a:focus {
 .main-header #navbar-search-input.form-control::-webkit-input-placeholder {
   color: #ccc;
 }
-.main-header .navbar-custom-menu,
+.main-header .navbar-custom-menu{
+  float: left;
+}
 .main-header .navbar-right {
   float: right;
 }
