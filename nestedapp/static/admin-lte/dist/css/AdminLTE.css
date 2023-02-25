@@ -227,10 +227,12 @@ a:focus {
 .main-header #navbar-search-input.form-control::-webkit-input-placeholder {
   color: #ccc;
 }
-.main-header .navbar-custom-menu,
-.main-header .navbar-right {
+.main-header .navbar-custom-menu{
   float: right;
 }
+/* .main-header .navbar-right {
+  float: right;
+} */
 @media (max-width: 991px) {
   .main-header .navbar-custom-menu a,
   .main-header .navbar-right a {
