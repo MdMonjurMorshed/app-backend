@@ -68,7 +68,7 @@
     float: right;
   }
 
-  button .sidebar-toggle{
+  .navbar button {
     border: none;
   }
 
