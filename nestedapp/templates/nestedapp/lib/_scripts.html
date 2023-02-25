@@ -547,15 +547,20 @@
  
 </script>
 <script>
-
  $(function(){
-
     var currentPath = window.location.pathname
+    console.log(currentPath)
    $(".sidebar-menu li a").each(function(){
     var href=$(this).attr('href')
-    if (href===currentPath){
+    if (currentPath==="/"){
+      $(this).parents('.treeview').addClass("")
+      $(this).parent().addClass("")
+    }
+    else if (href===currentPath){
+     
      $(this).parents('.treeview').addClass("active")
-
+     $(this).parent().addClass("active")
+ 
  
    
 
