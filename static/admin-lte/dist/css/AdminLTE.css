@@ -431,7 +431,7 @@ a:focus {
   transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
 }
 @media (max-width: 767px) {
-  .main-sidebar,
+
   .left-side {
     padding-top: 100px;
   }
@@ -469,11 +469,16 @@ a:focus {
 .sidebar-form input:focus {
   border-color: transparent;
 }
+
 .user-panel {
   position: relative;
   width: 100%;
   padding: 10px;
-  overflow: hidden;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  /* overflow: hidden; */
+  height: 60px;
+  top: 0px;
 }
 .user-panel:before,
 .user-panel:after {
