@@ -68,6 +68,10 @@
     float: right;
   }
 
+  button .sidebar-toggle{
+    border: none;
+  }
+
 
 
 

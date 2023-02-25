@@ -64,6 +64,14 @@
     width: 100% !important;
   }
 
+  .test{
+    float: right;
+  }
+
+  button .sidebar-toggle{
+    border: none;
+  }
+
 
 
 
