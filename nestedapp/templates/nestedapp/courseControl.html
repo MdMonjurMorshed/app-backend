@@ -49,13 +49,13 @@
           <div class="nav-tabs-custom">
           <ul class="nav nav-tabs">
 
-            <li class="active"><a data-bs-toggle="tab" aria-expanded="true" href="#sessionWise">Session wise data</a></li>
-            <li class=""><a data-bs-toggle="tab" aria-expanded="false" href="#endWise">End wise data</a></li>
+            <li class="active"><a data-toggle="tab" aria-expanded="true" href="#sessionWise">Session wise data</a></li>
+            <li class=""><a data-toggle="tab" aria-expanded="false" href="#endWise">End wise data</a></li>
           </ul>
           <script>
             $("li a").on("click",function(){
-             var get_tab=$(this).attr("href")
-             console.log(get_tab);
+          $(this).attr("aria-expanded")=true
+             
              
             });
           </script>
