@@ -48,9 +48,16 @@
           {% block content %}
           <div class="nav-tabs-custom">
           <ul class="nav nav-tabs">
+
             <li class="active"><a data-toggle="tab" aria-expanded="true" href="#sessionWise">Session wise data</a></li>
             <li class=""><a data-toggle="tab" aria-expanded="false" href="#endWise">End wise data</a></li>
           </ul>
+          <script>
+            $("li a").on("click",function(){
+             var get_tab=document.querySelector('a[href]')
+             console.log(get_tab)
+            });
+          </script>
            <div class="tab-content">
             <div class="tab-pane  active" id="sessionWise">
              
