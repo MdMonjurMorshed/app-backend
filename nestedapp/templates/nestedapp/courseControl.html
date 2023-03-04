@@ -46,7 +46,13 @@
 
         {% block content_block_wrap %}
           {% block content %}
-            <div class="row">
+          <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#">Session wise data</a></li>
+            <li class=""><a data-toggle="tab" href="#">End wise data</a></li>
+          </ul>
+           <div class="tab-content">
+             
+            <div class="row" id="sessionWise">
               <div class="col-md-12">
                 <div class="box">
                   <div class="box-header">
@@ -231,6 +237,8 @@
                 </div>
               </div>
             </div>
+           <div class="row" id="endWise"><h1>end wise data</h1></div>
+          </div>
           {% endblock %}
         {% endblock %}
       </section>
