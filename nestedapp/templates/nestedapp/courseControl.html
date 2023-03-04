@@ -54,7 +54,7 @@
           </ul>
           <script>
             $("li a").on("click",function(){
-             var get_tab=$(this).html()
+             var get_tab=$(this).attr("aria-expanded")
              console.log(get_tab);
              
             });
