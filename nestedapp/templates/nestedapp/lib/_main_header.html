@@ -32,12 +32,8 @@
 
         
         {% block nav_bar_center %}
-        <div class="test">
-            <a href="{% url 'logout'%}" class="log_test" >
-                <i class="fa fa-magnet" style="font-size:15px;line-height:3.5"></i>
-             
-            </a>
-      
+     
+         
         {% block nav_custom_menu %}
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
@@ -75,7 +71,7 @@
                             </ul>
                         </li>
                     {% endif %}
-                    <li class="test"><a href="{% url 'logout'%}" class="log_test" >
+                    <li class=""><a href="{% url 'logout'%}" class="log_test" >
                         <i class="fa fa-magnet" style="font-size:15px;line-height:3.5"></i>
                      
                     </a></li>
@@ -84,7 +80,7 @@
         </div>
         {% endblock nav_custom_menu %}
        
-    </div>
+   
         {% endblock %}
 
         
