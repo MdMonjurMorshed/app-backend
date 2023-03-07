@@ -182,17 +182,7 @@ class Migration(migrations.Migration):
                 ('department', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='inst_department', to='nestedapp.depertment')),
             ],
         ),
-        migrations.CreateModel(
-            name='endWiseCourse',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=200)),
-                ('category', models.CharField(max_length=200)),
-                ('days', models.IntegerField()),
-                ('is_active', models.BooleanField(default=True)),
-                ('course', models.ManyToManyField(to='nestedapp.coursemodel')),
-            ],
-        ),
+       
         migrations.AddField(
             model_name='coursemodel',
             name='department',

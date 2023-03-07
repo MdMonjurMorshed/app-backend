@@ -209,7 +209,7 @@ class videoTopic(models.Model):
     def __str__(self):
         return self.name.chapter.name
 
-class endWiseCourse(models.Model):
+class endCourse(models.Model):
     name=models.CharField(max_length=200,blank=False)
     category=models.CharField(max_length=200,blank=False)
     days=models.IntegerField()
