@@ -644,7 +644,7 @@
                         }
                         
                         /* The Close Button */
-                        .close {
+                        .endClose {
                           color: black;
                           float: right;
                           font-size: 25px;
@@ -670,7 +670,7 @@
                           font-size: 28px;
                           color: black;
                         }
-                        #chap_close {
+                        #endWiseClose {
                           color: black;
                           background: #cfcfcf;
                         }
@@ -679,7 +679,7 @@
                           color: red;
                         }
                         /*tom select css */
-                        #sessionWiseCategory .ts-wrapper.single .ts-control:after {
+                        #endWiseCategory .ts-wrapper.single .ts-control:after {
                           border-color: #343a40 transparent transparent;
                           border-style: solid;
                           border-width: 5px 5px 0;
@@ -718,7 +718,7 @@
                         </style>
                         <div class="modal-header">
                           <button type="button" class="endClose"><span aria-hidden="true">&times;</span></button>
-                          <h5 class="title" id="exampleModalLongTitle">Create New Chatpter</h5>
+                          <h5 class="title" id="exampleModalLongTitle">Create End wise Data</h5>
                         </div>
                         <div class="modal-body">
                           {% csrf_token %}
@@ -730,8 +730,8 @@
                           <span class="appendConditionalSelect"></span>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-default pull-left" id="sessionClose" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary sessionWiseSubmitBtn" data-dismiss="modal">Submit</button>
+                          <button type="button" class="btn btn-default pull-left" id="endWiseClose" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary endWiseSubmitBtn" data-dismiss="modal">Submit</button>
                         </div>
                       </div>
                     </div>
