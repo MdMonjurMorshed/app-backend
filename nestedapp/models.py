@@ -209,4 +209,12 @@ class videoTopic(models.Model):
     def __str__(self):
         return self.name.chapter.name
 
-        
+class endWiseCourse(models.Model):
+    name=models.CharField(max_length=200,blank=False)
+    category=models.CharField(max_length=200,blank=False)
+    days=models.IntegerField()
+    course=models.ManyToManyField(CourseModel)  
+    is_active=models.BooleanField(default=True)
+    
+    def __str__(self):
+        return self.name      

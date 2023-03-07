@@ -66,7 +66,9 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
       
-        'DIRS': os.path.join(BASE_DIR,'nestedapp/templates/nestedapp'),
+        'DIRS':[ os.path.join(BASE_DIR,'nestedapp/templates/nestedapp'),
+                'C:\\Users\\mmt37\\Desktop\\nested\\nestedapp\\templates\\nestedapp'
+                ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
