@@ -2,7 +2,7 @@ from select import select
 from selectors import SelectSelector
 from django import forms
 from taggit.forms import *
-from .models import Category, Chapter, Depertment, Semester, Subject, Video,Package,Instructor,CourseModel,SessionModel
+from .models import Category, Chapter, Depertment, Semester, Subject, Video,Package,Instructor,CourseModel,SessionModel,endCourse
 
 
 class ParentForm(forms.ModelForm):
@@ -221,5 +221,16 @@ class SessionForm(forms.ModelForm):
         }      
         
  
-            
+class EndwiseCourseForm(forms.ModelForm):
+    class Meta:
+        model=endCourse
+        fields=['name','category','days','is_active']  
+        
+        widgets={
+            'name':forms.TextInput(attrs={'class':'form-control',}),
+            'category':forms.Select(attrs={'class':'form-control','id':'end_category','autocomplete':'off'}),
+            'days':forms.NumberInput(attrs={'class':'form-control',}),
+            'is_active':forms.CheckboxInput(attrs={'class':'form-control'})
+        }
+                  
             

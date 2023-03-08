@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect,JsonResponse
 from django.shortcuts import render,redirect,get_object_or_404
 from rest_framework import request
 from django.contrib.auth.models import User
-from .form import ParentForm ,DepForm,SubForm,ChapterForm,VidForm,PackForm,CourseForm,instForm,SessionForm
+from .form import ParentForm ,DepForm,SubForm,ChapterForm,VidForm,PackForm,CourseForm,instForm,SessionForm,EndwiseCourseForm
 from .filter import filterModel, DepFilter,SubFilter,ChapFilter,VidFilter,instFilter
 from django.core.paginator import Paginator
 from django.contrib.contenttypes.models import ContentType
@@ -758,6 +758,10 @@ def PostCourse(request):
 
 ################### CONTROLLING VIEW ################
 def ControlingView(request):
+    # frm=EndwiseCourseForm()
+    # context={
+    #     'form':frm
+    # }
     return render(request,'nestedapp/courseControl.html')    
 
 def ControlPost(request):

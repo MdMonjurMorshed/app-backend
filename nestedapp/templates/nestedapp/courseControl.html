@@ -739,11 +739,21 @@
                           <div class="modal-body">
                             {% csrf_token %}
                             <div class="form-group">
-                              <label for="name" class="required">Category</label>
-                              <span class="appendSessionWiseCategory"></span>
+                              <label for="name" class="required">Title</label>
+                              {{form.name}}
+                            
                             </div>
-                            <!-- append conditional select -->
-                            <span class="appendConditionalSelect"></span>
+                            <div class="form-group">
+                              <label for="name" class="required">Category</label>
+                               {{form.category}}
+                            </div>
+                            <div class="form-group">
+                              <label for="name" class="required">Number of Days</label>
+
+                               {{form.days}}
+                            </div>
+                 
+                        
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left" id="EndClose" data-dismiss="modal">Close</button>
