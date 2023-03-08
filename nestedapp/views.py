@@ -758,11 +758,11 @@ def PostCourse(request):
 
 ################### CONTROLLING VIEW ################
 def ControlingView(request):
-    # frm=EndwiseCourseForm()
-    # context={
-    #     'form':frm
-    # }
-    return render(request,'nestedapp/courseControl.html')    
+    frm=EndwiseCourseForm()
+    context={
+        'form':frm
+    }
+    return render(request,'nestedapp/courseControl.html',context)    
 
 def ControlPost(request):
     if request.method=="POST":
