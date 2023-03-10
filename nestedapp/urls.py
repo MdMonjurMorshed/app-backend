@@ -65,7 +65,13 @@ urlpatterns = [
   # URL FOR USER
   path('instructor/',views.InstView,name='instructor'),
   path('inst-api/',views.InstructorSview.as_view(),name='inst-api'),
- 
+  
+  
+  ################# table url ################
+  
+  # END DAY WISE
+  path('end-day-wise/',views.endDayTable,name='end-day-wise'),
+  path('end-add-course/<int:id>',views.endAddCourse,name='end-add-course'),
   
   
   
@@ -99,6 +105,7 @@ urlpatterns = [
   
   
   path('course-control/',views.ControlingView,name='course-control'),
+  path('end-course-submit/',views.EndCouseSubmit,name='endSubmit'),
   path('control-post/',views.ControlPost,name='control-post'),
   
   

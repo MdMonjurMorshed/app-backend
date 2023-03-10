@@ -530,6 +530,44 @@
     ]
    })
 
+
+   // END DAY WISE DataTable
+   var table=$("#endtable").DataTable({
+    responsive:true,
+    "ajax":{
+      "processing":true,
+      "url":"{% url 'end-day-wise'%}",
+      "dataSrc":""
+    },
+    "columns":[
+    {"data":"name"},
+    {"data":"category"},
+    {"data":"days"},
+    {"data":"is_active"},
+    {"data":"id"}
+    ],
+    "columnDefs":[
+    {
+      "targets":3,
+      "data":"is_active",
+      "className":"dt-data",
+      "render": function(data,type,row){
+        return '<span class="label label-success">'+data+'</span>'
+      }
+    },
+    {
+      "targets":-1,
+      "data":"id",
+      "className":"dt-action",
+      "render": function(data,type,row){
+        return '<a class="btn btn-sm btn-success"><i class="glyphicon glyphicon-pencil"></i></a>'+" "+'<a href="/end-add-course/'+data+'" class="btn btn-sm btn-info" ><i class="glyphicon glyphicon-eye-open"></i></a>'
+      }
+    }
+    ]
+
+  })  
+ 
+
  })
 </script>
 

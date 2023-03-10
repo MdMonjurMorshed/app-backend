@@ -54,8 +54,9 @@ class SessionAdmin(admin.ModelAdmin):
 class SesscionCatAdmin(admin.ModelAdmin):
     list_display=['id','category','session']      
     
-admin.site.register(endCourse)
- 
+@admin.register(endCourse)
+class endAdmin(admin.ModelAdmin):
+    list_display=['id','name','category'] 
 
  
            

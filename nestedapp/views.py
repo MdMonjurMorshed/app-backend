@@ -14,7 +14,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import ListAPIView
-from .models import Category, Physics,Depertment,Semester,Subject,Chapter,Video,Package,videoTopic,Instructor,CourseModel,SessionModel,SessionCategory
+from .models import Category, Physics,Depertment,Semester,Subject,Chapter,Video,Package,videoTopic,Instructor,CourseModel,SessionModel,SessionCategory,endCourse
 from .serializers import TopicSerializer,PackageSerialize,VideoSerialize,CatSerializer,DepertSerializer,SemesterSerializer,SubSerializer,ChapSerializer,CourseSerialize,InstSerialize,SessionCatSerial,SessionSerial
 from django.contrib.auth import authenticate,login,logout
 from taggit.models import TaggedItem
@@ -758,6 +758,7 @@ def PostCourse(request):
 
 ################### CONTROLLING VIEW ################
 def ControlingView(request):
+   
     frm=EndwiseCourseForm()
     context={
         'form':frm
@@ -795,7 +796,34 @@ def ControlPost(request):
             
     return JsonResponse({'sussess':True})
 
-################### SERIALIZE VIEW ################
+def EndCouseSubmit(request):
+    if request.method =="POST":
+        data=json.loads(request.body)
+       
+            
+        dm=endCourse(name=data['title'],category=data['category'],days=data['days'])
+        dm.save()
+        messages="data added successfully"
+      
+    return JsonResponse({"success":True,"message":messages,})
+
+################# dataTable for end day wise course ################
+def endDayTable(request):
+    mi=endCourse.objects.filter(is_active=True).values('id','name','category','days','is_active')
+    print(mi)
+    data_list=[{"id":i['id'],"name":i['name'],"category":i['category'],"days":i['days'],"is_active":"Active" if i['is_active']==True else ""} for i in mi]
+    print(data_list)
+    return JsonResponse(data_list,safe=False)
+
+def endAddCourse(request,id):
+    
+    mi=endCourse.objects.filter(id=id).values()
+    context={
+        "data":mi
+    }
+  
+    return render(request,'nestedapp/endWiseCourse.html',context)
+################### SERIALIZE VIEW ################1
 
 class categoryView(ListAPIView):
     queryset=Category.objects.all()

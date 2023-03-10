@@ -2,6 +2,11 @@
 
 {% block content_wrapper %}
   <div class="content-wrapper">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+ 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
     {% block content_header %}
       <section class="content-header">
         {% block no_heading %}
@@ -50,7 +55,7 @@
           <ul class="nav nav-tabs" id="mytab">
 
             <li class="active"><a data-toggle="tab" aria-expanded="true" href="#sessionWise">Session wise data</a></li>
-            <li ><a data-toggle="tab" aria-expanded="false" href="#endWise">End wise data</a></li>
+            <li  ><a data-toggle="tab" aria-expanded="false" href="#endWise">End wise data</a></li>
           </ul>
          
          
@@ -63,7 +68,7 @@
             })
           </script>
            <div class="tab-content">
-          <div class="tab-pane fade in active" id="sessionWise">
+          <div class="tab-pane fade in active " id="sessionWise">
              
             <div class="row" >
               <div class="col-md-12">
@@ -576,7 +581,7 @@
               </script>
             </div>
          </div>
-          <div class="tab-pane fade" id="endWise">
+          <div class="tab-pane fade " id="endWise">
             <div class="row" >
               <div class="col-md-12">
                 <div class="box">
@@ -731,6 +736,16 @@
                               box-shadow: none !important;
                               outline: 0;
                             }
+
+                            .dt-data{
+                              text-align: center;
+                            }
+                            .table-row{
+                              text-align: center;
+                            }
+                            .dt-action{
+                              text-align: center;
+                            }
                           </style>
                           <div class="modal-header">
                             <button type="button" class="end_close"><span aria-hidden="true">&times;</span></button>
@@ -757,7 +772,7 @@
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left" id="EndClose" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary sessionWiseSubmitBtn" data-dismiss="modal">Submit</button>
+                            <button type="button" class="btn btn-primary endWiseSubmitBtn" data-dismiss="modal">Submit</button>
                           </div>
                         </div>
                       </div>
@@ -766,15 +781,15 @@
                     
                   </div>
                   <div class="box-body">
-                    <table class="table table-bordered table-striped table-responsive">
+                    <table class="table table-bordered table-striped table-responsive" id="endtable">
                       <thead>
-                        <tr>
-                          <th>Category</th>
-                          <th>Subject Name</th>
-                          <th>Chapter Name</th>
+                        <tr class="table-row">
+                          <th>Title</th>
+                          <th> Category</th>
+                          <th>Days</th>
 
                           <th>Status</th>
-                          <th>Create Date</th>
+                          
 
                           <th>Action</th>
                         </tr>
@@ -822,14 +837,137 @@
               </script>
              
               <script>
-                var cate
-                var sess
+                var cate=[]
+              changedCategory="" 
+            
+            
                 $(document).ready(function(){
-                 
+                
+                  var selectCategory
+
+                 getCategory()
+                 dataSubmition()
+            
+         
                   
                 })
+                function getCategory(){
+                
+                 selectCategory= new TomSelect("#end_category",{
+                  create:false,
+                  sortedField:{
+                    field:'text',
+                    direction:'asc'
+                  },
+                  minItems:1,
+                  maxItems:1
+                })
+
+                axios.get("/cat-api/").then(function(response){
+                  var data = response.data
+                 for (var i=0;i<data.length;i++){
+                  if (!data[i].has_session ){
+                     console.log(data[i].publish)
+                     newData={
+                      id:data[i].id,
+                      name:data[i].Category_name
+                     }
+                    cate.push(newData)
+                 }
+                }
+                  console.log(cate)
+                cate.forEach(function(item){
+                  var dat={
+                    value:item.id,text:item.name
+                  }
+                  selectCategory.addOption(dat)
+                })
+              
+                $("#end_category").on("change",function(){
+              
+                 changedCategory= $(this).find("data-ts-item").text()
+                 changedCatHandeler(changedCategory)
+                 
+                
+          
+            
+                 
+             
+            
+               
+                
+                })
+              
+              
+        
+              
+                })
+               
+               
+             
+               
+
+                }
+                function changedCatHandeler(n){
+
+                }
+
+              
+                function dataSubmition(){
+                
+                 
+                 
+                  $(".endWiseSubmitBtn").on('click',function(){
+                  var csrf =$("input[name=csrfmiddlewaretoken]").val()
+                  var title=$("#id_name").val()
+             
+                  var days=$("#id_days").val()
+                  if (title=="" || changedCategory=="" || days==""){
+                    if(title==""){
+                      toastr.error("title is required")
+                    }
+                    else if(changedCategory==""){
+                      toastr.error("category is required")
+                    }else{
+                      toastr.error("days is required")
+                    }
+                  
+                  }else{
+                    data={
+                      "title":title,
+                      "category":changedCategory,
+                      "days":days
+                    }
+                    console.log(data)
+                    axios.post("/end-course-submit/",data,{
+                      headers:{
+                        "X-CSRFToken":csrf
+                      }
+                    }).then(function(response){
+                    
+                      data=response.data
+                      toastr.success(data.message)
+              
+  
+                    }) 
+                    modal2.style.display = "none";
+                   
+                  }
+                  $("#id_name").val('')
+                  selectCategory.clear()
+                  $("#id_days").val('')
+
+                  var newtable=$("#endtable").DataTable()
+                  newtable.ajax.reload()
+
+                   
+                  })
+                  
+                }
             
               </script>
+          
+          
             </div>
           </div>
            

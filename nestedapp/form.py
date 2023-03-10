@@ -227,9 +227,9 @@ class EndwiseCourseForm(forms.ModelForm):
         fields=['name','category','days','is_active']  
         
         widgets={
-            'name':forms.TextInput(attrs={'class':'form-control',}),
-            'category':forms.Select(attrs={'class':'form-control','id':'end_category','autocomplete':'off'}),
-            'days':forms.NumberInput(attrs={'class':'form-control',}),
+            'name':forms.TextInput(attrs={'class':'form-control','required':"true"}),
+            'category':forms.Select(attrs={'class':'form-control','id':'end_category','autocomplete':'off','required':'true'}),
+            'days':forms.NumberInput(attrs={'class':'form-control','required':'true'}),
             'is_active':forms.CheckboxInput(attrs={'class':'form-control'})
         }
                   
