@@ -72,6 +72,8 @@ urlpatterns = [
   # END DAY WISE
   path('end-day-wise/',views.endDayTable,name='end-day-wise'),
   path('end-add-course/<int:id>',views.endAddCourse,name='end-add-course'),
+  path('load-course/',views.loadCourse,name='load-course'),
+  path('laod-department/',views.loadDepartment,name='load-department'),
   
   
   

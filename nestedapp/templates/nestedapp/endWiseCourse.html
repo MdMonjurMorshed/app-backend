@@ -330,31 +330,17 @@
                 var selectedDepartment=""
                 var category=""
                  global = " "
-                 course=[]
-                
                 var dep=[]
-                $.ajax({
-                  url:"{% url 'course-api'%}",
-                  success:function(data){
-                    console.log(data)
-                  }
-                })
+                var course=[]
+              
                 $(document).ready(function(){
-                  {% comment %} axios.get("{% url 'course-api'%}").then(function(response){
-                    data=response.data
-                    
-                    course=data;
-                  }) {% endcomment %}
-                  
-                
+          
                   handleDepartment()
-                  handleCourse()
+                 
                   submitCourse()
                 })
                 function handleDepartment(){
                 category=$("#selectedCategory").val()
-
-                
                    var html='<input class="form-control" id="endDepartment" placeholder="select department">'
                    var select='<select class="form-control" id="idSelect" placeholder="select department"></select>'
                    $('.categoryWiseDepartment').append(select)
@@ -368,40 +354,26 @@
                     maxItems:1
                    }) 
 
-                   axios.get("{% url 'dep-api'%}").then(function(response){
+                   axios.get("{% url 'load-department'%}").then(function(response){
                     data=response.data
                     for (var i=0; i< data.length;i++){
-                       if (data[i].category['Category_name']==category){
+                       if (data[i].category==category){
                            dep.push(data[i])
                          
                        }
                     }
                     dep.forEach(function(item){
-                        var dep_data={value:item.id,text:item.depName}
+                        var dep_data={value:item.id,text:item.name}
                         selectedDepartment.addOption(dep_data) 
                       
                        
                     })
-                    
-           
-
-                   
-
-                   })
-                   
-                
-                
-          
-                  
+                   })  
+                  handleCourse()
                     
                 }
-                function emptyFun(n){
 
-                }
-                
                 function handleCourse(){
-
-             
                  course_html='<select class="form-control" id="idCourse" placeholder="Select Course"></select>'
                  $(".cat-and-dep-wiseCourse").html(course_html)
                  var selectedCourse=new TomSelect("#idCourse",{
@@ -414,46 +386,42 @@
                   maxItems:1
                  })
                 
-               
-              
-                 $("#idSelect").on("change",function(){
-                  global = $(this).find("option:selected").text()
-              
-
-                    
-                  var filteredCourse=course.filter((item)=> item.category['Category_name']==category && item.department['depName']==global)
-                  selectedCourse.clear()
-                  selectedCourse.clearOptions()
-                  if(filteredCourse.length>0){
-                    filteredCourse.forEach(function(item){
-
-                      var course={
-                        value:item.id,
-                        text:item.name
-                      }
-                      selectedCourse.addOption(course)
-                      
-  
-                     })
-
-                  }
-                 
+                 axios.get("{% url 'load-course'%}").then(function(response){
+                  data=response.data
                   
-                   
-              
-                   })
-                   
-              
-                 
-            
+                  $("#idSelect").on("change",function(){
+                    global = $(this).val() 
+                    var filteredCourse=data.filter((item)=> item.category_name==category && item.department_id==global)
+                      console.log(filteredCourse)
+                      selectedCourse.clear()
+                      selectedCourse.clearOptions()
+                      if(filteredCourse.length>0){
+                        filteredCourse.forEach(function(item){
+    
+                          var c={
+                            value:item.id,
+                            text:item.name
+                          }
+                          selectedCourse.addOption(c)
+                          
+      
+                         })
+    
+                      }    
+                
+                     })
+                }) 
                 }
                function submitCourse(){
                 $(".courseSubmitButton").on("click",function(){
-                  console.log(category)
                   var selectedDep=$("#idSelect").val()
-                  console.log(selectedDep)
                   var course_value=$("#idCourse").val()
-                  console.log(course_value)
+                  var data={
+                    "category":category,
+                    "department_id":selectedDep,
+                    "course_id":course_value
+                                    }
+                console.log(data)
                     
 
                 })

@@ -821,8 +821,19 @@ def endAddCourse(request,id):
     context={
         "data":mi
     }
+    
+
+        
   
     return render(request,'nestedapp/endWiseCourse.html',context)
+def loadDepartment(request):
+    mi=Depertment.objects.all()
+    data_lsit=[{"id":i.id,"name":i.depName,"category":i.category.Category_name} for i in mi]
+    return JsonResponse(data_lsit,safe=False)
+def loadCourse(request):
+    mi=CourseModel.objects.all()
+    data_list=[{"id":i.id,"name":i.name,"category_name":i.category.Category_name,"department_id":i.department.id} for i in mi]
+    return JsonResponse(data_list,safe=False)
 ################### SERIALIZE VIEW ################1
 
 class categoryView(ListAPIView):
