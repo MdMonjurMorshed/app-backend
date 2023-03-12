@@ -885,7 +885,7 @@
               
                 $("#end_category").on("change",function(){
               
-                 changedCategory= $(this).find("data-ts-item").text()
+                 changedCategory= $(this).find("option:selected").text()
                  changedCatHandeler(changedCategory)
                  
                 
@@ -909,18 +909,18 @@
 
                 }
                 function changedCatHandeler(n){
-
+                     
                 }
 
               
                 function dataSubmition(){
                 
-                 
+         
                  
                   $(".endWiseSubmitBtn").on('click',function(){
                   var csrf =$("input[name=csrfmiddlewaretoken]").val()
                   var title=$("#id_name").val()
-             
+                  console.log(changedCategory)
                   var days=$("#id_days").val()
                   if (title=="" || changedCategory=="" || days==""){
                     if(title==""){

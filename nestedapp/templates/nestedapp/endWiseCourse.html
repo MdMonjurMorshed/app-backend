@@ -328,12 +328,31 @@
             </script>
             <script>
                 var selectedDepartment=""
+                var category=""
+                 global = " "
+                 course=[]
+                
                 var dep=[]
+                $.ajax({
+                  url:"{% url 'course-api'%}",
+                  success:function(data){
+                    console.log(data)
+                  }
+                })
                 $(document).ready(function(){
+                  {% comment %} axios.get("{% url 'course-api'%}").then(function(response){
+                    data=response.data
+                    
+                    course=data;
+                  }) {% endcomment %}
+                  
+                
                   handleDepartment()
+                  handleCourse()
+                  submitCourse()
                 })
                 function handleDepartment(){
-                    var category=$("#selectedCategory").val()
+                category=$("#selectedCategory").val()
 
                 
                    var html='<input class="form-control" id="endDepartment" placeholder="select department">'
@@ -363,19 +382,85 @@
                       
                        
                     })
-             $("#idSelect").on("change",function(){
-                        var changedDepartment=$(this).val()
-                        handleCourse(changedDepartment)
-                    })
+                    
+           
 
-              
+                   
 
                    })
+                   
+                
+                
+          
+                  
                     
                 }
-                function handleCourse(n){
-                    console.log(n)
+                function emptyFun(n){
+
                 }
+                
+                function handleCourse(){
+
+             
+                 course_html='<select class="form-control" id="idCourse" placeholder="Select Course"></select>'
+                 $(".cat-and-dep-wiseCourse").html(course_html)
+                 var selectedCourse=new TomSelect("#idCourse",{
+                  create:false,
+                  sortedField:{
+                    field:'text',
+                    direction:'asc'
+                  },
+                  minItems:1,
+                  maxItems:1
+                 })
+                
+               
+              
+                 $("#idSelect").on("change",function(){
+                  global = $(this).find("option:selected").text()
+              
+
+                    
+                  var filteredCourse=course.filter((item)=> item.category['Category_name']==category && item.department['depName']==global)
+                  selectedCourse.clear()
+                  selectedCourse.clearOptions()
+                  if(filteredCourse.length>0){
+                    filteredCourse.forEach(function(item){
+
+                      var course={
+                        value:item.id,
+                        text:item.name
+                      }
+                      selectedCourse.addOption(course)
+                      
+  
+                     })
+
+                  }
+                 
+                  
+                   
+              
+                   })
+                   
+              
+                 
+            
+                }
+               function submitCourse(){
+                $(".courseSubmitButton").on("click",function(){
+                  console.log(category)
+                  var selectedDep=$("#idSelect").val()
+                  console.log(selectedDep)
+                  var course_value=$("#idCourse").val()
+                  console.log(course_value)
+                    
+
+                })
+
+               }
+                
+             
             </script>
             
             
