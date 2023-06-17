@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import  Physics, Category,Depertment,Semester,Subject,Chapter,Video,Package,videoTopic,Instructor,CourseModel,SessionModel,SessionCategory,endCourse
+from .models import  Physics, Category,Depertment,Semester,Subject,Chapter,Video,Package,videoTopic,Instructor,CourseModel,SessionModel,SessionCategory,endCourse,coursePlan,CourseDetails
 
 
 @admin.register(Physics)
@@ -57,6 +57,11 @@ class SesscionCatAdmin(admin.ModelAdmin):
 @admin.register(endCourse)
 class endAdmin(admin.ModelAdmin):
     list_display=['id','name','category'] 
+
+
+### test puspose########
+admin.site.register(coursePlan)  
+admin.site.register(CourseDetails)  
 
  
            

@@ -1,8 +1,15 @@
 {% extends 'nestedapp/base.html' %}
 
 {% block content_wrapper %}
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.8/sweetalert2.min.js" integrity="sha512-ySDkgzoUz5V9hQAlAg0uMRJXZPfZjE8QiW0fFMW7Jm15pBfNn3kbGsOis5lPxswtpxyY3wF5hFKHi+R/XitalA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<style>
+  .swal2-confirm {
+   
+    }
+    .swal2-cancel{
+      margin-right: 20px !important;
+    }
+</style>
     {% for d in data%}
         <div class="content-wrapper">
             {% block content_header %}
@@ -250,7 +257,7 @@
                                  </div>
                                  <div class='box-body'>
 
-                                    <table class='table table-bordered table-striped table-responsive'>
+                                    <table class='table table-bordered table-striped table-responsive' id="endTable">
 
                                         <thead>
                                             <tr>
@@ -328,16 +335,19 @@
             </script>
             <script>
                 var selectedDepartment=""
+                var selectedCourse=""
                 var category=""
                  global = " "
                 var dep=[]
                 var course=[]
+                var endCourseTable=""
               
                 $(document).ready(function(){
           
                   handleDepartment()
-                 
+                  EndCourseDatatable()
                   submitCourse()
+                 
                 })
                 function handleDepartment(){
                 category=$("#selectedCategory").val()
@@ -376,7 +386,7 @@
                 function handleCourse(){
                  course_html='<select class="form-control" id="idCourse" placeholder="Select Course"></select>'
                  $(".cat-and-dep-wiseCourse").html(course_html)
-                 var selectedCourse=new TomSelect("#idCourse",{
+                 selectedCourse=new TomSelect("#idCourse",{
                   create:false,
                   sortedField:{
                     field:'text',
@@ -392,7 +402,7 @@
                   $("#idSelect").on("change",function(){
                     global = $(this).val() 
                     var filteredCourse=data.filter((item)=> item.category_name==category && item.department_id==global)
-                      console.log(filteredCourse)
+                     console.log(filteredCourse)
                       selectedCourse.clear()
                       selectedCourse.clearOptions()
                       if(filteredCourse.length>0){
@@ -414,20 +424,154 @@
                 }
                function submitCourse(){
                 $(".courseSubmitButton").on("click",function(){
+                  window.location.reload()
                   var selectedDep=$("#idSelect").val()
                   var course_value=$("#idCourse").val()
-                  var data={
-                    "category":category,
-                    "department_id":selectedDep,
-                    "course_id":course_value
-                                    }
-                console.log(data)
-                    
+                  var csrf=$("input[name=csrfmiddlewaretoken]").val()
+                 
+                  if (selectedDep==""|| course_value ==""){
+                  if (selectedDep==""){
+                    toastr.error("department is required")
+                  }
+                  else if(course_value==""){
+                    toastr.error("course is required")
+                  }
+                  }   else{
+                    modal.style.display="none";
 
+                    var data={
+                      "id":"{{d.id}}",
+                      "category":category,
+                      "department_id":selectedDep,
+                      "course_id":course_value
+                                      }
+
+
+                     axios.post("{% url 'save-end-course'%}",data,{
+                      headers:{
+                        "X-CSRFToken":csrf
+                      }
+                     }).then(function(response){
+
+                     
+                       
+                      selectedDepartment.clear()
+                      selectedCourse.clear()
+                      
+                      var data=response.data
+                      toastr.success(data.massage)
+                      
+                      
+
+                                      })
+
+                  }               
+               
+                 
+                
+                 
+                
                 })
+               
+
 
                }
+               function EndCourseDatatable(){
+               endCourseTable = $("#endTable").DataTable({
+                 responsive:true,
+                 autowidth:false,
+                 order:[[0,"asc"]],
+                 ordering:true,
+                 columndefs:[{orderable:false,targets:0}]
+
+                });
+                $.ajax({
+                  url:"{% url 'check-data'%}",
+                  data:{
+                    id:{{d.id}},
+                    category:"{{d.category}}"
+                  },
+                  success:function(data){
+                    console.log(data)
+                    var list=[]
+                    for (var i=0;i<data.length;i++){
+                      list.push(data[i].id)
+                      var btn=getDeleteButton(data[i].id)
+                      endCourseTable.row.add([data[i].name,data[i].department,btn]).draw(false)
+                    }
+                    click(list)
+                   
+                  }
+                })
+             
+               }
+
+               function getDeleteButton(id){
+               
+                let btn=`<span class="btn btn-sm btn-danger" id="remove-${id}" ><i class="glyphicon glyphicon-trash"></i></span>`
                 
+                return btn
+                
+               }
+             
+             function click(n){
+              n.forEach(function(item){
+                $("#remove-"+item+"").on("click",function(){
+              
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                      confirmButton: 'btn btn-success',
+                      cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false
+                  })
+                  
+                  swalWithBootstrapButtons.fire({
+                    title: 'Are you sure?',
+                    text: "you want to remove this course",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Remove',
+                    cancelButtonText:  'Cancel',
+                    reverseButtons: true
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                     
+                      $.ajax({
+                        url:"{% url 'remove-endcourse'%}",
+                        data:{
+                          id:{{d.id}},
+                          category:"{{d.category}}",
+                          course_id:item
+                        },
+                        success:function(data){
+                          
+                        location.reload()
+                        swalWithBootstrapButtons.fire(
+                        'Removed!',
+                        data.message,
+                        'success'
+                      )
+                    
+                         
+                        }
+                      })
+
+                   
+                    } else if (
+                      /* Read more about handling dismissals below */
+                      result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                      swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your course is safe :)',
+                        'error'
+                      )
+                    }
+                  }) 
+                })
+              })
+             }
              
             </script>
             

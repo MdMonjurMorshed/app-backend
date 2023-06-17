@@ -74,8 +74,15 @@ urlpatterns = [
   path('end-add-course/<int:id>',views.endAddCourse,name='end-add-course'),
   path('load-course/',views.loadCourse,name='load-course'),
   path('laod-department/',views.loadDepartment,name='load-department'),
+  path('save-end-course/',views.saveEndCourse,name='save-end-course'),
+  path('check-data/',views.CheckView,name="check-data"),
+  path('remove-endcourse/',views.removeEndCourse,name='remove-endcourse'),
+
   
+  # COURSE PRICING
   
+  path('course-pricing',views.CoursePricing,name='course-pricing'),
+  path('cousrse-price-data/',views.CoursePriceData,name="course-price-data"),
   
   
   
@@ -90,6 +97,7 @@ urlpatterns = [
   path('video-api/',views.Videosview.as_view(),name='video-api'),
   path('chap-api/',views.ChapSview.as_view(),name='chap-api'),
   path('course-api/',views.CourseSview.as_view(),name='course-api'),
+  path('endCourse-api/',views.endCourseSerialView.as_view(),name='endCourse-api'),
   
   
   path('response-table/',views.TableView,name="response-table"),
@@ -116,5 +124,7 @@ urlpatterns = [
   
   path('addcourse-to-semester/',views.AddCourseToSemester,name='addcourse-to-semester'),
   path('post-course-semester',views.PostCourse,name='postCourse'),
+  
+ 
    
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

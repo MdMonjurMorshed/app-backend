@@ -14,8 +14,8 @@ from django.contrib.contenttypes.models import ContentType
 
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import ListAPIView
-from .models import Category, Physics,Depertment,Semester,Subject,Chapter,Video,Package,videoTopic,Instructor,CourseModel,SessionModel,SessionCategory,endCourse
-from .serializers import TopicSerializer,PackageSerialize,VideoSerialize,CatSerializer,DepertSerializer,SemesterSerializer,SubSerializer,ChapSerializer,CourseSerialize,InstSerialize,SessionCatSerial,SessionSerial
+from .models import Category, Physics,Depertment,Semester,Subject,Chapter,Video,Package,videoTopic,Instructor,CourseModel,SessionModel,SessionCategory,endCourse,coursePlan,CourseDetails
+from .serializers import TopicSerializer,PackageSerialize,VideoSerialize,CatSerializer,DepertSerializer,SemesterSerializer,SubSerializer,ChapSerializer,CourseSerialize,InstSerialize,SessionCatSerial,SessionSerial,EndCourseSerializer
 from django.contrib.auth import authenticate,login,logout
 from taggit.models import TaggedItem
 import json
@@ -764,7 +764,7 @@ def ControlingView(request):
         'form':frm
     }
     return render(request,'nestedapp/courseControl.html',context)    
-
+########## session wise semester add #################
 def ControlPost(request):
     if request.method=="POST":
         data=json.loads(request.body)
@@ -834,7 +834,114 @@ def loadCourse(request):
     mi=CourseModel.objects.all()
     data_list=[{"id":i.id,"name":i.name,"category_name":i.category.Category_name,"department_id":i.department.id} for i in mi]
     return JsonResponse(data_list,safe=False)
-################### SERIALIZE VIEW ################1
+
+def saveEndCourse(request):
+    if request.method=="POST":
+        data=json.loads(request.body)
+        endCourse_mi=endCourse.objects.filter(id=int(data['id']),category=data['category'])
+        course_mi=CourseModel.objects.filter(id=data['course_id'])
+        
+      
+            
+        for e_c in endCourse_mi:
+            e_c.course.add(data['course_id'])
+            messages="course is added successfully"
+            return JsonResponse({"massage":messages})
+
+                
+        
+        
+    return JsonResponse({"success":True})
+def removeEndCourse(request):
+    id=request.GET.get('id')
+    category=request.GET.get('category')
+    id_course=request.GET.get('course_id')
+    endcourse_mi=endCourse.objects.filter(id=id,category=category)
+    for ec in endcourse_mi:
+        ec.course.remove(id_course)
+    
+    messages="Course is removed successfully"
+ 
+    return JsonResponse({"message":messages})
+
+def CheckView(request):
+    
+    id=request.GET.get("id",None)
+    category=request.GET.get("category")
+    print("category is:",category)
+    course_filter=endCourse.objects.filter(id=id,category=category).values("course")
+    data_list=[]
+    for course in course_filter:
+        course_mi=CourseModel.objects.filter(id=course["course"])
+        print(course_mi)
+        for c in course_mi:
+            data={
+                "id":c.id,
+                "name":c.name,
+                "department":c.department.depName
+            }
+            data_list.append(data)
+   
+    return JsonResponse(data_list,safe=False)
+
+
+############### COURSE PRICING ################
+def CoursePricing(request):
+    if request.method=="POST":
+        data=json.loads(request.body)
+        courseName=CourseModel.objects.get(name=data['course'])
+        print(courseName)
+        course_mi=CourseModel.objects.filter(category__Category_name=data["category"],department__depName=data["department"],name=data["course"])
+        
+        course_name=course_mi.first()
+        print(course_name)
+        course_details,createed=CourseDetails.objects.get_or_create(course=course_name,videos=data["video_number"])
+        if createed:
+            return JsonResponse({"message":"already exist"})
+        
+        else:
+          course_details=CourseDetails(course=course_name,videos=data["video_number"])  
+          course_details.save()
+       
+        courseDetails_mi=CourseDetails.objects.filter(course=course_name)
+        plan_details=data['pack_details']
+        for plan in plan_details:
+            course_plan,created=coursePlan.objects.get_or_create(plan=plan["pack_name"],course_hour=plan["hours"],course_price=plan["course_price"],sell_price=plan["sell_price"],course_duration=plan["course_duration"],total_quiz=plan["total_quiz"],total_notebook=plan["total_notebook"])
+            if createed:
+                 return JsonResponse({"message":"already exist"})
+            else:
+              course_plan=coursePlan(plan=plan["pack_name"],course_hour=plan["hours"],course_price=plan["course_price"],sell_price=plan["sell_price"],course_duration=plan["course_duration"],total_quiz=plan["total_quiz"],total_notebook=plan["total_notebook"])  
+              course_plan.save()
+              for c_d in courseDetails_mi:
+                  c_d.plan.add(course_plan)
+        messages.success(request,"pricing data is added successfully")
+      
+        return JsonResponse({"message":"pricing data is added successfully"})
+    
+        
+    return render(request,"nestedapp/addCoursePrice.html")
+def CoursePriceData(request):
+    
+    course_mi=CourseModel.objects.all()
+   
+    category_mi=Category.objects.all()
+    data_category=[{"id":i.id,"name":i.Category_name}for i in category_mi]
+    department_mi=Depertment.objects.all()
+    data_department=[{"id":i.id,"name":i.depName,"category_id":i.category.id,"category_name":i.category.Category_name} for i in department_mi]
+   
+    data_course=[{"category_id":i.category.id,"category_name":i.category.Category_name,"department_id":i.department.id,"department_name":i.department.depName,"course_id":i.id,"course_name":i.name} for i in course_mi]
+    final_data={
+                "category":data_category,
+                "department":data_department,
+                "course":data_course
+            }
+    return JsonResponse(final_data,safe=False)
+
+   
+            
+    
+    
+################### SERIALIZE VIEW ################
 
 class categoryView(ListAPIView):
     queryset=Category.objects.all()
@@ -880,3 +987,7 @@ class SessionCatSerialView(ListAPIView):
 class SessionSerialView(ListAPIView):
     queryset=SessionModel.objects.all()
     serializer_class= SessionSerial   
+    
+class endCourseSerialView(ListAPIView):
+        queryset=endCourse.objects.all()
+        serializer_class=EndCourseSerializer

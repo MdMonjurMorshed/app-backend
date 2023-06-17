@@ -4,7 +4,7 @@ from django import template
 from django.conf import settings
 from django.urls import reverse
 
-from django_adminlte.compat import is_authenticated
+# from django_adminlte.compat import is_authenticated
 from django.shortcuts import redirect
 
 register = template.Library()

@@ -218,3 +218,25 @@ class endCourse(models.Model):
     
     def __str__(self):
         return self.name      
+
+class coursePlan(models.Model):
+   
+   
+    plan=models.CharField(max_length=50,blank=False)
+    course_hour=models.CharField(max_length=100,blank=False,null=True)
+    course_price=models.DecimalField(max_digits=10,decimal_places=2,blank=False,null=True)
+    sell_price=models.DecimalField(max_digits=10,decimal_places=2,blank=False,null=True)
+    course_duration=models.CharField(max_length=100,blank=True,null=True)
+    total_quiz=models.CharField(max_length=100,blank=True,null=True)
+    total_notebook=models.CharField(max_length=100,blank=True,null=True)
+    
+    def __str__(self) -> str:
+        return self.plan
+    
+class CourseDetails(models.Model):
+    course=models.ForeignKey(CourseModel,blank=False,on_delete=models.CASCADE)
+    videos=models.IntegerField(blank=True,null=True)
+    plan=models.ManyToManyField(coursePlan,blank=True)    
+    
+    def __str__(self) -> str:
+        return self.course.name    

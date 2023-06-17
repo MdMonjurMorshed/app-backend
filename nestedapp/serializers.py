@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Package,Video,videoTopic,Category,Subject,Depertment,Chapter,Semester,CourseModel,Instructor,SessionCategory,SessionModel
+from .models import Package,Video,videoTopic,Category,Subject,Depertment,Chapter,Semester,CourseModel,Instructor,SessionCategory,SessionModel,endCourse
 
 
 class CatSerializer(serializers.ModelSerializer):
@@ -84,6 +84,9 @@ class SessionCatSerial (serializers.ModelSerializer):
         model=SessionCategory
         fields=["session","category","semester"]     
     
-
-       
+class EndCourseSerializer(serializers.ModelSerializer):
+    course=CourseSerialize(many=True)
+    class Meta:
+        model=endCourse
+        fields="__all__"
        

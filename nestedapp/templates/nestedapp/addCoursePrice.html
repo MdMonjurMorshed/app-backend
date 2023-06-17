@@ -1,0 +1,649 @@
+{% extends 'nestedapp/base.html' %}
+
+{% block content_wrapper %}
+        <div class="content-wrapper">
+            {% block content_header %}
+                <section class="content-header">
+                   
+                    {% block no_heading %}
+                        <h1>
+                            {% block page_name %}Category Page{% endblock %}
+                            <div class="header-actions">
+                                {% block page_actions %}
+
+                                 {% endblock %}
+                            </div>
+                            {% block no_description %}
+                            <small>{% block page_description %}{% endblock %}</small>
+                            {% endblock %}
+                        </h1>
+                        {% block breadcrumbs %}
+                        <ol class='breadcrumb'>
+                            <li >
+                                <a href="{%url 'dash'%}">
+                                    <i class='fa fa-dashboard'></i>
+                                    DashBoard
+                                </a>
+                            </li>
+                            <li>
+                                Category Page
+                            </li>
+
+
+                        </ol>
+                            {# Breadcrumb implementation left to developers #}
+                        {% endblock %}
+                    {% endblock no_heading %}
+                </section>
+            {% endblock %}
+
+            {% block content_outer %}
+            <section class="content">
+                {% block messages %}
+                    {% include 'nestedapp/lib/_messages.html' %}
+                {% endblock %}
+
+                {% block content_block_wrap %}
+                    {% block content %}
+                      
+                      <div class='row'>
+
+                        <div class='col-md-12'>
+                            <div class='box box-primary'>
+
+                                <!-- its header for the page -->
+                              <div class='box-header with-border'>
+                                <h3 class='box-title'> Create Category<h3>
+                               </div>
+
+                               <!-- its form for this page-->
+                               <div class='box-body'>
+                                <form method='POST' role='form' id="post_form" enctype='multipart/form-data'>
+
+                                    {%csrf_token%}
+                                    <div class='tosterMessage' id='messageArea'>
+    
+                                    </div>
+                                    <div class="row">
+                                        <div class='col-md-12 '>
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; grid-gap:5px">
+                                            <div class='form-group'>
+                                                 <label for='name'> Category Name</label>
+                                                 <select name="" class="form-control" id="cat_select"><option value="" selected disabled>---------</option></select>
+                                                 
+                                             </div>
+                                             <div class='form-group'>
+                                                 
+                                                 
+                                                 <label for="name"> Department</label>
+                                                 <select name="depart" class="form-control" id="dep_select"><option value="" selected disabled>---------</option></select>
+                                             </div>
+                                             <div class='form-group'>
+                                                 
+                                                 
+                                                 <label for="name"> Course</label>
+                                                 <select name="course" class="form-control" id="course_select"><option value="" selected disabled>-----------</option></select>
+                                             </div>
+                                             <div class='form-group'>
+                                                
+                                                 
+                                                 <label for="name"> number of videos</label>
+                                                 <input class="form-control" type="number" id="vid_number">
+                                             </div>
+                                             
+                                         </div>
+                                         </div>
+                                    </div>
+                                    <div class='row'>
+                                       <form class="myForm">
+                                        <div class="duplicate">
+                                            <div class="row">
+                                            <div class="col-md-12">
+                                                <table class="col-md-12">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="col-md-3 form-group">
+                                                                <label for="name">Select Package</label>
+                                                                <select name="pack_select" class="form-control" id="my_select">
+                                                                    <option value="Basic">Basic</option>
+                                                                    <option value="Premium">Premium</option>
+                                                                    <option value="Diamond">Diamond</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="col-md-3 form-group">
+                                                                <label for="name">Course Hours</label>
+                                                                <input type="text"  class="form-control" name="course_hours">
+                                                            </td>
+                                                            <td class="col-md-3 form-group">
+                                                                <label for="name">Course price</label>
+                                                                <input type="text" type="number" class="form-control" name="course_price" required>
+                                                            </td>
+                                                            <td class="col-md-3 form-group">
+                                                                <label for="name">Sell price</label>
+                                                                <input type="text" type="number" class="form-control" name="sell_price"  required>
+                                                            </td>
+                                                           
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="col-md-3 form-group">
+                                                                <label for="name">Course Duration</label>
+                                                                <input type="text" name="course_duration" class="form-control" >
+                                                            </td>
+                                                            <td class="col-md-3 form-group">
+                                                                <label for="name">Total Quiz</label>
+                                                                <input type="text"  name="total_quiz" class="form-control" >
+                                                            </td>
+                                                            <td class="col-md-3 form-group">
+                                                                <label for="name">Total Notebook</label>
+                                                                <input type="text" name="total_notebook" class="form-control" >
+                                                            </td>
+                                                            <td class="col-md-3 form-group" id="button">
+                                                               <style>
+                                                                .btn {
+                                                                    margin-top: 22px !important;
+                                                                    border-radius: 3px;
+                                                                    -webkit-box-shadow: none;
+                                                                    box-shadow: none;
+                                                                    border: 1px solid transparent;
+                                                                }
+                                                               </style>
+                                                                <button class="btn btn-info btn-sm add_btn">Add</button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+
+                                               
+
+                                            </div>
+                                        </div>
+                                       </form>
+                                           
+                                      
+                                          
+                                    </div>
+    
+                                    <div class="box-footer">
+                                        <button id="priceModelSubmit" class='btn btn-success btn-sm' data-placement='right' data-toggle='tooltip' >Save</button>
+                                        <a href="{% url 'dash'%}" class='btn btn-sm btn-primary'>
+                                          Back
+                                        </a>
+                                    </div>
+    
+                                   </form>
+                                
+
+                               </div>
+                              
+                               
+                               
+
+
+
+                            </div>
+                        </div>
+                      </div>
+                    {% endblock %}
+                {% endblock %}
+            </section>
+            {% endblock   %}
+         <script>
+    let optionIndex = 1;
+	$(document).ready(function(){
+		var select_option=document.getElementById("my_select")
+ 
+	 var g
+	
+		
+		console.log(select_option.options.length)
+		let row=document.querySelectorAll(".duplicate > .row")
+	    let numberOfRows = document.querySelectorAll(".duplicate > .row").length;
+		let select=document.querySelector(".duplicate ")
+        console.log(select.querySelectorAll(".row select"))
+        let new_select=select.querySelectorAll(".row select")
+
+      
+        
+        function option_data(){
+            console.log($("#my_select").val())
+			console.log("function is working")
+			//get selected item from the previous row
+			
+            var selectedopt=Array.from(select.querySelectorAll("select")).map(sel=>sel.value)
+			console.log(selectedopt)
+			
+			// make a array of all items in the select field
+			opt=Array.from(select_option.options)
+			var list_opt=[]
+			for(var i=0;i<opt.length;i++){
+				list_opt.push(opt[i].value)
+			}
+            console.log(list_opt)
+
+		
+			// filter available option
+			var avaiable=list_opt.filter(option=> !selectedopt.includes(option))
+			console.log(avaiable)
+			// make the html option with available option
+			var new_data=select.querySelectorAll(" select").innerHTML=avaiable.map(option=>`<option value="${option}">${option}</option>`).join('')
+			console.log(new_data)
+			optionIndex++;
+		
+           
+
+			// make the add button disabled while fulfil the condition
+			if(optionIndex===3){
+
+				
+				//$("#button > .button").attr({class:"btn btn-sm btn-danger remove_btn"} )
+			
+
+				
+
+			 }
+			 $("#button > .add_btn").replaceWith('<button class="btn btn-danger btn-sm remove_btn">remove</button>')
+			 $("#button > .new_btn-1").replaceWith('<button class="btn btn-danger remove_btn">remove</button>')
+			 if(optionIndex<=2){
+				$('.duplicate').append(`<div class="row">
+                    <div class="col-md-12">
+                        <table class="col-md-12">
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-3 form-group">
+                                        <label for="name">Select Package</label>
+                                        <select name="pack_select" class="form-control" id="my_select">
+                                            
+                                            ${new_data}
+                                        </select>
+                                    </td>
+                                    <td class="col-md-3 form-group">
+                                        <label for="name">Course Hours</label>
+                                        <input type="text"  class="form-control" name="course_hours">
+                                    </td>
+                                    <td class="col-md-3 form-group">
+                                        <label for="name">Course price</label>
+                                        <input type="text" type="number" class="form-control" name="course_price" required>
+                                    </td>
+                                    <td class="col-md-3 form-group">
+                                        <label for="name">Sell price</label>
+                                        <input type="text" type="number" class="form-control" name="sell_price"  required>
+                                    </td>
+                                   
+
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3 form-group">
+                                        <label for="name">Course Duration</label>
+                                        <input type="text" name="course_duration" class="form-control" >
+                                    </td>
+                                    <td class="col-md-3 form-group">
+                                        <label for="name">Total Quiz</label>
+                                        <input type="text"  name="total_quiz" class="form-control" >
+                                    </td>
+                                    <td class="col-md-3 form-group">
+                                        <label for="name">Total Notebook</label>
+                                        <input type="text"  name="total_notebook" class="form-control" >
+                                    </td>
+                                    <td class="col-md-3 form-group" id="button">
+                                       <style>
+                                        .btn {
+                                            margin-top: 22px !important;
+                                            border-radius: 3px;
+                                            -webkit-box-shadow: none;
+                                            box-shadow: none;
+                                            border: 1px solid transparent;
+                                        }
+                                       </style>
+                                        <button class="btn btn-info btn-sm add_btn">Add</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                       
+
+                    </div>`)
+				
+			 }else{
+				$('.duplicate').append(`<div class="row">
+                    <div class="col-md-12">
+                        <table class="col-md-12">
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-3 form-group">
+                                        <label for="name">Select Package</label>
+                                        <select name="pack_select" class="form-control" id="my_select">
+                                            
+                                            ${new_data}
+                                        </select>
+                                    </td>
+                                    <td class="col-md-3 form-group">
+                                        <label for="name">Course Hours</label>
+                                        <input type="text"  class="form-control" name="course_hours">
+                                    </td>
+                                    <td class="col-md-3 form-group">
+                                        <label for="name">Course price</label>
+                                        <input type="text" type="number" class="form-control" name="course_price" required>
+                                    </td>
+                                    <td class="col-md-3 form-group">
+                                        <label for="name">Sell price</label>
+                                        <input type="text" type="number" class="form-control" name="sell_price"  required>
+                                    </td>
+                                   
+
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3 form-group">
+                                        <label for="name">Course Duration</label>
+                                        <input type="text"  name="course_duration" class="form-control" >
+                                    </td>
+                                    <td class="col-md-3 form-group">
+                                        <label for="name">Total Quiz</label>
+                                        <input type="text"  name="total_quiz" class="form-control" >
+                                    </td>
+                                    <td class="col-md-3 form-group">
+                                        <label for="name">Total Notebook</label>
+                                        <input type="text"  name="total_notebook" class="form-control" >
+                                    </td>
+                                    <td class="col-md-3 form-group" id="button">
+                                       <style>
+                                        .btn {
+                                            margin-top: 22px !important;
+                                            border-radius: 3px;
+                                            -webkit-box-shadow: none;
+                                            box-shadow: none;
+                                            border: 1px solid transparent;
+                                        }
+                                       </style>
+                                       <button  class="btn btn-danger btn-sm remove_btn ">remove</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                       
+
+                    </div>`)
+			 }
+			//append new row in the duplicate container
+		
+	
+			
+         
+		}
+	
+			/*$(".add_btn").on("click",function(){
+			
+				option_data()
+				$(".new_btn-1").on("click",function(e){
+			        e.preventDefault()
+                  
+					console.log("button clicked")
+					option_data()
+					$("#button > .new_btn-2").replaceWith('<button class="btn btn-danger remove_btn">remove</button>')
+				})
+			})*/
+     $(document).on("click",".add_btn",function(){
+        option_data()
+     })       
+			
+    /* var get_value=$("#my_select").val()
+	 console.log(get_value)
+	 console.log(g)
+	 var selectedprev=Array.from(select.querySelectorAll(" select")).map(sel=>sel.value)
+	 console.log(selectedprev)*/
+		
+      $(document).on("change","#my_select",function(){
+	
+		
+		// Store the previously selected option for this select element
+		
+				
+		
+			let sel = select.querySelectorAll("select");
+			
+
+			let selectedOption = $(this).val();
+			console.log(selectedOption)
+			console.log($(sel[0]).val())
+	
+			let isDuplicate = false;
+			for (let i = 0; i < sel.length; i++) {
+				if (sel[i] !== this && $(sel[i]).val() === selectedOption) {
+                 				
+					isDuplicate=true
+					break
+
+
+				}
+			}
+			if (isDuplicate) {
+				toastr.error("Option is already selected.");
+			}
+			
+		
+
+
+	  })
+	  $(document).on("change","#my_select-1",function(){
+				
+		
+		let sel = select.querySelectorAll("select");
+		let selectedOption = $(this).val();
+		let isDuplicate = false;
+		for (let i = 0; i < sel.length; i++) {
+			if (sel[i] !== this && $(sel[i]).val() === selectedOption) {
+				isDuplicate = true;
+				break;
+			}
+		}
+		if (isDuplicate) {
+			toastr.error("Option is already selected.");
+		}
+		
+	
+
+
+  })
+	
+
+      $(document).on("click",".remove_btn",function(e){
+		e.preventDefault()
+		
+		let item_row=$(this).parent().parent().parent().parent().parent().parent();
+		console.log(item_row)
+		item_row.remove()
+		optionIndex--;
+		console.log(optionIndex)
+		console.log(row[optionIndex])
+
+		let chil= $(".duplicate").children().last()
+        console.log(chil.prevObject)
+        let numrow=document.querySelectorAll(".duplicate >.row")
+        console.log(numrow[numrow.length-1].children)
+        let last_row_tr=numrow[numrow.length-1].querySelector("#button")
+        let lst_btn=numrow[numrow.length-1].querySelector("#button > button")
+        console.log(lst_btn)
+
+		//console.log(chil[0].children[0].children[0].children[0].children[1].children[3].children[0])
+        //chil[0].children[0].children[0].children[0].children[1].button.remove()
+		//chil[0].children.button.children[0].remove()
+        //chil[0].children[0].children[0].children[0].children[1].children[3].children[0].remove()
+        lst_btn.remove()
+        last_row_tr.innerHTML='<button  class="btn btn-info btn-sm add_btn">Add</button>'
+		
+		
+	   // chil.find('button').replaceWith('').appendTo(chil);
+
+		
+
+	  })
+     
+    })
+         </script>
+         <script>
+        
+            $(document).ready(function(){
+                var cat
+                var dep
+                var cour
+               
+                axios.get("{% url 'course-price-data'%}").then(function(response){
+                    cat=response.data.category
+                    dep=response.data.department
+                    cour=response.data.course
+                    
+                 
+                    cat.forEach(function(item){
+                        var data_cat={value:item.id,text:item.name}
+                        $("#cat_select").append(`<option value="${data_cat.value}">${data_cat.text}</option>`)
+                        
+                      
+
+                    })
+                    $("#cat_select").on("change",function(){
+                       
+                     
+                        var cat_value=$(this).find("option:selected").text()
+                        console.log(cat_value)
+                        var dep_filter=dep.filter((item)=> cat_value==item.category_name)
+                        console.log(dep_filter)
+                        $("#dep_select").html(' <option value="" selected disabled>---------</option>')
+                        var dep_option='<option value="" selected disabled>---------</option>'
+                        dep_filter.forEach(function(item){
+                            var dep_value={value:item.id,text:item.name}
+                              dep_option+=`<option value="${dep_value.value}">${dep_value.text}</option>`
+                             $("#dep_select").html(dep_option)
+                        })
+
+                    })
+
+                    $("#dep_select").on("change",function(){
+                        var selected_dep=$(this).find("option:selected").text()
+                        var selected_cat=$("#cat_select").find("option:selected").text()
+                        console.log(selected_cat)
+                        $("#course_select").html('<option selected disabled>---------</option>')
+                        var option_course='<option selected disabled>---------</option>'
+                        var course_filter=cour.filter((item)=>item.category_name==selected_cat && item.department_name==selected_dep)
+                        course_filter.forEach(function(item){
+                            var course_value={value:item.course_id,text:item.course_name
+                                
+                            
+                            }
+                            option_course+=`<option value="${course_value.value}">${course_value.text}</option>`
+                        })
+                        $("#course_select").html(option_course)
+                        
+
+                    })
+                  })
+
+                  $(document).on("click","#priceModelSubmit",function(){
+                    var pack_data=[]
+                    var csrf=$("input[name='csrfmiddlewaretoken']").val()
+                    console.log(csrf)
+                   var row=$(".duplicate .row")
+
+                   console.log(row.length)
+                   var courseCat_value=$("#cat_select").find("option:selected").text()
+                   var courseDep_value=$("#dep_select").find("option:selected").text()
+                   var course_value=$("#course_select").find("option:selected").text()
+                   var vidNumber_value=$("#vid_number").val()
+                   row.each(function(){
+                   
+                    var selectField_value=$(this).find("[name='pack_select']").val()
+                    var hours_value=$(this).find("[name='course_hours']").val()
+                    var coursePrice_value=$(this).find("[name='course_price']").val()
+                    var sellPrice_value=$(this).find("[name='sell_price']").val()
+                    var courseDuration_value=$(this).find("[name='course_duration']").val()
+                    var totalQuiz_value=$(this).find("[name='total_quiz']").val()
+                    var totalNotebook_value=$(this).find("[name='total_notebook']").val()
+                   
+                        var data={
+                            pack_name:selectField_value,
+                            hours:hours_value,
+                            course_price:coursePrice_value,
+                            sell_price:sellPrice_value,
+                            course_duration:courseDuration_value,
+                            total_quiz:totalQuiz_value,
+                            total_notebook:totalNotebook_value
+                        }
+                        pack_data.push(data)
+
+                  
+                    
+                   
+                    
+
+                   
+
+                   })
+
+                 var pack_data_filter=pack_data.filter((item)=>item.course_price=="" || item.sell_price=="")
+          
+               if (pack_data_filter.length==0){
+                if (courseCat_value=="---------"){
+                     toastr.error("category is required")
+                }else if(courseDep_value=="---------"){
+                    toastr.error("department is required")
+                }else if(course_value=="---------"){
+                    toastr.error("Course is required")
+                }else{
+                    var submit_data={
+                        category:courseCat_value,
+                        department:courseDep_value,
+                        course:course_value,
+                        video_number:vidNumber_value,
+                        pack_details:pack_data
+                    }
+                    axios.post("{% url 'course-pricing'%}",submit_data,{
+                        headers:{
+                           "X-CSRFToken":csrf
+                        }
+                    }).then(function(response){
+                        console.log(response)
+                    }).catch(function(e){
+                        console.log(e)
+                    })
+                    
+                }
+                 
+                   
+                  
+                  }else{
+                    pack_data_filter.forEach(function(item){
+                        if (item.course_price==""){
+                            toastr.error("course price is required")
+                          
+                            $(".duplicate .row").find("input[name='course_price']").filter(function(){
+                                return $(this).val()==="";
+                            }).css({
+                                "border-color":"red"
+                            })
+                        }else if(item.sell_price==""){
+                            toastr.error("sell price  is required")
+                            $(".duplicate .row").find("input[name='sell_price']").filter(function(){
+                                return $(this).val()==="";
+                            }).css({
+                                "border-color":"red"
+                            })
+                        }
+                    })
+
+                    
+                  }
+                  })
+                  
+                 
+            })
+        
+         </script>
+        </div>
+        {% endblock content_wrapper %}

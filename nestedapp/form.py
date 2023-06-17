@@ -2,7 +2,7 @@ from select import select
 from selectors import SelectSelector
 from django import forms
 from taggit.forms import *
-from .models import Category, Chapter, Depertment, Semester, Subject, Video,Package,Instructor,CourseModel,SessionModel,endCourse
+from .models import Category, Chapter, Depertment, Semester, Subject, Video,Package,Instructor,CourseModel,SessionModel,endCourse,coursePlan
 
 
 class ParentForm(forms.ModelForm):
@@ -232,5 +232,18 @@ class EndwiseCourseForm(forms.ModelForm):
             'days':forms.NumberInput(attrs={'class':'form-control','required':'true'}),
             'is_active':forms.CheckboxInput(attrs={'class':'form-control'})
         }
-                  
+class coursePlanForm (forms.ModelForm):
+    class Meta:
+        model=coursePlan
+        fields="__all__"    
+        
+        widgets={
+            'plan':forms.Select(attrs={"class":"form-control","id":"my_select","required":True}),
+            'course_hour':forms.NumberInput(attrs={"class":"form-control","required":True}),
+            'course_price':forms.NumberInput(attrs={"class":"form-control"}),
+            'sell_price':forms.NumberInput(attrs={"class":"form-control","required":True}),
+            'course_duration':forms.NumberInput(attrs={"class":"form-control"}),
+            'total_quiz':forms.NumberInput(attrs={"class":"form-control"}),
+            'total_notebooks':forms.NumberInput(attrs={"class":"form-control"})
+        }             
             
