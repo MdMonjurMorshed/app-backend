@@ -1,2 +1,3 @@
-AdminLTE/
-env/
+/AdminLTE/
+/env/
+.env
