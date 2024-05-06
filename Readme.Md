@@ -1,4 +1,4 @@
-this project is published on heroku. link is give bellow
+this project is published on python anywhere. link is give bellow
 http://03username.pythonanywhere.com/
 
 
