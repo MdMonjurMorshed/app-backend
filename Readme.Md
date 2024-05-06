@@ -1,7 +1,7 @@
 this project is published on heroku. link is give bellow
 http://03username.pythonanywhere.com/
 
-![Opera Snapshot_2023-07-10_234319_sos-backend-af02c64ab654 herokuapp com](https://github.com/MdMonjurMorshed/app-backend/assets/66746208/5d1e362e-875c-43cc-b8ad-5dbe0456b7ee)
+
 ![Opera Snapshot_2023-07-10_234620_sos-backend-af02c64ab654 herokuapp com](https://github.com/MdMonjurMorshed/app-backend/assets/66746208/c5221007-344e-4abb-8e5d-c2de4427379a)
 ![Opera Snapshot_2023-07-10_234658_sos-backend-af02c64ab654 herokuapp com](https://github.com/MdMonjurMorshed/app-backend/assets/66746208/478d85ef-1b31-46af-9625-e07e4d544096)
 ![Opera Snapshot_2023-07-10_234722_sos-backend-af02c64ab654 herokuapp com](https://github.com/MdMonjurMorshed/app-backend/assets/66746208/7f9b48c2-274a-404a-b647-b7fee486b252)
