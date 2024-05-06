@@ -1,5 +1,5 @@
 this project is published on heroku. link is give bellow
-https://sos-backend-af02c64ab654.herokuapp.com/
+http://03username.pythonanywhere.com/
 
 ![Opera Snapshot_2023-07-10_234319_sos-backend-af02c64ab654 herokuapp com](https://github.com/MdMonjurMorshed/app-backend/assets/66746208/5d1e362e-875c-43cc-b8ad-5dbe0456b7ee)
 ![Opera Snapshot_2023-07-10_234620_sos-backend-af02c64ab654 herokuapp com](https://github.com/MdMonjurMorshed/app-backend/assets/66746208/c5221007-344e-4abb-8e5d-c2de4427379a)
